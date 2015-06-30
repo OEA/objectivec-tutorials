@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Card.h"
+#import "PlayingCard.h"
 #import "Deck.h"
 
 @interface CardMatchingGame : NSObject
-
-@property (nonatomic, readonly)NSUInteger score;
+//Current game score
+@property (nonatomic)NSUInteger score;
+//Cards on the deck
 @property (strong, nonatomic)NSMutableArray *cards;
+//Current deck on the game
 -(instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck;
 @end

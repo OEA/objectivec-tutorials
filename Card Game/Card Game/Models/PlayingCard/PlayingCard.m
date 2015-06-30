@@ -34,6 +34,24 @@
     }
 }
 
+-(int)match:(PlayingCard *)otherCard
+{
+    NSLog(@"First card suit: %@ , rank: %li, Second card suit: %@, rank: %li",self.suit, self.rank, otherCard.suit, otherCard.rank);
+    int score = 0;
+    if (otherCard.rank == self.rank) {
+        self.matched = YES;
+        otherCard.matched = YES;
+        score = 1;
+    } else if ([[otherCard suit] isEqualToString:self.suit]) {
+        self.matched = YES;
+        otherCard.matched = YES;
+        score = 4;
+    } else {
+        score = -1;
+    }
+    return score;
+}
+
 + (NSArray *)rankStrings
 {
     return @[@"?", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"j", @"q", @"k"];

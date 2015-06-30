@@ -13,7 +13,6 @@
 @interface ViewController ()
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) IBOutlet UIView *mainView;
-
 @property (strong, nonatomic) CardMatchingGame* game;
 @end
 
@@ -38,6 +37,8 @@
 - (void)refreshUI
 {
     if ([self hasTwoCardChosen]) {
+        [self updateScore];
+        NSLog(@"Score: %li", self.game.score);
         [self clearTable];
     } else {
         [self refreshTable];
@@ -45,36 +46,60 @@
     
 }
 
--(void)clearTable
+- (void)updateScore
+{
+    int card1 = -1, card2 = -1;
+    for (UIButton *button in self.cardButtons){
+        int index = (int)[self.cardButtons indexOfObject:button];
+        PlayingCard *card = [[self.game cards] objectAtIndex:index];
+        if (card.isChosen) {
+            if (card1 == -1)
+                card1 = index;
+            else
+                card2 = index;
+        }
+    } 
+    
+    
+    PlayingCard *pCard1 = [[self.game cards] objectAtIndex:card1];
+    PlayingCard *pCard2 = [[self.game cards] objectAtIndex:card2];
+
+    int score = [pCard1 match:pCard2];
+    self.game.score += score;
+
+}
+
+- (void)clearTable
 {
     for (UIButton *button in self.cardButtons){
         int index = (int)[self.cardButtons indexOfObject:button];
-        if (index % 2 == 0) {
+        PlayingCard *card = [[self.game cards] objectAtIndex:index];
+        if (index % 2 == 0 && !card.isMatched) {
             [button setBackgroundImage:[UIImage imageNamed:@"blue"] forState:UIControlStateNormal];
-        } else {
+        } else if(index % 2 == 1 && !card.isMatched) {
             [button setBackgroundImage:[UIImage imageNamed:@"red"] forState:UIControlStateNormal];
         }
-        Card *card = [[self.game cards] objectAtIndex:index];
         card.chosen = NO;
     } 
+    [self refreshTable];
 }
 
 -(void)refreshTable
 {
     for (UIButton *button in self.cardButtons){
         int index = (int)[self.cardButtons indexOfObject:button];
-        Card *card = [[self.game cards] objectAtIndex:index];
-        if (!card.isChosen) {
+        PlayingCard *card = [[self.game cards] objectAtIndex:index];
+        if (!card.isChosen && !card.isMatched) {
             if (index % 2 == 0) {
                 [button setBackgroundImage:[UIImage imageNamed:@"blue"] forState:UIControlStateNormal];
             } else {
                 [button setBackgroundImage:[UIImage imageNamed:@"red"] forState:UIControlStateNormal];
             }
+        } else if (card.isMatched) {
+            button.enabled = NO;
         }
     }
 }
-
-
 
 
 - (BOOL)hasTwoCardChosen
@@ -82,7 +107,7 @@
     int chosenCount = 0;
     for (UIButton *button in self.cardButtons){
         int index = (int)[self.cardButtons indexOfObject:button];
-        Card *card = [[self.game cards] objectAtIndex:index];
+        PlayingCard *card = [[self.game cards] objectAtIndex:index];
         if (card.isChosen) {
             chosenCount++;
         }
@@ -101,7 +126,7 @@
 - (void)drawRandomCard:(int)cardButtonIndex
 {
     UIButton *cardButton = self.cardButtons[cardButtonIndex];
-    Card *card = [[self.game cards] objectAtIndex:cardButtonIndex];
+    PlayingCard *card = [[self.game cards] objectAtIndex:cardButtonIndex];
     
     if ([[self.game cards] count] && !card.isChosen) {
         card.chosen = YES;

@@ -10,11 +10,12 @@
 
 
 @interface CardMatchingGame()
-@property (nonatomic, readwrite)NSUInteger score;
+
 @end
 
 
 @implementation CardMatchingGame
+
 
 -(NSMutableArray *)cards
 {
@@ -28,10 +29,13 @@
 {
     self = [super init];
     for (int i=0; i<count; i++) {
-        Card *card = [deck drawRandomCard];
-        [self.cards addObject:card];
+        id card = [deck drawRandomCard];
+        PlayingCard *playingCard = (PlayingCard *)card;
+        [self.cards addObject:playingCard];
     }
     return self;
 }
+
+
 
 @end
