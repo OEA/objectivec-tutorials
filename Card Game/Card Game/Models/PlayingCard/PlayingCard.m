@@ -13,13 +13,13 @@
 @synthesize suit = _suit;
 
 + (NSArray * )validSuits {
-    return @[@"♠️", @"♣️", @"♥️", @"♦️"];
+    return @[@"s", @"c", @"h", @"d"];
 }
 
 - (NSString *)contents
 {
     NSArray *rankStrings = [PlayingCard rankStrings];
-    return [rankStrings[self.rank] stringByAppendingString:self.suit];
+    return [self.suit stringByAppendingString:rankStrings[self.rank]];
 }
 
 - (NSString *)suit
@@ -36,7 +36,7 @@
 
 + (NSArray *)rankStrings
 {
-    return @[@"?", @"A", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"J", @"Q", @"K"];
+    return @[@"?", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"j", @"q", @"k"];
 }
 
 + (NSUInteger)maxRank

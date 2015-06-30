@@ -50,4 +50,13 @@
     return card;
 }
 
+-(Card *)getCardAtIndex:(int)index
+{
+    Card *card = nil;
+    if (index < [self.cards count]) {
+        card = self.cards[index];
+    }
+    return card;
+}
+
 @end

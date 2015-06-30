@@ -8,46 +8,114 @@
 
 #import "ViewController.h"
 #import "PlayingCardDeck.h"
+#import "CardMatchingGame.h"
 
 @interface ViewController ()
-@property (strong, nonatomic) IBOutlet UIButton *cardButton;
-@property (strong, nonatomic) IBOutlet UILabel *labelCount;
-@property (strong, nonatomic) PlayingCardDeck *cardDeck;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (strong, nonatomic) IBOutlet UIView *mainView;
+
+@property (strong, nonatomic) CardMatchingGame* game;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (!_cardDeck)
-        _cardDeck = [PlayingCardDeck new];
+    
+    if (!_game)
+        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[PlayingCardDeck new]];
+    
+    [[self mainView] setBackgroundColor: [[UIColor alloc] initWithPatternImage: [UIImage imageNamed: @"card-table"]]];
+    
+    [self refreshUI];
+    
     PlayingCardDeck *sharedInstance = [PlayingCardDeck new];
     PlayingCardDeck *cardDeck1 = [[PlayingCardDeck alloc] init];
     PlayingCardDeck *cardDeck2 = [sharedInstance copy];
     NSLog(@"sharedInstance: %@ c1: %@ c2: %@",sharedInstance,cardDeck1,cardDeck2);
 }
-- (IBAction)cardButtonTapped:(id)sender
+
+- (void)refreshUI
 {
-    [self drawRandomCard];
+    if ([self hasTwoCardChosen]) {
+        [self clearTable];
+    } else {
+        [self refreshTable];
+    }
+    
 }
 
-- (void)drawRandomCard
+-(void)clearTable
 {
-    if ([self.cardDeck.cards count]) {
-    Card *card = [self.cardDeck drawRandomCard]; 
-    self.labelCount.text = [NSString stringWithFormat:@"There are %li cards in deck", [self.cardDeck.cards count]];
-    [self.cardButton setTitle:[NSString stringWithFormat:@"%@",card.contents] forState:UIControlStateNormal];
-    } else {
-        self.labelCount.text = @"There is no any card in deck!";
-        [self.cardButton setTitle:@":(" forState:UIControlStateNormal];
+    for (UIButton *button in self.cardButtons){
+        int index = (int)[self.cardButtons indexOfObject:button];
+        if (index % 2 == 0) {
+            [button setBackgroundImage:[UIImage imageNamed:@"blue"] forState:UIControlStateNormal];
+        } else {
+            [button setBackgroundImage:[UIImage imageNamed:@"red"] forState:UIControlStateNormal];
+        }
+        Card *card = [[self.game cards] objectAtIndex:index];
+        card.chosen = NO;
+    } 
+}
+
+-(void)refreshTable
+{
+    for (UIButton *button in self.cardButtons){
+        int index = (int)[self.cardButtons indexOfObject:button];
+        Card *card = [[self.game cards] objectAtIndex:index];
+        if (!card.isChosen) {
+            if (index % 2 == 0) {
+                [button setBackgroundImage:[UIImage imageNamed:@"blue"] forState:UIControlStateNormal];
+            } else {
+                [button setBackgroundImage:[UIImage imageNamed:@"red"] forState:UIControlStateNormal];
+            }
+        }
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
+
+
+
+- (BOOL)hasTwoCardChosen
+{
+    int chosenCount = 0;
+    for (UIButton *button in self.cardButtons){
+        int index = (int)[self.cardButtons indexOfObject:button];
+        Card *card = [[self.game cards] objectAtIndex:index];
+        if (card.isChosen) {
+            chosenCount++;
+        }
+    }
+    return (chosenCount==2) ? YES : NO;
+}
+
+- (IBAction)cardButtonTapped:(id)sender
 {
     
-    [self drawRandomCard];
+    [self refreshUI];
+    int cardIndex =(int)[self.cardButtons indexOfObject:sender];
+    [self drawRandomCard:cardIndex];
 }
+
+- (void)drawRandomCard:(int)cardButtonIndex
+{
+    UIButton *cardButton = self.cardButtons[cardButtonIndex];
+    Card *card = [[self.game cards] objectAtIndex:cardButtonIndex];
+    
+    if ([[self.game cards] count] && !card.isChosen) {
+        card.chosen = YES;
+       [cardButton setBackgroundImage:[UIImage imageNamed:card.contents] forState:UIControlStateNormal];
+    } else {
+        if (cardButtonIndex % 2 == 0) {
+            [cardButton setBackgroundImage:[UIImage imageNamed:@"blue"] forState:UIControlStateNormal];
+        } else {
+            [cardButton setBackgroundImage:[UIImage imageNamed:@"red"] forState:UIControlStateNormal];
+        }
+        card.chosen = NO;
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

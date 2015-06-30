@@ -20,5 +20,7 @@
 
 //-(NSMutableArray *)cards;
 
+-(Card *)getCardAtIndex:(int)index;
+
 
 @end
