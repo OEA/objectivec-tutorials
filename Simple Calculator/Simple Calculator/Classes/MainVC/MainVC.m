@@ -29,7 +29,9 @@
 - (IBAction)numbersButtonTapped:(id)sender 
 {
     UIButton *button = (UIButton *)sender;
-    if ([self hasResultZero]) {
+    [self clearBorderOfLogicalButtons];
+    if ([self hasResultZero] || self.calculateManager.isOnProgress) {
+        self.calculateManager.isOnProgress = NO;
         if (![[button currentTitle] isEqualToString:@"0"]) {
             self.resultText.text = [button currentTitle];
             [self.clearButton setTitle:@"C" forState:UIControlStateNormal];
@@ -76,6 +78,17 @@
 }
 - (IBAction)equalsButtonTapped:(id)sender {
     [self clearBorderOfLogicalButtons];
+    
+    if (self.calculateManager.cMode) {
+        self.calculateManager.secondNumber = [self convertStringToNumber:self.resultText.text];
+        NSNumber *result = [self.calculateManager processNumbers:self.calculateManager.cMode];
+        self.calculateManager.firstNumber = result;
+        self.resultText.text = [NSString stringWithFormat:@"%@",result];
+        self.calculateManager.cMode = nil;
+    } 
+    
+    
+    
 }
 
 - (IBAction)percentageButtonTapped:(id)sender {
@@ -83,6 +96,7 @@
     self.resultText.text = [self.calculateManager getPercentageOfNumber:number];
 }
 - (void)clearBorderOfLogicalButtons {
+    
     for (UIButton *button in self.logicalButtons) {
         [[button layer] setBorderWidth:0.25f];
         [[button layer] setBorderColor:[UIColor colorWithRed:0.0f/255.0f
@@ -98,14 +112,21 @@
     /*
     
     */
-    if (!self.calculateManager.firstNumber) {
-        self.calculateManager.firstNumber = [self convertStringToNumber:self.resultText.text];
-    } else {
-        self.calculateManager.secondNumber = [self convertStringToNumber:self.resultText.text];
-        NSNumber *result = [self.calculateManager processNumbers:[self.logicalButtons indexOfObject:sender]];
-        self.resultText.text = [NSString stringWithFormat:@"%@",result];
+    if (!self.calculateManager.cMode) {
         
+        self.calculateManager.firstNumber = nil;
+        self.calculateManager.secondNumber = nil;
+        self.calculateManager.cMode = [self.logicalButtons indexOfObject:sender];
     }
+        self.calculateManager.isOnProgress = YES;
+        if (!self.calculateManager.firstNumber) {
+            self.calculateManager.firstNumber = [self convertStringToNumber:self.resultText.text];
+        } else {
+            self.calculateManager.secondNumber = [self convertStringToNumber:self.resultText.text];
+            NSNumber *result = [self.calculateManager processNumbers:[self.logicalButtons indexOfObject:sender]];
+            self.calculateManager.firstNumber = result;
+            self.resultText.text = [NSString stringWithFormat:@"%@",result];
+        }
     
     [self clearBorderOfLogicalButtons];
     
@@ -142,6 +163,7 @@
     self.calculateManager.firstNumber = nil;
     self.calculateManager.secondNumber = nil;
     self.resultText.text = @"0";
+    [self clearBorderOfLogicalButtons];
     [self.clearButton setTitle:@"AC" forState:UIControlStateNormal];
 }
 @end

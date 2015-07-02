@@ -17,6 +17,8 @@
 @property (strong, nonatomic) NSNumber *firstNumber;
 
 @property (strong, nonatomic) NSNumber *secondNumber;
+@property (nonatomic) BOOL isOnProgress;
+@property (nonatomic) CalculationMode cMode;
 
 - (NSNumber *)processNumbers:(CalculationMode)cMode;
 
