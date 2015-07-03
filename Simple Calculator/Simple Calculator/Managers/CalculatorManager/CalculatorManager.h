@@ -14,17 +14,15 @@
 @interface CalculatorManager : NSObject
 
 +(instancetype)sharedInstance;
-
-@property (strong, nonatomic) NSNumber *firstNumber;
-@property (strong, nonatomic) NSNumber *secondNumber;
 @property (nonatomic) BOOL isOnProgress;
 @property (nonatomic) CalculationMode cMode;
-@property (strong, nonatomic) Stack *stack;
+@property (strong, nonatomic, readonly) Stack *transactionStack;
 
 - (NSNumber *)processNumbers:(CalculationMode)cMode;
 
 - (BOOL)isFloat:(NSNumber *)number;
-- (void)addOperator:(NSObject *)object;
-- (void)addOperand:(NSObject *)object;
 - (NSNumber *)calculateFromInfixExpression:(Stack *)infixStack;
+- (void)addItemToTransaction:(id)object;
+- (void)removeLastItemInTransaction;
+- (NSString *)getCurrentTitle;
 @end

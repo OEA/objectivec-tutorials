@@ -9,6 +9,11 @@
 #import "CalculatorManager.h"
 #import "Calculator.h"
 
+
+@interface CalculatorManager()
+@property (strong, nonatomic, readwrite)Stack *transactionStack;
+@end
+
 @implementation CalculatorManager
 
 - (BOOL)isFloat:(NSNumber *)number
@@ -23,11 +28,47 @@
     }
 }
 
+- (void)addItemToTransaction:(id)object
+{
+    [_transactionStack push:object];
+}
+
+- (void)removeLastItemInTransaction
+{
+    [_transactionStack removeLastItem];
+}
+
+- (NSString *)getCurrentTitle
+{
+    Stack *copy = [_transactionStack copy];
+    @try {
+        NSLog(@"%li",[_transactionStack count]);
+        if ([copy count] == 1) {
+            
+            return [NSString stringWithFormat:@"%@",[copy bottom]];
+        } else if ([_transactionStack count] % 2 == 0) {
+            [copy removeLastItem];
+            return [NSString stringWithFormat:@"%@", [self calculateFromInfixExpression:copy]];
+        } else {
+            return [NSString stringWithFormat:@"%@", [self calculateFromInfixExpression:copy]];
+            
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    }
+    @finally {
+        
+    }
+    
+    return nil;
+}
+
 - (id)init 
 {
     self = [super init];
     if (self) {
-        _stack = [Stack new];
+        _transactionStack = [Stack new];
     }
     return self;
 }
@@ -53,8 +94,20 @@
     return [self.class sharedInstance];
 }
 
+- (NSNumber *)calculateFromLocalStack
+{
+    return [self calculateFromInfixExpression:_transactionStack];
+}
+
 - (NSNumber *)calculateFromInfixExpression:(Stack *)infixStack
 {
+    if ([infixStack count] == 1)
+        return [infixStack bottom];
+    if ([infixStack count] % 2 == 0) {
+        Stack *stack = [infixStack copy];
+        [stack.stack removeLastObject];
+        return [self calculateFromInfixExpression:stack];
+    }
     // This is an example of a functional test case.
     Stack *operand = [Stack new];
     Stack *operator = [Stack new];
@@ -158,7 +211,7 @@
     
     
     
-    return [Calculator processNumbers:cMode firstNumber:self.firstNumber secondNumber:self.secondNumber];
+    return @(2);
 }
 
 - (NSNumber *)convertStringToNumber:(NSString *)number
@@ -169,16 +222,6 @@
     return myNumber;
 }
 
-
-- (void)addOperand:(NSObject *)object
-{
-    [_stack push:object];
-}
-
-- (void)addOperator:(NSObject *)object
-{
-    [_stack push:object];
-}
 
 
 @end

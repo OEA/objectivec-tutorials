@@ -51,11 +51,17 @@
 
 - (id)bottom
 {
-    id object = nil;
-    if ([_stack count] > 0) {
-        object = [_stack firstObject];
-    }
-    return object;
+    return [_stack firstObject];
+}
+
+- (id)top
+{
+    return [_stack lastObject];
+}
+
+- (void)removeLastItem
+{
+    [self.stack removeLastObject];
 }
 
 - (void)pushTop:(id)object
@@ -64,7 +70,28 @@
 }
 
 
+-(id)copy
+{
+    Stack *copy = [[Stack alloc] init];
+    if (copy)
+    {
+        for (int i = 0; i < self.stack.count; i++) 
+        {
+            id object = self.stack[i];
+            if ([object respondsToSelector:@selector(copy)])
+                [copy push:[object copy]];
+        }
+    }
+    return copy;
+}
 
-
+//-(id)copyWithZone:(NSZone *)zone
+//{
+//    Stack *copy = [[[self class] allocWithZone:zone] init];
+//    if (copy) {
+//        [copy setStack:[self stack]];
+//    }
+//    return copy;
+//}
 
 @end

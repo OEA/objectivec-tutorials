@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) IBOutlet UIView *mainView;
 @property (strong, nonatomic) CardMatchingGame* game;
+
 @end
 
 @implementation ViewController
@@ -119,6 +120,7 @@
 {
     
     [self refreshUI];
+    
     int cardIndex =(int)[self.cardButtons indexOfObject:sender];
     [self drawRandomCard:cardIndex];
 }

@@ -28,10 +28,13 @@
 -(instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck
 {
     self = [super init];
-    for (int i=0; i<count; i++) {
-        id card = [deck drawRandomCard];
-        PlayingCard *playingCard = (PlayingCard *)card;
-        [self.cards addObject:playingCard];
+    if (self)
+    {
+        for (int i=0; i<count; i++) {
+            id card = [deck drawRandomCard];
+            PlayingCard *playingCard = (PlayingCard *)card;
+            [self.cards addObject:playingCard];
+        }
     }
     return self;
 }

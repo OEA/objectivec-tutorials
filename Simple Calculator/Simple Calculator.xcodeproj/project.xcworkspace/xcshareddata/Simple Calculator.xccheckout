@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>E640570C-CBBD-4130-9831-73ACCA7F6AAB</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Simple Calculator</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>C5943FCC863A075386CBF6A75FCF88EA11FC1552</key>
 		<string>https://github.com/OEASLAN/objectivec-tutorials.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Simple Calculator/Simple Calculator.xcodeproj</string>
+	<string>Simple Calculator/Simple Calculator.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>C5943FCC863A075386CBF6A75FCF88EA11FC1552</key>

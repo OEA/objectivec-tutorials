@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Stack : NSObject
+@interface Stack : NSObject <NSCopying>
 
 @property (strong, nonatomic) NSMutableArray *stack;
 
@@ -17,4 +17,7 @@
 - (id)bottom;
 - (NSUInteger)count;
 - (void)pushTop:(id)object;
+- (void)removeLastItem;
+- (id)top;
+-(NSMutableArray *)cloneArray: (NSMutableArray *) myArray;
 @end

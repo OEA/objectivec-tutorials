@@ -125,6 +125,41 @@
     XCTAssertEqual(12.5, resultTest);
 }
 
+- (void)testCalculation7 {
+    CalculatorManager *cManager = [CalculatorManager new];
+    Stack *test = [Stack new];
+    [test push:@(3)];
+    NSNumber *result = [cManager calculateFromInfixExpression:test];
+    int resultTest = [result intValue];
+    XCTAssertEqual(3, resultTest);
+}
+
+
+- (void)testCalculation8 {
+    CalculatorManager *cManager = [CalculatorManager new];
+    Stack *test = [Stack new];
+    [test push:@(7)];
+    [test push:@"*"];
+    [test push:@(76)];
+    NSNumber *result = [cManager calculateFromInfixExpression:test];
+    int resultTest = [result intValue];
+    XCTAssertEqual(532, resultTest);
+}
+- (void)testCalculation9 {
+    CalculatorManager *cManager = [CalculatorManager new];
+    Stack *test = [Stack new];
+    [test push:@(2)];
+    [test push:@"*"];
+    [test push:@(2)];
+    [test push:@"*"];
+    NSNumber *result = [cManager calculateFromInfixExpression:test];
+    [test push:@(2)];
+    [test push:@"*"];
+    [test push:@(2)];
+    result = [cManager calculateFromInfixExpression:test];
+    int resultTest = [result intValue];
+    XCTAssertEqual(16, resultTest);
+}
 
 
 - (void)testPerformanceExample {

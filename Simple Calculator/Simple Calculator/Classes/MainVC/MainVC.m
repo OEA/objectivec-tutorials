@@ -14,7 +14,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *clearButton;
 @property (strong, nonatomic) CalculatorManager *calculateManager;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *logicalButtons;
-
+@property (nonatomic, copy) Stack *stack;
 @end
 
 @implementation MainVC
@@ -26,6 +26,8 @@
     [self updateUI];
     if (!_calculateManager)
         _calculateManager = [CalculatorManager sharedInstance];
+    if (!_stack)
+        _stack = [Stack new];
     
 }
 - (IBAction)numbersButtonTapped:(id)sender 
@@ -84,20 +86,29 @@
 - (IBAction)equalsButtonTapped:(id)sender {
     [self clearBorderOfLogicalButtons];
     
+    [self.stack push:[self convertStringToNumber:self.resultText.text]];
+    NSNumber *number = [self.calculateManager calculateFromInfixExpression:self.stack];
     
-    [self.calculateManager addOperand:self.resultText.text];
-        
-    NSNumber *result = [self.calculateManager processNumbers:1];
-    self.resultText.text = [NSString stringWithFormat:@"%@",result];
+    NSString *newTitle = [NSString stringWithFormat:@"%@",number];
     
+    self.resultText.text = newTitle;
+    self.calculateManager.isOnProgress = YES;
 }
 
 - (IBAction)percentageButtonTapped:(id)sender {
-    NSNumber *number = [self convertStringToNumber:self.resultText.text];
-    self.calculateManager.firstNumber = number;
-    self.calculateManager.secondNumber = @(100);
-    NSNumber *result = [self.calculateManager processNumbers:CalculationModeDivide];
-    self.resultText.text = [NSString stringWithFormat:@"%8f",[result floatValue]];
+    [self.stack push:[self convertStringToNumber:self.resultText.text]];
+    [self.stack push:@"/"];
+    [self.stack push:@(100)];
+    NSNumber *number = [self.calculateManager calculateFromInfixExpression:self.stack];
+    
+    NSString *newTitle = [NSString stringWithFormat:@"%@",number];
+    
+    self.resultText.text = newTitle;
+    
+    self.calculateManager.isOnProgress = YES;
+    
+    [self clearBorderOfLogicalButtons];
+    
 }
 - (void)clearBorderOfLogicalButtons {
     
@@ -116,8 +127,25 @@
     /*
     
     */
-
-    //NSNumber *result = self.calculateManager
+    
+    NSString *title = [sender currentTitle];
+    if ([title isEqualToString:@"x"] || [title isEqualToString:@"X"])
+        title = @"*";
+    if ([title isEqualToString:@"÷"])
+        title = @"/";
+    if ([title isEqualToString:@"—"])
+        title = @"-";
+    
+    [self.stack push:[self convertStringToNumber:self.resultText.text]];
+    [self.stack push:title];
+   
+    NSNumber *number = [self.calculateManager calculateFromInfixExpression:self.stack];
+    
+    NSString *newTitle = [NSString stringWithFormat:@"%@",number];
+    
+    self.resultText.text = newTitle;
+    
+    self.calculateManager.isOnProgress = YES;
     
     [self clearBorderOfLogicalButtons];
     
@@ -150,9 +178,7 @@
 
 - (IBAction)clearResultText:(id)sender 
 {
-    
-    self.calculateManager.firstNumber = nil;
-    self.calculateManager.secondNumber = nil;
+    [[self.stack stack] removeAllObjects];
     self.resultText.text = @"0";
     [self clearBorderOfLogicalButtons];
     [self.clearButton setTitle:@"AC" forState:UIControlStateNormal];

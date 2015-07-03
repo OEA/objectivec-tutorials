@@ -11,32 +11,22 @@
 
 @implementation PlayingCardDeck
 
-
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self) {
-        for (NSString *suit in [PlayingCard validSuits]) {
-            for (NSUInteger rank = 1; rank <= [PlayingCard maxRank]; rank++) {
-                PlayingCard *card = [PlayingCard new];
-                card.rank = rank;
-                card.suit = suit;
-                [self addCard:card];
-                
-            }
-        }
-        
-    }
-    return self;
-}
-
 +(instancetype)sharedInstance
 {
     static PlayingCardDeck *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[super allocWithZone:NULL] init];
+        
+        for (NSString *suit in [PlayingCard validSuits])
+        {
+            for (NSUInteger rank = 1; rank <= [PlayingCard maxRank]; rank++) {
+                PlayingCard *card = [PlayingCard new];
+                card.rank = rank;
+                card.suit = suit;
+                [instance addCard:card];
+            }
+        }
     });
     return instance;
 }

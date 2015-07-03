@@ -277,7 +277,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="FhQ-KL-tXO"/>
                     <connections>
-                        <outlet property="mainView" destination="58M-VM-642" id="bNv-bU-NXK"/>
+                        <outlet property="mainView" destination="Pnn-oc-Pac" id="Uo8-T7-aPb"/>
                         <outletCollection property="cardButtons" destination="Pnn-oc-Pac" id="YBg-dm-cyd"/>
                         <outletCollection property="cardButtons" destination="xo6-to-K9Z" id="rcA-MG-TmC"/>
                         <outletCollection property="cardButtons" destination="nSe-k3-4df" id="Zif-vL-fJ4"/>
