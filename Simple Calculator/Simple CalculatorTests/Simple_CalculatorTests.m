@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "Stack.h"
+#import "CalculatorManager.h"
 
 @interface Simple_CalculatorTests : XCTestCase
 
@@ -25,10 +27,105 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+- (void)testCalculation {
+    CalculatorManager *cManager = [CalculatorManager new];
+    Stack *test = [Stack new];
+    [test push:@(14)];
+    [test push:@"-"];
+    [test push:@(4)];
+    [test push:@"*"];
+    [test push:@(5)];
+    [test push:@"*"];
+    [test push:@(2)];
+    [test push:@"+"];
+    [test push:@(6)];
+    NSNumber *result = [cManager calculateFromInfixExpression:test];
+    int resultTest = [result intValue];
+                  XCTAssertEqual(-20, resultTest);
+    
 }
+- (void)testCalculation2 {
+    
+    CalculatorManager *cManager = [CalculatorManager new];
+    Stack *test = [Stack new];
+    [test push:@(3)];
+    [test push:@"*"];
+    [test push:@(4)];
+    NSNumber *result = [cManager calculateFromInfixExpression:test];
+    int resultTest = [result intValue];
+    XCTAssertEqual(12, resultTest);
+}
+
+- (void)testCalculation3 {
+    
+    CalculatorManager *cManager = [CalculatorManager new];
+    Stack *test = [Stack new];
+    [test push:@(3)];
+    [test push:@"*"];
+    [test push:@(4)];
+    [test push:@"*"];
+    [test push:@(4)];
+    [test push:@"*"];
+    [test push:@(4)];
+    [test push:@"*"];
+    [test push:@(4)];
+    [test push:@"/"];
+    [test push:@(2)];
+    NSNumber *result = [cManager calculateFromInfixExpression:test];
+    int resultTest = [result intValue];
+    XCTAssertEqual(384, resultTest);
+}
+- (void)testCalculation4 {
+    
+    CalculatorManager *cManager = [CalculatorManager new];
+    Stack *test = [Stack new];
+    [test push:@(3)];
+    [test push:@"*"];
+    [test push:@(-4)];
+    [test push:@"*"];
+    [test push:@(4)];
+    [test push:@"+"];
+    [test push:@(8)];
+    [test push:@"-"];
+    [test push:@(2)];
+    NSNumber *result = [cManager calculateFromInfixExpression:test];
+    int resultTest = [result intValue];
+    XCTAssertEqual(-42, resultTest);
+}
+- (void)testCalculation5 {
+    
+    CalculatorManager *cManager = [CalculatorManager new];
+    Stack *test = [Stack new];
+    [test push:@(3)];
+    [test push:@"/"];
+    [test push:@(4)];
+    NSNumber *result = [cManager calculateFromInfixExpression:test];
+    float resultTest = [result floatValue];
+    XCTAssertEqual(0.75, resultTest);
+}
+- (void)testCalculation6 {
+    
+    CalculatorManager *cManager = [CalculatorManager new];
+    Stack *test = [Stack new];
+    [test push:@(3)];
+    [test push:@"+"];
+    [test push:@(14)];
+    [test push:@"-"];
+    [test push:@(4)];
+    [test push:@"*"];
+    [test push:@(3)];
+    [test push:@"+"];
+    [test push:@(7)];
+    [test push:@"+"];
+    [test push:@(2)];
+    [test push:@"/"];
+    [test push:@(4)];
+    NSNumber *result = [cManager calculateFromInfixExpression:test];
+    float resultTest = [result floatValue];
+    XCTAssertEqual(12.5, resultTest);
+}
+
+
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.

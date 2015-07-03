@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *clearButton;
 @property (strong, nonatomic) CalculatorManager *calculateManager;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *logicalButtons;
+
 @end
 
 @implementation MainVC
@@ -25,10 +26,14 @@
     [self updateUI];
     if (!_calculateManager)
         _calculateManager = [CalculatorManager sharedInstance];
+    
 }
 - (IBAction)numbersButtonTapped:(id)sender 
 {
+    
+
     UIButton *button = (UIButton *)sender;
+
     [self clearBorderOfLogicalButtons];
     if ([self hasResultZero] || self.calculateManager.isOnProgress) {
         self.calculateManager.isOnProgress = NO;
@@ -79,21 +84,20 @@
 - (IBAction)equalsButtonTapped:(id)sender {
     [self clearBorderOfLogicalButtons];
     
-    if (self.calculateManager.cMode) {
-        self.calculateManager.secondNumber = [self convertStringToNumber:self.resultText.text];
-        NSNumber *result = [self.calculateManager processNumbers:self.calculateManager.cMode];
-        self.calculateManager.firstNumber = result;
-        self.resultText.text = [NSString stringWithFormat:@"%@",result];
-        self.calculateManager.cMode = nil;
-    } 
     
-    
+    [self.calculateManager addOperand:self.resultText.text];
+        
+    NSNumber *result = [self.calculateManager processNumbers:1];
+    self.resultText.text = [NSString stringWithFormat:@"%@",result];
     
 }
 
 - (IBAction)percentageButtonTapped:(id)sender {
     NSNumber *number = [self convertStringToNumber:self.resultText.text];
-    self.resultText.text = [self.calculateManager getPercentageOfNumber:number];
+    self.calculateManager.firstNumber = number;
+    self.calculateManager.secondNumber = @(100);
+    NSNumber *result = [self.calculateManager processNumbers:CalculationModeDivide];
+    self.resultText.text = [NSString stringWithFormat:@"%8f",[result floatValue]];
 }
 - (void)clearBorderOfLogicalButtons {
     
@@ -112,21 +116,8 @@
     /*
     
     */
-    if (!self.calculateManager.cMode) {
-        
-        self.calculateManager.firstNumber = nil;
-        self.calculateManager.secondNumber = nil;
-        self.calculateManager.cMode = [self.logicalButtons indexOfObject:sender];
-    }
-        self.calculateManager.isOnProgress = YES;
-        if (!self.calculateManager.firstNumber) {
-            self.calculateManager.firstNumber = [self convertStringToNumber:self.resultText.text];
-        } else {
-            self.calculateManager.secondNumber = [self convertStringToNumber:self.resultText.text];
-            NSNumber *result = [self.calculateManager processNumbers:[self.logicalButtons indexOfObject:sender]];
-            self.calculateManager.firstNumber = result;
-            self.resultText.text = [NSString stringWithFormat:@"%@",result];
-        }
+
+    //NSNumber *result = self.calculateManager
     
     [self clearBorderOfLogicalButtons];
     

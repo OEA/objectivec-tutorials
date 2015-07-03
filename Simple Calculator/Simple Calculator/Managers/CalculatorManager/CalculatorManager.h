@@ -9,19 +9,22 @@
 #import <Foundation/Foundation.h>
 
 #import "Calculator.h"
+#import "Stack.h"
 
 @interface CalculatorManager : NSObject
 
 +(instancetype)sharedInstance;
 
 @property (strong, nonatomic) NSNumber *firstNumber;
-
 @property (strong, nonatomic) NSNumber *secondNumber;
 @property (nonatomic) BOOL isOnProgress;
 @property (nonatomic) CalculationMode cMode;
+@property (strong, nonatomic) Stack *stack;
 
 - (NSNumber *)processNumbers:(CalculationMode)cMode;
 
 - (BOOL)isFloat:(NSNumber *)number;
-- (NSString *)getPercentageOfNumber:(NSNumber *)number;
+- (void)addOperator:(NSObject *)object;
+- (void)addOperand:(NSObject *)object;
+- (NSNumber *)calculateFromInfixExpression:(Stack *)infixStack;
 @end
