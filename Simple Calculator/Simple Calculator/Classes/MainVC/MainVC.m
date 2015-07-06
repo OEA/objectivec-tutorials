@@ -39,7 +39,7 @@
     [self clearBorderOfLogicalButtons];
     if ([self hasResultZero] || self.calculateManager.isOnProgress) {
         self.calculateManager.isOnProgress = NO;
-        if (![[button currentTitle] isEqualToString:@"0"]) {
+        if (![[button currentTitle] isEqualToString:@"00"]) {
             self.resultText.text = [button currentTitle];
             [self.clearButton setTitle:@"C" forState:UIControlStateNormal];
         }
@@ -49,23 +49,34 @@
     }
 }
 - (IBAction)plusMinusButtonTapped:(id)sender {
-    NSNumber *number = [self convertStringToNumber:self.resultText.text];
-    if ([number floatValue] > 0 ) {
-        self.resultText.text = [NSString stringWithFormat:@"-%@", number];
-    } else if ([number floatValue] < 0){
-        float number1 = [number floatValue];
-        float product = number1 * -1;
-        NSNumber *result = [NSNumber numberWithFloat:product];
-        self.resultText.text = [NSString stringWithFormat:@"%@", result];
+
+    if (self.calculateManager.isOnProgress) {
+        self.resultText.text = @"-0";
     } else {
-        //do Nothing when it is zero
+        NSNumber *number = [self convertStringToNumber:self.resultText.text];
+        if ([number floatValue] > 0 ) {
+            self.resultText.text = [NSString stringWithFormat:@"-%@", number];
+        } else if ([number floatValue] < 0){
+            float number1 = [number floatValue];
+            float product = number1 * -1;
+            NSNumber *result = [NSNumber numberWithFloat:product];
+            self.resultText.text = [NSString stringWithFormat:@"%@", result];
+        } else {
+            //do Nothing when it is zero
+        }
     }
 }
 - (IBAction)commaButtonTapped:(id)sender {
+    
     if ([self.resultText.text containsString:@"."]) {
         //do nothing
     } else {
-        self.resultText.text = [self.resultText.text stringByAppendingString:@"."];
+        if (self.calculateManager.isOnProgress) {
+            self.resultText.text = [@"0" stringByAppendingString:@"."];
+            self.calculateManager.isOnProgress = NO;
+        } else {
+            self.resultText.text = [self.resultText.text stringByAppendingString:@"."];
+        }
     }
 }
 
@@ -84,15 +95,29 @@
     return UIStatusBarStyleLightContent; 
 }
 - (IBAction)equalsButtonTapped:(id)sender {
-    [self clearBorderOfLogicalButtons];
     
-    [self.stack push:[self convertStringToNumber:self.resultText.text]];
-    NSNumber *number = [self.calculateManager calculateFromInfixExpression:self.stack];
+    @try {
+        [self clearBorderOfLogicalButtons];
+        
+        [self.stack push:[self convertStringToNumber:self.resultText.text]];
+        NSNumber *number = [self.calculateManager calculateFromInfixExpression:self.stack];
+        
+        NSString *newTitle = [NSString stringWithFormat:@"%@",number];
+        
+        self.resultText.text = newTitle;
+        self.calculateManager.isOnProgress = YES;
+
+    }
+    @catch (NSException *exception) {
+        NSLog(@"exc: %@",exception);
+        self.resultText.text = @"Error";
+        self.calculateManager.isOnProgress = YES;
+    }
+    @finally {
+        
+    }
     
-    NSString *newTitle = [NSString stringWithFormat:@"%@",number];
     
-    self.resultText.text = newTitle;
-    self.calculateManager.isOnProgress = YES;
 }
 
 - (IBAction)percentageButtonTapped:(id)sender {
@@ -113,11 +138,10 @@
 - (void)clearBorderOfLogicalButtons {
     
     for (UIButton *button in self.logicalButtons) {
-        [[button layer] setBorderWidth:0.25f];
-        [[button layer] setBorderColor:[UIColor colorWithRed:0.0f/255.0f
-                                                       green:0.0f/255.0f
-                                                        blue:0.0f/255.0f
-                                                       alpha:0.4f] .CGColor];
+        [[button layer] setBorderColorWithWidth:0.25f :[UIColor colorWithRed:0.0f/255.0f
+                                                                       green:0.0f/255.0f
+                                                                        blue:0.0f/255.0f
+                                                                       alpha:0.75f]];
     }
 }
 
@@ -149,22 +173,20 @@
     
     [self clearBorderOfLogicalButtons];
     
-    [[sender layer] setBorderWidth:2.0f];
-    [[sender layer] setBorderColor:[UIColor colorWithRed:0.0f/255.0f
-                                                   green:0.0f/255.0f
-                                                    blue:0.0f/255.0f
-                                                   alpha:0.75f] .CGColor];
+    [[sender layer] setBorderColorWithWidth:2.0f :[UIColor colorWithRed:0.0f/255.0f
+                                                                  green:0.0f/255.0f
+                                                                   blue:0.0f/255.0f
+                                                                  alpha:0.4f]];
 }
 
 - (void)updateUI
 {
     [self setNeedsStatusBarAppearanceUpdate];
     for (UIButton *button in self.calculatorButtons) {
-        [[button layer] setBorderWidth:0.25f];
-        [[button layer] setBorderColor:[UIColor colorWithRed:0.0f/255.0f
-                                                       green:0.0f/255.0f
-                                                        blue:0.0f/255.0f
-                                                       alpha:0.4f] .CGColor];
+        [[button layer] setBorderColorWithWidth:0.25f :[UIColor colorWithRed:0.0f/255.0f
+                                                                      green:0.0f/255.0f
+                                                                       blue:0.0f/255.0f
+                                                                      alpha:0.75f]];
     }
 }
 

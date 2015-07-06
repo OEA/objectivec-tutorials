@@ -38,32 +38,6 @@
     [_transactionStack removeLastItem];
 }
 
-- (NSString *)getCurrentTitle
-{
-    Stack *copy = [_transactionStack copy];
-    @try {
-        NSLog(@"%li",[_transactionStack count]);
-        if ([copy count] == 1) {
-            
-            return [NSString stringWithFormat:@"%@",[copy bottom]];
-        } else if ([_transactionStack count] % 2 == 0) {
-            [copy removeLastItem];
-            return [NSString stringWithFormat:@"%@", [self calculateFromInfixExpression:copy]];
-        } else {
-            return [NSString stringWithFormat:@"%@", [self calculateFromInfixExpression:copy]];
-            
-        }
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@",exception);
-    }
-    @finally {
-        
-    }
-    
-    return nil;
-}
-
 - (id)init 
 {
     self = [super init];
@@ -148,22 +122,8 @@
             NSNumber *secondNumber = sobj;
             id obj = [operand pop];
             NSString *operatorStr = obj;
-            @try {
-                if ([operatorStr isEqualToString:@"+"])
-                    result = [NSNumber numberWithFloat:([firstNumber floatValue] + [secondNumber floatValue])];
-                if ([operatorStr isEqualToString:@"-"])
-                    result = [NSNumber numberWithFloat:([firstNumber floatValue] - [secondNumber floatValue])];
-                if ([operatorStr isEqualToString:@"*"])
-                    result = [NSNumber numberWithFloat:([firstNumber floatValue] * [secondNumber floatValue])];
-                if ([operatorStr isEqualToString:@"/"])
-                    result = [NSNumber numberWithFloat:([firstNumber floatValue] / [secondNumber floatValue])];
-            }
-            @catch (NSException *exception) {
-                NSLog(@"%@", exception);
-            }
-            @finally {
-                
-            }
+            result = [self calculateOperation:firstNumber :secondNumber :result 
+                                             :operatorStr];
             
             [operand pushTop:result];
             
@@ -173,46 +133,44 @@
             NSNumber *thirdNumber = [operand pop];
             NSString *operatorStr = [operand pop];
             
-            @try {
-                if ([operatorStr isEqualToString:@"+"])
-                    result = [NSNumber numberWithFloat:([secondNumber floatValue] + [thirdNumber floatValue])];
-                if ([operatorStr isEqualToString:@"-"])
-                    result = [NSNumber numberWithFloat:([secondNumber floatValue] - [thirdNumber floatValue])];
-                if ([operatorStr isEqualToString:@"*"])
-                    result = [NSNumber numberWithFloat:([secondNumber floatValue] * [thirdNumber floatValue])];
-                if ([operatorStr isEqualToString:@"/"])
-                    result = [NSNumber numberWithFloat:([secondNumber floatValue] / [thirdNumber floatValue])];
-            }
-            @catch (NSException *exception) {
-                NSLog(@"%@", exception);
-            }
-            @finally {
-                
-            }
-            
+            result = [self calculateOperation:secondNumber :thirdNumber :result
+                                             :operatorStr];
+                       
             [operand pushTop:result];
             [operand pushTop:fobj];
             
         }
-        
-        
-        
-        
     }
     
     return result;   
 }
-- (NSNumber *)processNumbers:(CalculationMode)cMode
+
+- (NSNumber *)calculateOperation:(NSNumber *)firstNumber :(NSNumber *)secondNumber :(NSNumber *)result :(NSString *)operatorStr
 {
-    
-    
-    
-    
-    
-    
-    
-    return @(2);
+//    @try {
+        if ([operatorStr isEqualToString:@"+"])
+            result = [NSNumber numberWithFloat:([firstNumber floatValue] + [secondNumber floatValue])];
+        if ([operatorStr isEqualToString:@"-"])
+            result = [NSNumber numberWithFloat:([firstNumber floatValue] - [secondNumber floatValue])];
+        if ([operatorStr isEqualToString:@"*"])
+            result = [NSNumber numberWithFloat:([firstNumber floatValue] * [secondNumber floatValue])];
+        if ([operatorStr isEqualToString:@"/"]) {
+            if ([secondNumber floatValue] == 0) {
+                [NSException raise:@"Invalid divide transaction." format:@"Error"];
+            } else {
+            result = [NSNumber numberWithFloat:([firstNumber floatValue] / [secondNumber floatValue])];
+            }
+        }
+//    }
+//    @catch (NSException *exception) {
+//        return exception;
+//    }
+//    @finally {
+//        
+//    }
+    return result;
 }
+
 
 - (NSNumber *)convertStringToNumber:(NSString *)number
 {

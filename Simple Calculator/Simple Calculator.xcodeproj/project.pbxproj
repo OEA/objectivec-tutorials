@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9510734A1B4528C4001EB26A /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 951073491B4528C4001EB26A /* Stack.m */; };
+		9525555C1B4A628100249F3B /* CALayer+BorderColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9525555B1B4A628100249F3B /* CALayer+BorderColor.m */; };
 		9536AC361B43CD6C00530276 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9536AC351B43CD6C00530276 /* main.m */; };
 		9536AC391B43CD6C00530276 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9536AC381B43CD6C00530276 /* AppDelegate.m */; };
 		9536AC3F1B43CD6C00530276 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9536AC3D1B43CD6C00530276 /* Main.storyboard */; };
@@ -32,6 +33,8 @@
 /* Begin PBXFileReference section */
 		951073451B452319001EB26A /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		951073491B4528C4001EB26A /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		9525555A1B4A628100249F3B /* CALayer+BorderColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+BorderColor.h"; sourceTree = "<group>"; };
+		9525555B1B4A628100249F3B /* CALayer+BorderColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+BorderColor.m"; sourceTree = "<group>"; };
 		9536AC301B43CD6C00530276 /* Simple Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9536AC341B43CD6C00530276 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9536AC351B43CD6C00530276 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -99,15 +102,17 @@
 		9536AC321B43CD6C00530276 /* Simple Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				9536AC591B43CD9F00530276 /* Classes */,
 				9536AC601B43CEBC00530276 /* Managers */,
 				9536AC5A1B43CDAE00530276 /* Models */,
-				9536AC591B43CD9F00530276 /* Classes */,
 				9536AC371B43CD6C00530276 /* AppDelegate.h */,
 				9536AC381B43CD6C00530276 /* AppDelegate.m */,
 				9536AC3D1B43CD6C00530276 /* Main.storyboard */,
 				9536AC401B43CD6C00530276 /* Images.xcassets */,
 				9536AC421B43CD6C00530276 /* LaunchScreen.xib */,
 				9536AC331B43CD6C00530276 /* Supporting Files */,
+				9525555A1B4A628100249F3B /* CALayer+BorderColor.h */,
+				9525555B1B4A628100249F3B /* CALayer+BorderColor.m */,
 			);
 			path = "Simple Calculator";
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9510734A1B4528C4001EB26A /* Stack.m in Sources */,
+				9525555C1B4A628100249F3B /* CALayer+BorderColor.m in Sources */,
 				9536AC5E1B43CE4700530276 /* MainVC.m in Sources */,
 				9536AC391B43CD6C00530276 /* AppDelegate.m in Sources */,
 				9536AC361B43CD6C00530276 /* main.m in Sources */,

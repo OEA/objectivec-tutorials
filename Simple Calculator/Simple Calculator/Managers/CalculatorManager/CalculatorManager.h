@@ -24,5 +24,4 @@
 - (NSNumber *)calculateFromInfixExpression:(Stack *)infixStack;
 - (void)addItemToTransaction:(id)object;
 - (void)removeLastItemInTransaction;
-- (NSString *)getCurrentTitle;
 @end
