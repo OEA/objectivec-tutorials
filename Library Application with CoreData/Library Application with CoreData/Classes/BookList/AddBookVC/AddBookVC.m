@@ -41,9 +41,20 @@
 //        book.imageUrl = self.imageUrl.text;
 //        [_books addObject:book];
         
-        Author *author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
-        [author setValue:self.author.text forKey:@"name"];
+        Author *author;
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Author"];
+        request.predicate = [NSPredicate predicateWithFormat:@"name = %@", self.author.text];
         
+        NSError *searchError;
+        
+        NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+        
+        if ([results count] > 0) {
+            author = [results objectAtIndex:0];
+        } else {
+            author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
+            [author setValue:self.author.text forKey:@"name"];
+        }
         
         Book *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
         
