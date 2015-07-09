@@ -16,6 +16,7 @@
 		95DA185B1B4D31A4008B5517 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 95DA18591B4D31A4008B5517 /* LaunchScreen.xib */; };
 		95DA18671B4D31A4008B5517 /* MapKitExperimentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA18661B4D31A4008B5517 /* MapKitExperimentTests.m */; };
 		95DA18711B4D336E008B5517 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95DA18701B4D336E008B5517 /* MapKit.framework */; };
+		95DA18761B4E4B3C008B5517 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA18751B4E4B3C008B5517 /* City.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,8 @@
 		95DA18651B4D31A4008B5517 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95DA18661B4D31A4008B5517 /* MapKitExperimentTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapKitExperimentTests.m; sourceTree = "<group>"; };
 		95DA18701B4D336E008B5517 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		95DA18741B4E4B3C008B5517 /* City.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		95DA18751B4E4B3C008B5517 /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,7 @@
 		95DA18461B4D31A4008B5517 /* MapKitExperiment */ = {
 			isa = PBXGroup;
 			children = (
+				95DA18721B4E4ADF008B5517 /* Models */,
 				95DA184B1B4D31A4008B5517 /* AppDelegate.h */,
 				95DA184C1B4D31A4008B5517 /* AppDelegate.m */,
 				95DA18511B4D31A4008B5517 /* ViewController.h */,
@@ -124,6 +128,23 @@
 				95DA18651B4D31A4008B5517 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		95DA18721B4E4ADF008B5517 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				95DA18731B4E4B0A008B5517 /* City */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		95DA18731B4E4B0A008B5517 /* City */ = {
+			isa = PBXGroup;
+			children = (
+				95DA18741B4E4B3C008B5517 /* City.h */,
+				95DA18751B4E4B3C008B5517 /* City.m */,
+			);
+			path = City;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95DA18761B4E4B3C008B5517 /* City.m in Sources */,
 				95DA18501B4D31A4008B5517 /* MapKitExperiment.xcdatamodeld in Sources */,
 				95DA184D1B4D31A4008B5517 /* AppDelegate.m in Sources */,
 				95DA18531B4D31A4008B5517 /* ViewController.m in Sources */,
@@ -431,6 +453,7 @@
 				95DA186C1B4D31A4008B5517 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		95DA186D1B4D31A4008B5517 /* Build configuration list for PBXNativeTarget "MapKitExperimentTests" */ = {
 			isa = XCConfigurationList;
@@ -439,6 +462,7 @@
 				95DA186F1B4D31A4008B5517 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

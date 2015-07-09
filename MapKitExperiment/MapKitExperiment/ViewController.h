@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <CoreData/CoreData.h>
 #define METERS_PER_MILE 1609.344
 
 @interface ViewController : UIViewController
 
-
+@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @end
 
