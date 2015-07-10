@@ -1,5 +1,5 @@
 //
-//  User.h
+//  Subject.h
 //  Library Application with CoreData
 //
 //  Created by Ömer Emre Aslan on 10/07/15.
@@ -10,11 +10,8 @@
 #import <CoreData/CoreData.h>
 
 
-@interface User : NSManagedObject
+@interface Subject : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * password;
-@property (nonatomic, retain) NSString * username;
-@property (nonatomic, retain) NSDate * creationDate;
 
 @end

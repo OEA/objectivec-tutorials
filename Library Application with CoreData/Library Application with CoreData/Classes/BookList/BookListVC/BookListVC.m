@@ -13,6 +13,7 @@
 #import "AddBookVC.h"
 
 @interface BookListVC()
+@property (strong, nonatomic) IBOutlet UIView *mainView;
 @property (strong, nonatomic) IBOutlet UITableView *mTableView;
 @end
 

@@ -2,7 +2,7 @@
 //  Book.h
 //  Library Application with CoreData
 //
-//  Created by Ömer Emre Aslan on 08/07/15.
+//  Created by Ömer Emre Aslan on 10/07/15.
 //  Copyright (c) 2015 omer. All rights reserved.
 //
 
@@ -13,10 +13,11 @@
 
 @interface Book : NSManagedObject
 
-@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * pages;
 @property (nonatomic, retain) NSDate * publishDate;
+@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSData * image;
+@property (nonatomic, retain) NSNumber * subject_id;
 @property (nonatomic, retain) Author *author;
 
 @end

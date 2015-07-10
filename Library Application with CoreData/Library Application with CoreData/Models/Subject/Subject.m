@@ -1,19 +1,16 @@
 //
-//  User.m
+//  Subject.m
 //  Library Application with CoreData
 //
 //  Created by Ömer Emre Aslan on 10/07/15.
 //  Copyright (c) 2015 omer. All rights reserved.
 //
 
-#import "User.h"
+#import "Subject.h"
 
 
-@implementation User
+@implementation Subject
 
 @dynamic name;
-@dynamic password;
-@dynamic username;
-@dynamic creationDate;
 
 @end
