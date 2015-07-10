@@ -15,5 +15,6 @@
 @dynamic password;
 @dynamic username;
 @dynamic creationDate;
+@dynamic isAdmin;
 
 @end

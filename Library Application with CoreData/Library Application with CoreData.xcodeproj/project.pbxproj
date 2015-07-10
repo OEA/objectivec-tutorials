@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		954036E61B4F9DF0004D2794 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 954036E51B4F9DF0004D2794 /* Book.m */; };
-		954036EC1B4F9E48004D2794 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 954036EB1B4F9E48004D2794 /* User.m */; };
 		954036EF1B4FAD15004D2794 /* Subject.m in Sources */ = {isa = PBXBuildFile; fileRef = 954036EE1B4FAD15004D2794 /* Subject.m */; };
 		954036F11B4FB4F4004D2794 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 954036F01B4FB4F4004D2794 /* Images.xcassets */; };
+		954036FA1B4FF6CB004D2794 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 954036F91B4FF6CB004D2794 /* User.m */; };
 		95DA17EB1B4CFC6A008B5517 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA17EA1B4CFC6A008B5517 /* main.m */; };
 		95DA17EE1B4CFC6A008B5517 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA17ED1B4CFC6A008B5517 /* AppDelegate.m */; };
 		95DA17F11B4CFC6A008B5517 /* Library_Application_with_CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 95DA17EF1B4CFC6A008B5517 /* Library_Application_with_CoreData.xcdatamodeld */; };
@@ -39,11 +39,11 @@
 /* Begin PBXFileReference section */
 		954036E41B4F9DF0004D2794 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		954036E51B4F9DF0004D2794 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
-		954036EA1B4F9E48004D2794 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		954036EB1B4F9E48004D2794 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		954036ED1B4FAD15004D2794 /* Subject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subject.h; sourceTree = "<group>"; };
 		954036EE1B4FAD15004D2794 /* Subject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subject.m; sourceTree = "<group>"; };
 		954036F01B4FB4F4004D2794 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		954036F81B4FF6CB004D2794 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		954036F91B4FF6CB004D2794 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		95DA17E51B4CFC6A008B5517 /* Library Application with CoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Library Application with CoreData.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		95DA17E91B4CFC6A008B5517 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95DA17EA1B4CFC6A008B5517 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -265,8 +265,8 @@
 		95DA182E1B4CFE60008B5517 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				954036EA1B4F9E48004D2794 /* User.h */,
-				954036EB1B4F9E48004D2794 /* User.m */,
+				954036F81B4FF6CB004D2794 /* User.h */,
+				954036F91B4FF6CB004D2794 /* User.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -371,7 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				954036EC1B4F9E48004D2794 /* User.m in Sources */,
+				954036FA1B4FF6CB004D2794 /* User.m in Sources */,
 				954036E61B4F9DF0004D2794 /* Book.m in Sources */,
 				95DA17EE1B4CFC6A008B5517 /* AppDelegate.m in Sources */,
 				95DA183A1B4CFEFA008B5517 /* Author.m in Sources */,

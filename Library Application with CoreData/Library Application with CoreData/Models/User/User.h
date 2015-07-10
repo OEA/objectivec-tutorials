@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * username;
 @property (nonatomic, retain) NSDate * creationDate;
+@property (nonatomic, retain) NSNumber * isAdmin;
 
 @end
