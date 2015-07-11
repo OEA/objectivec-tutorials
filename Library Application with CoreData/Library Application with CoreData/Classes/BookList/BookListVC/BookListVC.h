@@ -11,7 +11,9 @@
 
 @interface BookListVC : UITableViewController <NSFetchedResultsControllerDelegate>
 
-@property (strong, nonatomic) NSMutableArray *books;
+@property (strong, nonatomic) NSMutableArray *books; //of library
+
+//Core Data context variable
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 
 @end

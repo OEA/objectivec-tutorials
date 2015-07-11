@@ -9,12 +9,13 @@
 
 #import "LoginVC.h"
 #import "User.h"
+#import "BookListVC.h"
 
 @interface LoginVC()
 @property (strong, nonatomic) IBOutlet UITextField *usernameText;
 @property (strong, nonatomic) IBOutlet UITextField *passwordText;
 
-
+@property (nonatomic)BOOL isLoggedIn;
 @end
 
 @implementation LoginVC
@@ -43,18 +44,28 @@
     
     NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
     
-    User *user = [results objectAtIndex:0];
-    
     if ([results count] > 0) {
-        //LOGIN
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfully logged in" message:@"you successfully logged in to system." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
-        [alert show];
+        self.isLoggedIn = YES;
     } else {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Login Failed" message:@"you entered wrong username or password" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
         [alert show];
+        self.isLoggedIn = NO;
     }
 
     
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"test"]) {
+        
+    }
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+//    return self.isLoggedIn;
+    return YES;
 }
 
 @end

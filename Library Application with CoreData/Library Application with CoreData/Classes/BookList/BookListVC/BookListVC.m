@@ -20,6 +20,7 @@
 @implementation BookListVC
 @synthesize managedObjectContext;
 
+#pragma mark - View Controller default methods
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -34,6 +35,7 @@
     [self.mTableView reloadData];
 }
 
+#pragma mark - Core Data method
 
 - (NSManagedObjectContext *)managedObjectContext
 {
@@ -44,25 +46,10 @@
     }
     return context;
 }
+
+#pragma mark - Book Init
 - (void)initBooks
 {
-//    
-//    Book *gameOfThrones = [Book new]; 
-//    gameOfThrones.title = @"A Game of Thrones";
-//    gameOfThrones.author = @"George R. R. Martin";
-//    gameOfThrones.pages = 710;
-//    gameOfThrones.publishdate = @"1997";
-//    gameOfThrones.imageUrl = @"http://ecx.images-amazon.com/images/I/51Yl0b4CjWL._SX329_BO1,204,203,200_.jpg";
-//    
-//    Book *clashOfKings = [Book new]; 
-//    clashOfKings.title = @"A Clash of Kings";
-//    clashOfKings.author = @"George R. R. Martin";
-//    clashOfKings.pages = 1040;
-//    clashOfKings.publishdate = @"2000";
-//    clashOfKings.imageUrl = @"http://ecx.images-amazon.com/images/I/51o2UG3sp3L._SX305_BO1,204,203,200_.jpg";
-//    
-//    [_books addObject:gameOfThrones];
-//    [_books addObject:clashOfKings];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest new];
     NSEntityDescription *entity = [NSEntityDescription
@@ -72,6 +59,8 @@
     self.books = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     
 }
+
+#pragma mark - Table View
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -109,6 +98,14 @@
     return cell;
 }
 
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [_books count];
+}
+
+#pragma mark - segue
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"addBook"]) {
@@ -118,8 +115,4 @@
     }
 }
 
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [_books count];
-}
 @end

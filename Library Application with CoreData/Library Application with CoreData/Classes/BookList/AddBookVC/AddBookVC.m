@@ -142,15 +142,8 @@
 - (IBAction)addButtonTapped:(id)sender {
     
     if (!_books) {
-        //do nothing
+        
     } else {
-//        Book *book = [Book new];
-//        book.title = self.bookTitle.text;
-//        book.author = self.author.text;
-//        book.pages = [self.pages.text integerValue];
-//        book.publishdate = self.publishDate.text;
-//        book.imageUrl = self.imageUrl.text;
-//        [_books addObject:book];
         
         Author *author;
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Author"];
