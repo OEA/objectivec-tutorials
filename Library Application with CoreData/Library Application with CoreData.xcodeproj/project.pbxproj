@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17ABD62E1B53808700AE5B11 /* AdminHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD62D1B53808700AE5B11 /* AdminHomeVC.m */; };
 		954036E61B4F9DF0004D2794 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 954036E51B4F9DF0004D2794 /* Book.m */; };
 		954036EF1B4FAD15004D2794 /* Subject.m in Sources */ = {isa = PBXBuildFile; fileRef = 954036EE1B4FAD15004D2794 /* Subject.m */; };
 		954036F11B4FB4F4004D2794 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 954036F01B4FB4F4004D2794 /* Images.xcassets */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		17ABD62C1B53808700AE5B11 /* AdminHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdminHomeVC.h; sourceTree = "<group>"; };
+		17ABD62D1B53808700AE5B11 /* AdminHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminHomeVC.m; sourceTree = "<group>"; };
 		954036E41B4F9DF0004D2794 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
 		954036E51B4F9DF0004D2794 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		954036ED1B4FAD15004D2794 /* Subject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subject.h; sourceTree = "<group>"; };
@@ -92,6 +95,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17ABD62A1B537FF500AE5B11 /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				17ABD62B1B537FFF00AE5B11 /* AdminHomeVC */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		17ABD62B1B537FFF00AE5B11 /* AdminHomeVC */ = {
+			isa = PBXGroup;
+			children = (
+				17ABD62C1B53808700AE5B11 /* AdminHomeVC.h */,
+				17ABD62D1B53808700AE5B11 /* AdminHomeVC.m */,
+			);
+			path = AdminHomeVC;
+			sourceTree = "<group>";
+		};
 		954036DD1B4F9D96004D2794 /* Subject */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +203,7 @@
 		95DA18111B4CFCF0008B5517 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				17ABD62A1B537FF500AE5B11 /* Admin */,
 				954036FE1B513DEE004D2794 /* UserVC */,
 				95DA18121B4CFCF0008B5517 /* BookList */,
 				95DA181C1B4CFCF0008B5517 /* HomeVC */,
@@ -397,6 +418,7 @@
 				95DA17EE1B4CFC6A008B5517 /* AppDelegate.m in Sources */,
 				95DA183A1B4CFEFA008B5517 /* Author.m in Sources */,
 				95DA18251B4CFCF0008B5517 /* BookListVC.m in Sources */,
+				17ABD62E1B53808700AE5B11 /* AdminHomeVC.m in Sources */,
 				954036EF1B4FAD15004D2794 /* Subject.m in Sources */,
 				95DA17EB1B4CFC6A008B5517 /* main.m in Sources */,
 				95DA18241B4CFCF0008B5517 /* BookListCell.m in Sources */,

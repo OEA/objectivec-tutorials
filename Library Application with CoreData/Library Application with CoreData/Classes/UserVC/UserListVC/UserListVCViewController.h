@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-@interface UserListVCViewController : UIViewController <UISearchControllerDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface UserListVCViewController : UITableViewController <UISearchResultsUpdating,NSFetchedResultsControllerDelegate,UISearchControllerDelegate>
 
 @end
