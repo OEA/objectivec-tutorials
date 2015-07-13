@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E11f" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8154.4" systemVersion="14E46" minimumToolsVersion="Automatic">
     <entity name="Author" representedClassName="Author" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Book" inverseName="author" inverseEntity="Book" syncable="YES"/>
@@ -8,12 +8,13 @@
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="pages" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="publishDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="subject_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="books" inverseEntity="Author" syncable="YES"/>
+        <relationship name="subjects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Subject" inverseName="newRelationship" inverseEntity="Subject" syncable="YES"/>
     </entity>
     <entity name="Subject" representedClassName="Subject" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="subjects" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -21,11 +22,18 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="logs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserLog" inverseName="user" inverseEntity="UserLog" syncable="YES"/>
+    </entity>
+    <entity name="UserLog" representedClassName="UserLog" syncable="YES">
+        <attribute name="transaction" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="transactionDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="logs" inverseEntity="User" syncable="YES"/>
     </entity>
     <elements>
         <element name="Author" positionX="-11" positionY="-28" width="128" height="73"/>
         <element name="Book" positionX="-173" positionY="-243" width="128" height="133"/>
-        <element name="User" positionX="-11" positionY="-153" width="128" height="118"/>
-        <element name="Subject" positionX="-173" positionY="-27" width="128" height="58"/>
+        <element name="Subject" positionX="-182" positionY="-27" width="128" height="73"/>
+        <element name="User" positionX="-11" positionY="-234" width="128" height="133"/>
+        <element name="UserLog" positionX="160" positionY="-243" width="128" height="88"/>
     </elements>
 </model>

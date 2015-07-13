@@ -8,6 +8,8 @@
 
 #import "UserAddVC.h"
 #import "User.h"
+#import "UserLog.h"
+
 @interface UserAddVC ()
 @property (weak, nonatomic) IBOutlet UITextField *nameText;
 @property (weak, nonatomic) IBOutlet UITextField *usernameText;
@@ -56,13 +58,16 @@
         [alert show];
     } else {
         User *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:self.managedObjectContext];
-        
         [user setValue:name forKey:@"name"];
         [user setValue:username forKey:@"username"];
         [user setValue:password forKey:@"password"];
-        [user setValue:[NSDate date] forKey:@"creationDate"];
+        [user setValue:[NSDate date]
+        
+                forKey:@"creationDate"];
         [user setValue:isAdmin forKey:@"isAdmin"];
         
+        UserLog *log = [self createLog:user];
+        [user addLogsObject:log];
         NSError *error;
         if (![self.managedObjectContext save:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
@@ -72,6 +77,23 @@
         
     }
 
+}
+
+- (UserLog *)createLog:(User *)user
+{
+    
+    UserLog *userLog = [NSEntityDescription insertNewObjectForEntityForName:@"UserLog" inManagedObjectContext:self.managedObjectContext];
+    [userLog setValue:user forKey:@"user"];
+    [userLog setValue:@"User created by himself/herself" forKey:@"transaction"];
+    [userLog setValue:[NSDate date] forKey:@"transactionDate"];
+    
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    return userLog;
+    
 }
 
 /*

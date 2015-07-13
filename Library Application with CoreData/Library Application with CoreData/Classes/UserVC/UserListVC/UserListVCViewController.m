@@ -140,10 +140,10 @@
         User *user = [self.userArray objectAtIndex:indexPath.row];
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:[NSString stringWithFormat:@"@%@",user.username]
-                              message:@"User Menu"
+                              message:[NSString stringWithFormat:@"%@",user.name]
                               delegate:self
                               cancelButtonTitle:@"OK"
-                              otherButtonTitles:@"Edit", @"Delete", nil];
+                              otherButtonTitles:@"Edit", @"Delete",@"Detail", nil];
         [alert show];
     }
 }

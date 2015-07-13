@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		17ABD62E1B53808700AE5B11 /* AdminHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD62D1B53808700AE5B11 /* AdminHomeVC.m */; };
 		17ABD6321B539CCF00AE5B11 /* UserAddVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6311B539CCF00AE5B11 /* UserAddVC.m */; };
-		954036E61B4F9DF0004D2794 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 954036E51B4F9DF0004D2794 /* Book.m */; };
-		954036EF1B4FAD15004D2794 /* Subject.m in Sources */ = {isa = PBXBuildFile; fileRef = 954036EE1B4FAD15004D2794 /* Subject.m */; };
+		17ABD6361B53B02500AE5B11 /* UserDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6351B53B02500AE5B11 /* UserDetailVC.m */; };
+		17ABD63C1B53B55E00AE5B11 /* UserLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD63B1B53B55E00AE5B11 /* UserLog.m */; };
+		17ABD6401B53B5AA00AE5B11 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD63F1B53B5AA00AE5B11 /* User.m */; };
+		17ABD6451B53CB7100AE5B11 /* Subject.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6441B53CB7100AE5B11 /* Subject.m */; };
+		17ABD6491B53CB9800AE5B11 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6481B53CB9800AE5B11 /* Book.m */; };
+		17ABD64D1B53CBA900AE5B11 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD64C1B53CBA900AE5B11 /* Author.m */; };
 		954036F11B4FB4F4004D2794 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 954036F01B4FB4F4004D2794 /* Images.xcassets */; };
-		954036FA1B4FF6CB004D2794 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 954036F91B4FF6CB004D2794 /* User.m */; };
 		954036FD1B5136CD004D2794 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954036FB1B5136CD004D2794 /* Main.storyboard */; };
 		954037021B513E2E004D2794 /* UserListVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 954037011B513E2E004D2794 /* UserListVCViewController.m */; };
 		95DA17EB1B4CFC6A008B5517 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA17EA1B4CFC6A008B5517 /* main.m */; };
@@ -26,7 +29,6 @@
 		95DA18251B4CFCF0008B5517 /* BookListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA181B1B4CFCF0008B5517 /* BookListVC.m */; };
 		95DA18261B4CFCF0008B5517 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA181F1B4CFCF0008B5517 /* LoginVC.m */; };
 		95DA18271B4CFCF0008B5517 /* RegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA18221B4CFCF0008B5517 /* RegisterVC.m */; };
-		95DA183A1B4CFEFA008B5517 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 95DA18391B4CFEFA008B5517 /* Author.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,13 +46,24 @@
 		17ABD62D1B53808700AE5B11 /* AdminHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminHomeVC.m; sourceTree = "<group>"; };
 		17ABD6301B539CCF00AE5B11 /* UserAddVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAddVC.h; sourceTree = "<group>"; };
 		17ABD6311B539CCF00AE5B11 /* UserAddVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAddVC.m; sourceTree = "<group>"; };
-		954036E41B4F9DF0004D2794 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
-		954036E51B4F9DF0004D2794 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
-		954036ED1B4FAD15004D2794 /* Subject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subject.h; sourceTree = "<group>"; };
-		954036EE1B4FAD15004D2794 /* Subject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subject.m; sourceTree = "<group>"; };
+		17ABD6341B53B02500AE5B11 /* UserDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailVC.h; sourceTree = "<group>"; };
+		17ABD6351B53B02500AE5B11 /* UserDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailVC.m; sourceTree = "<group>"; };
+		17ABD6391B53B55E00AE5B11 /* UserLog+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UserLog+CoreDataProperties.h"; sourceTree = "<group>"; };
+		17ABD63A1B53B55E00AE5B11 /* UserLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLog.h; sourceTree = "<group>"; };
+		17ABD63B1B53B55E00AE5B11 /* UserLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLog.m; sourceTree = "<group>"; };
+		17ABD63D1B53B5AA00AE5B11 /* User+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+CoreDataProperties.h"; sourceTree = "<group>"; };
+		17ABD63E1B53B5AA00AE5B11 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		17ABD63F1B53B5AA00AE5B11 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		17ABD6421B53CB7100AE5B11 /* Subject+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Subject+CoreDataProperties.h"; sourceTree = "<group>"; };
+		17ABD6431B53CB7100AE5B11 /* Subject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subject.h; sourceTree = "<group>"; };
+		17ABD6441B53CB7100AE5B11 /* Subject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subject.m; sourceTree = "<group>"; };
+		17ABD6461B53CB9800AE5B11 /* Book+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Book+CoreDataProperties.h"; sourceTree = "<group>"; };
+		17ABD6471B53CB9800AE5B11 /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		17ABD6481B53CB9800AE5B11 /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
+		17ABD64A1B53CBA900AE5B11 /* Author+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Author+CoreDataProperties.h"; sourceTree = "<group>"; };
+		17ABD64B1B53CBA900AE5B11 /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
+		17ABD64C1B53CBA900AE5B11 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
 		954036F01B4FB4F4004D2794 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		954036F81B4FF6CB004D2794 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		954036F91B4FF6CB004D2794 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		954036FC1B5136CD004D2794 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		954037001B513E2E004D2794 /* UserListVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListVCViewController.h; sourceTree = "<group>"; };
 		954037011B513E2E004D2794 /* UserListVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListVCViewController.m; sourceTree = "<group>"; };
@@ -76,8 +89,6 @@
 		95DA181F1B4CFCF0008B5517 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
 		95DA18211B4CFCF0008B5517 /* RegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterVC.h; sourceTree = "<group>"; };
 		95DA18221B4CFCF0008B5517 /* RegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterVC.m; sourceTree = "<group>"; };
-		95DA18381B4CFEFA008B5517 /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Author.h; path = "Library Application with CoreData/Models/Author/Author.h"; sourceTree = SOURCE_ROOT; };
-		95DA18391B4CFEFA008B5517 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Author.m; path = "Library Application with CoreData/Models/Author/Author.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,11 +136,31 @@
 			path = UserAddVC;
 			sourceTree = "<group>";
 		};
+		17ABD6331B53AFE900AE5B11 /* UserDetailVC */ = {
+			isa = PBXGroup;
+			children = (
+				17ABD6341B53B02500AE5B11 /* UserDetailVC.h */,
+				17ABD6351B53B02500AE5B11 /* UserDetailVC.m */,
+			);
+			path = UserDetailVC;
+			sourceTree = "<group>";
+		};
+		17ABD6371B53B48D00AE5B11 /* UserLog */ = {
+			isa = PBXGroup;
+			children = (
+				17ABD6391B53B55E00AE5B11 /* UserLog+CoreDataProperties.h */,
+				17ABD63A1B53B55E00AE5B11 /* UserLog.h */,
+				17ABD63B1B53B55E00AE5B11 /* UserLog.m */,
+			);
+			path = UserLog;
+			sourceTree = "<group>";
+		};
 		954036DD1B4F9D96004D2794 /* Subject */ = {
 			isa = PBXGroup;
 			children = (
-				954036ED1B4FAD15004D2794 /* Subject.h */,
-				954036EE1B4FAD15004D2794 /* Subject.m */,
+				17ABD6421B53CB7100AE5B11 /* Subject+CoreDataProperties.h */,
+				17ABD6431B53CB7100AE5B11 /* Subject.h */,
+				17ABD6441B53CB7100AE5B11 /* Subject.m */,
 			);
 			path = Subject;
 			sourceTree = "<group>";
@@ -137,6 +168,7 @@
 		954036FE1B513DEE004D2794 /* UserVC */ = {
 			isa = PBXGroup;
 			children = (
+				17ABD6331B53AFE900AE5B11 /* UserDetailVC */,
 				17ABD62F1B539C4A00AE5B11 /* UserAddVC */,
 				954036FF1B513DF6004D2794 /* UserListVC */,
 			);
@@ -292,6 +324,7 @@
 		95DA18281B4CFE20008B5517 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				17ABD6371B53B48D00AE5B11 /* UserLog */,
 				954036DD1B4F9D96004D2794 /* Subject */,
 				95DA182D1B4CFE5B008B5517 /* Author */,
 				95DA182C1B4CFE57008B5517 /* Book */,
@@ -303,8 +336,9 @@
 		95DA182C1B4CFE57008B5517 /* Book */ = {
 			isa = PBXGroup;
 			children = (
-				954036E41B4F9DF0004D2794 /* Book.h */,
-				954036E51B4F9DF0004D2794 /* Book.m */,
+				17ABD6461B53CB9800AE5B11 /* Book+CoreDataProperties.h */,
+				17ABD6471B53CB9800AE5B11 /* Book.h */,
+				17ABD6481B53CB9800AE5B11 /* Book.m */,
 			);
 			path = Book;
 			sourceTree = "<group>";
@@ -312,8 +346,9 @@
 		95DA182D1B4CFE5B008B5517 /* Author */ = {
 			isa = PBXGroup;
 			children = (
-				95DA18381B4CFEFA008B5517 /* Author.h */,
-				95DA18391B4CFEFA008B5517 /* Author.m */,
+				17ABD64A1B53CBA900AE5B11 /* Author+CoreDataProperties.h */,
+				17ABD64B1B53CBA900AE5B11 /* Author.h */,
+				17ABD64C1B53CBA900AE5B11 /* Author.m */,
 			);
 			path = Author;
 			sourceTree = "<group>";
@@ -321,8 +356,9 @@
 		95DA182E1B4CFE60008B5517 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				954036F81B4FF6CB004D2794 /* User.h */,
-				954036F91B4FF6CB004D2794 /* User.m */,
+				17ABD63D1B53B5AA00AE5B11 /* User+CoreDataProperties.h */,
+				17ABD63E1B53B5AA00AE5B11 /* User.h */,
+				17ABD63F1B53B5AA00AE5B11 /* User.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -427,20 +463,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				954036FA1B4FF6CB004D2794 /* User.m in Sources */,
-				954036E61B4F9DF0004D2794 /* Book.m in Sources */,
 				95DA17EE1B4CFC6A008B5517 /* AppDelegate.m in Sources */,
-				95DA183A1B4CFEFA008B5517 /* Author.m in Sources */,
+				17ABD6401B53B5AA00AE5B11 /* User.m in Sources */,
+				17ABD64D1B53CBA900AE5B11 /* Author.m in Sources */,
 				95DA18251B4CFCF0008B5517 /* BookListVC.m in Sources */,
 				17ABD62E1B53808700AE5B11 /* AdminHomeVC.m in Sources */,
-				954036EF1B4FAD15004D2794 /* Subject.m in Sources */,
+				17ABD6451B53CB7100AE5B11 /* Subject.m in Sources */,
 				17ABD6321B539CCF00AE5B11 /* UserAddVC.m in Sources */,
 				95DA17EB1B4CFC6A008B5517 /* main.m in Sources */,
 				95DA18241B4CFCF0008B5517 /* BookListCell.m in Sources */,
 				95DA18231B4CFCF0008B5517 /* AddBookVC.m in Sources */,
 				95DA17F41B4CFC6A008B5517 /* ViewController.m in Sources */,
 				95DA18271B4CFCF0008B5517 /* RegisterVC.m in Sources */,
+				17ABD6491B53CB9800AE5B11 /* Book.m in Sources */,
+				17ABD63C1B53B55E00AE5B11 /* UserLog.m in Sources */,
 				95DA18261B4CFCF0008B5517 /* LoginVC.m in Sources */,
+				17ABD6361B53B02500AE5B11 /* UserDetailVC.m in Sources */,
 				954037021B513E2E004D2794 /* UserListVCViewController.m in Sources */,
 				95DA17F11B4CFC6A008B5517 /* Library_Application_with_CoreData.xcdatamodeld in Sources */,
 			);

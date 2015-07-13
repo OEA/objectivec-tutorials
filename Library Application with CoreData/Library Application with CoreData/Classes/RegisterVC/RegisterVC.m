@@ -9,6 +9,7 @@
 #import "RegisterVC.h"
 #import "BookListVC.h"
 #import "User.h"
+#import "UserLog.h"
 
 @interface RegisterVC()
 @property (strong, nonatomic) IBOutlet UITextField *nameText;
@@ -38,6 +39,7 @@
 }
 
 - (IBAction)registerButtonTapped:(id)sender {
+
     NSString *username = self.usernameText.text;
     NSString *password = self.passwordText.text;
     NSString *name = self.nameText.text;
@@ -70,6 +72,22 @@
 
     }
 
+}
+- (UserLog *)createLog:(User *)user
+{
+    
+    UserLog *userLog = [NSEntityDescription insertNewObjectForEntityForName:@"UserLog" inManagedObjectContext:self.managedObjectContext];
+    [userLog setValue:user forKey:@"user"];
+    [userLog setValue:@"User created by himself/herself" forKey:@"transaction"];
+    [userLog setValue:[NSDate date] forKey:@"transactionDate"];
+    
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    return userLog;
+    
 }
 
 - (NSNumber *)isAdmin

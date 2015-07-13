@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@interface AddBookVC : UIViewController <NSFetchedResultsControllerDelegate>
+@interface AddBookVC : UIViewController <UIPickerViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic)NSMutableArray *books;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;

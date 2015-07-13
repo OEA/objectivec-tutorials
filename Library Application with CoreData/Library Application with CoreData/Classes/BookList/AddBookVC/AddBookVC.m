@@ -11,18 +11,20 @@
 #import "Subject.h"
 #import "Author.h"
 
-@interface AddBookVC() <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface AddBookVC() <UIPickerViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UITextField *bookTitle;
 
 @property (strong, nonatomic) IBOutlet UITextField *author;
 @property (strong, nonatomic) IBOutlet UITextField *pages;
-@property (strong, nonatomic) IBOutlet UITextField *publishDate;
 @property (strong, nonatomic) IBOutlet UITextField *imageUrl;
 @property (strong, nonatomic) IBOutlet UIPickerView *categoryView;
 @property (strong, nonatomic) NSMutableArray *years;
 @property (strong, nonatomic) NSMutableArray *subjects;
 @property (strong, nonatomic) IBOutlet UIPickerView *dateView;
+@property (strong, nonatomic) NSString *date;
+@property (strong, nonatomic) NSString *subject;
+@property (weak, nonatomic) IBOutlet UIPickerView *subjectView;
 
 
 #define MIN_YEAR 1800
@@ -33,6 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.dateView.delegate = self;
+    self.categoryView.delegate = self;
     UITapGestureRecognizer *dismissKeyboard = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:dismissKeyboard];
     
@@ -78,6 +82,18 @@
     
 }
 
+#pragma mark - Core Data method
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    NSManagedObjectContext *context = nil;
+    id delegate = [[UIApplication sharedApplication] delegate];
+    if ([delegate performSelector:@selector(managedObjectContext)]) {
+        context = [delegate managedObjectContext];
+    }
+    return context;
+}
+
 - (void)initSubjects
 {
     
@@ -107,10 +123,6 @@
         [self.pages becomeFirstResponder];
     } else if (textField == self.pages) {
         [textField resignFirstResponder];
-        [self.publishDate becomeFirstResponder];
-    } else if (textField == self.publishDate) {
-        [textField resignFirstResponder];
-        [self.imageUrl becomeFirstResponder];
     }
     return YES;
 }
@@ -139,12 +151,20 @@
     }
 }
 
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (pickerView == self.categoryView) {
+        id subjectId = [_subjects objectAtIndex:row];
+        Subject *subject = subjectId;
+        self.subject = [NSString stringWithFormat:@"%@", subject.name];
+    } else {
+        id title = [_years objectAtIndex:row];
+        self.date = [NSString stringWithFormat:@"%@", title];
+    }
+}
+
 - (IBAction)addButtonTapped:(id)sender {
     
-    if (!_books) {
-        
-    } else {
-        
         Author *author;
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Author"];
         request.predicate = [NSPredicate predicateWithFormat:@"name = %@", self.author.text];
@@ -164,10 +184,9 @@
         
         [book setValue:self.bookTitle.text forKey:@"title"];
         [book setValue:[self numberFromString:self.pages.text] forKey:@"pages"];
-        [book setValue:[self dateFromString:self.publishDate.text] forKey:@"publishDate"];
+        [book setValue:[self dateFromString:self.date] forKey:@"publishDate"];
         [book setValue:[self imageFromUrl:self.imageUrl.text] forKey:@"image"];
         [book setValue:author forKey:@"author"];
-        
         [author addBooksObject:book];
         NSError *error;
         if (![self.managedObjectContext save:&error]) {
@@ -175,7 +194,7 @@
         }
         
         [self.navigationController popViewControllerAnimated:YES];
-    }
+    
 }
 
 - (NSNumber *)numberFromString:(NSString *)numberStr
