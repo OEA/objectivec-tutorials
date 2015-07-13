@@ -2,8 +2,8 @@
 //  Author.h
 //  Library Application with CoreData
 //
-//  Created by Ömer Emre Aslan on 08/07/15.
-//  Copyright (c) 2015 omer. All rights reserved.
+//  Created by Ömer Emre Aslan on 13/07/15.
+//  Copyright © 2015 omer. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,17 +11,14 @@
 
 @class Book;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface Author : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSSet *books;
-@end
-
-@interface Author (CoreDataGeneratedAccessors)
-
-- (void)addBooksObject:(Book *)value;
-- (void)removeBooksObject:(Book *)value;
-- (void)addBooks:(NSSet *)values;
-- (void)removeBooks:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "Author+CoreDataProperties.h"

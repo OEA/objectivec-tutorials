@@ -2,21 +2,16 @@
 //  Book.m
 //  Library Application with CoreData
 //
-//  Created by Ömer Emre Aslan on 10/07/15.
-//  Copyright (c) 2015 omer. All rights reserved.
+//  Created by Ömer Emre Aslan on 13/07/15.
+//  Copyright © 2015 omer. All rights reserved.
 //
 
 #import "Book.h"
 #import "Author.h"
-
+#import "Subject.h"
 
 @implementation Book
 
-@dynamic pages;
-@dynamic publishDate;
-@dynamic title;
-@dynamic image;
-@dynamic subject_id;
-@dynamic author;
+// Insert code here to add functionality to your managed object subclass
 
 @end
