@@ -10,7 +10,7 @@
 #import "Book.h"
 #import "Subject.h"
 #import "Author.h"
-
+#import "SubjectModalVC.h"
 @interface AddBookVC() <UIPickerViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UITextField *bookTitle;
@@ -18,13 +18,10 @@
 @property (strong, nonatomic) IBOutlet UITextField *author;
 @property (strong, nonatomic) IBOutlet UITextField *pages;
 @property (strong, nonatomic) IBOutlet UITextField *imageUrl;
-@property (strong, nonatomic) IBOutlet UIPickerView *categoryView;
 @property (strong, nonatomic) NSMutableArray *years;
-@property (strong, nonatomic) NSMutableArray *subjects;
 @property (strong, nonatomic) IBOutlet UIPickerView *dateView;
 @property (strong, nonatomic) NSString *date;
 @property (strong, nonatomic) NSString *subject;
-@property (weak, nonatomic) IBOutlet UIPickerView *subjectView;
 
 
 #define MIN_YEAR 1800
@@ -36,7 +33,6 @@
 {
     [super viewDidLoad];
     self.dateView.delegate = self;
-    self.categoryView.delegate = self;
     UITapGestureRecognizer *dismissKeyboard = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:dismissKeyboard];
     
@@ -55,8 +51,8 @@
     }
     
     
-    [self.categoryView reloadAllComponents];
-    [self.categoryView selectRow:[self.years count]-1 inComponent:0 animated:YES];
+    [self.dateView reloadAllComponents];
+    [self.dateView selectRow:[self.years count]-1 inComponent:0 animated:YES];
     
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Subject"];
@@ -129,8 +125,6 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    if (pickerView == self.categoryView)
-        return [_subjects count];
     return [_years count];
 }
 
@@ -141,26 +135,15 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if (pickerView == self.categoryView) {
-        id subjectId = [_subjects objectAtIndex:row];
-        Subject *subject = subjectId;
-        return [NSString stringWithFormat:@"%@", subject.name];
-    } else {
         id title = [_years objectAtIndex:row];
         return [NSString stringWithFormat:@"%@", title];
-    }
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (pickerView == self.categoryView) {
-        id subjectId = [_subjects objectAtIndex:row];
-        Subject *subject = subjectId;
-        self.subject = [NSString stringWithFormat:@"%@", subject.name];
-    } else {
-        id title = [_years objectAtIndex:row];
-        self.date = [NSString stringWithFormat:@"%@", title];
-    }
+    
+    id title = [_years objectAtIndex:row];
+    self.date = [NSString stringWithFormat:@"%@", title];
 }
 
 - (IBAction)addButtonTapped:(id)sender {
@@ -212,6 +195,17 @@
 - (NSData *)imageFromUrl:(NSString *)url
 {
     return [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+}
+
+- (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
+{
+    if ([segue.identifier isEqualToString:@"subjectModal"]) {
+        SubjectModalVC *vc = segue.destinationViewController;
+        vc.selectedSubjects = self.subjects;
+        vc.addbookvc = self;
+        
+        
+    }
 }
 
 @end

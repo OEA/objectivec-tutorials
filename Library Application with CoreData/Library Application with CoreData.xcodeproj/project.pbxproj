@@ -15,6 +15,7 @@
 		17ABD6451B53CB7100AE5B11 /* Subject.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6441B53CB7100AE5B11 /* Subject.m */; };
 		17ABD6491B53CB9800AE5B11 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6481B53CB9800AE5B11 /* Book.m */; };
 		17ABD64D1B53CBA900AE5B11 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD64C1B53CBA900AE5B11 /* Author.m */; };
+		17ABD6511B53DA8200AE5B11 /* SubjectModalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6501B53DA8200AE5B11 /* SubjectModalVC.m */; };
 		954036F11B4FB4F4004D2794 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 954036F01B4FB4F4004D2794 /* Images.xcassets */; };
 		954036FD1B5136CD004D2794 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 954036FB1B5136CD004D2794 /* Main.storyboard */; };
 		954037021B513E2E004D2794 /* UserListVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 954037011B513E2E004D2794 /* UserListVCViewController.m */; };
@@ -63,6 +64,8 @@
 		17ABD64A1B53CBA900AE5B11 /* Author+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Author+CoreDataProperties.h"; sourceTree = "<group>"; };
 		17ABD64B1B53CBA900AE5B11 /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
 		17ABD64C1B53CBA900AE5B11 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
+		17ABD64F1B53DA8200AE5B11 /* SubjectModalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectModalVC.h; sourceTree = "<group>"; };
+		17ABD6501B53DA8200AE5B11 /* SubjectModalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectModalVC.m; sourceTree = "<group>"; };
 		954036F01B4FB4F4004D2794 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		954036FC1B5136CD004D2794 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		954037001B513E2E004D2794 /* UserListVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListVCViewController.h; sourceTree = "<group>"; };
@@ -112,6 +115,7 @@
 		17ABD62A1B537FF500AE5B11 /* Admin */ = {
 			isa = PBXGroup;
 			children = (
+				17ABD64E1B53DA5A00AE5B11 /* SubjectModalVC */,
 				954036FE1B513DEE004D2794 /* UserVC */,
 				17ABD62B1B537FFF00AE5B11 /* AdminHomeVC */,
 			);
@@ -153,6 +157,15 @@
 				17ABD63B1B53B55E00AE5B11 /* UserLog.m */,
 			);
 			path = UserLog;
+			sourceTree = "<group>";
+		};
+		17ABD64E1B53DA5A00AE5B11 /* SubjectModalVC */ = {
+			isa = PBXGroup;
+			children = (
+				17ABD64F1B53DA8200AE5B11 /* SubjectModalVC.h */,
+				17ABD6501B53DA8200AE5B11 /* SubjectModalVC.m */,
+			);
+			path = SubjectModalVC;
 			sourceTree = "<group>";
 		};
 		954036DD1B4F9D96004D2794 /* Subject */ = {
@@ -478,6 +491,7 @@
 				17ABD6491B53CB9800AE5B11 /* Book.m in Sources */,
 				17ABD63C1B53B55E00AE5B11 /* UserLog.m in Sources */,
 				95DA18261B4CFCF0008B5517 /* LoginVC.m in Sources */,
+				17ABD6511B53DA8200AE5B11 /* SubjectModalVC.m in Sources */,
 				17ABD6361B53B02500AE5B11 /* UserDetailVC.m in Sources */,
 				954037021B513E2E004D2794 /* UserListVCViewController.m in Sources */,
 				95DA17F11B4CFC6A008B5517 /* Library_Application_with_CoreData.xcdatamodeld in Sources */,

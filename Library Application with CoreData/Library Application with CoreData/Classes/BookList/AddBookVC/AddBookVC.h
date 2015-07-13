@@ -15,4 +15,6 @@
 @property (strong, nonatomic)NSMutableArray *books;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 
+@property (strong, nonatomic) NSMutableArray *subjects;
+
 @end
