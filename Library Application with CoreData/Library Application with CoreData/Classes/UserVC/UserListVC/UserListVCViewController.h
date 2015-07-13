@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface UserListVCViewController : UITableViewController <UISearchResultsUpdating,NSFetchedResultsControllerDelegate,UISearchControllerDelegate>
+@interface UserListVCViewController : UITableViewController <UISearchResultsUpdating,NSFetchedResultsControllerDelegate, UISearchControllerDelegate>
 
 @end
