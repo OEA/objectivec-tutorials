@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface BookEditVC : UITableViewController
-
+#import <CoreData/CoreData.h>
+@interface BookEditVC : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate, NSFetchedResultsControllerDelegate>
+@property (strong,nonatomic)NSString *bookTitle;
+@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+@property (strong, nonatomic) NSMutableArray *subjects;
 @end

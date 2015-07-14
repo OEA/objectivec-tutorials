@@ -8,6 +8,7 @@
 
 #import "AdminBookListVC.h"
 #import "Book.h"
+#import "BookEditVC.h"
 @interface AdminBookListVC ()
 @property (strong, nonatomic)NSMutableArray *books;
 @end
@@ -26,6 +27,12 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self initBooks];
+    [self.tableView reloadData];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -41,6 +48,41 @@
     self.books = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     
 
+}
+
+- (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
+        Book *book = [self.books objectAtIndex:indexPath.row];
+        [self deleteBook:book.title];
+        
+        [tableView beginUpdates];
+        
+        [self initBooks];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView endUpdates];
+    }];
+    deleteAction.backgroundColor = [UIColor redColor];
+    
+    return @[deleteAction];
+}
+
+- (void)deleteBook:(NSString *)title
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    request.predicate = [NSPredicate predicateWithFormat:@"title = %@", title];
+    
+    NSError *searchError;
+    
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    Book *book = [results firstObject];
+    
+    [self.managedObjectContext deleteObject:book];
+    NSError *error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
+        return;
+    }
 }
 
 #pragma mark - Core Data method
@@ -76,49 +118,13 @@
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
+{
+    UITableViewCell *cell = sender;
+    if ([segue.identifier isEqualToString:@"bookEdit"]) {
+        BookEditVC *vc = segue.destinationViewController;
+        vc.bookTitle = cell.textLabel.text;
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

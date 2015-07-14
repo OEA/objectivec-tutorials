@@ -580,7 +580,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="29q-pl-UDo" kind="show" id="iq0-Qn-vEB"/>
+                                    <segue destination="29q-pl-UDo" kind="show" identifier="bookEdit" id="SAg-62-RK1"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1113,10 +1113,10 @@
             </objects>
             <point key="canvasLocation" x="-524" y="-76"/>
         </scene>
-        <!--Add Book-->
+        <!--Edit Book-->
         <scene sceneID="Wst-c0-kal">
             <objects>
-                <viewController id="29q-pl-UDo" customClass="AddBookVC" sceneMemberID="viewController">
+                <viewController id="29q-pl-UDo" customClass="BookEditVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rTW-r5-YCI"/>
                         <viewControllerLayoutGuide type="bottom" id="arC-Qz-pij"/>
@@ -1176,21 +1176,17 @@
                                             </label>
                                             <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Yp-Rt-fMH">
                                                 <rect key="frame" x="10" y="325" width="285" height="64"/>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="29q-pl-UDo" id="QLi-a4-frm"/>
-                                                    <outlet property="delegate" destination="29q-pl-UDo" id="2Go-4x-psa"/>
-                                                </connections>
                                             </pickerView>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bNP-rS-zC7">
                                                 <rect key="frame" x="8" y="397" width="584" height="61"/>
                                                 <color key="backgroundColor" red="0.97647058819999999" green="0.39607843139999999" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <state key="normal" title="Add">
+                                                <state key="normal" title="Edit">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="addButtonTapped:" destination="29q-pl-UDo" eventType="touchUpInside" id="RJr-zi-SkR"/>
+                                                    <action selector="editButtonTapped:" destination="29q-pl-UDo" eventType="touchUpInside" id="gBe-VM-qyN"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NvH-bD-Qqk">
@@ -1200,6 +1196,9 @@
                                                     <constraint firstAttribute="width" constant="68" id="Ssr-N8-UsY"/>
                                                 </constraints>
                                                 <state key="normal" title="Choose"/>
+                                                <connections>
+                                                    <segue destination="7bU-TY-dgz" kind="show" identifier="subjectModal" id="yPn-Da-erJ"/>
+                                                </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IBq-GO-WD4">
                                                 <rect key="frame" x="305" y="325" width="285" height="64"/>
@@ -1277,14 +1276,14 @@
                             <constraint firstItem="Fev-U9-fVv" firstAttribute="leading" secondItem="iHe-ee-olS" secondAttribute="leadingMargin" constant="-16" id="j9U-Ds-j3b"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Book" id="IeI-M7-u3J"/>
+                    <navigationItem key="navigationItem" title="Edit Book" id="IeI-M7-u3J"/>
                     <connections>
-                        <outlet property="author" destination="cQq-fA-llN" id="I3x-qH-QO1"/>
-                        <outlet property="bookTitle" destination="6m8-2X-Xsl" id="yrw-UI-VkT"/>
-                        <outlet property="dateView" destination="7Yp-Rt-fMH" id="5kp-4h-DsN"/>
-                        <outlet property="imageUrl" destination="i4u-zb-t37" id="t7Q-ja-afM"/>
-                        <outlet property="pages" destination="XXO-fb-kb7" id="gCk-yK-W2A"/>
-                        <outlet property="subjectList" destination="IBq-GO-WD4" id="gVx-L7-poF"/>
+                        <outlet property="authorText" destination="cQq-fA-llN" id="Rax-z0-r72"/>
+                        <outlet property="dateView" destination="7Yp-Rt-fMH" id="mO6-re-0Dt"/>
+                        <outlet property="imageText" destination="i4u-zb-t37" id="Kfr-fq-rhc"/>
+                        <outlet property="pagesText" destination="XXO-fb-kb7" id="Q8Z-ya-EDI"/>
+                        <outlet property="subjectList" destination="IBq-GO-WD4" id="y5u-gp-19J"/>
+                        <outlet property="titleText" destination="6m8-2X-Xsl" id="jpZ-JK-uKj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7qd-Xf-Zjc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1299,4 +1298,7 @@
         <image name="red-book" width="512" height="512"/>
         <image name="users" width="29" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="yPn-Da-erJ"/>
+    </inferredMetricsTieBreakers>
 </document>

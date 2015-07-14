@@ -153,6 +153,9 @@
         [book setValue:[self dateFromString:self.date] forKey:@"publishDate"];
         [book setValue:self.imageUrl.text forKey:@"image"];
         [book setValue:author forKey:@"author"];
+        for (Subject *subject in self.subjects) {
+            [book addSubjectsObject:subject];
+        }
         [author addBooksObject:book];
         NSError *error;
         if (![self.managedObjectContext save:&error]) {
