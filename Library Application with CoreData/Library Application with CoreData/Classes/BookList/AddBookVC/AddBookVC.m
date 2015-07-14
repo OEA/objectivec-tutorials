@@ -11,7 +11,7 @@
 #import "Subject.h"
 #import "Author.h"
 #import "SubjectModalVC.h"
-@interface AddBookVC() <UIPickerViewDataSource>
+@interface AddBookVC() <UIPickerViewDataSource, SubjectModelDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *bookTitle;
 
@@ -22,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *dateView;
 @property (strong, nonatomic) NSString *date;
 @property (strong, nonatomic) NSString *subject;
+
 
 
 #define MIN_YEAR 1800
@@ -55,27 +56,17 @@
     [self.dateView selectRow:[self.years count]-1 inComponent:0 animated:YES];
     
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Subject"];
-    
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    
-    if ([results count] > 0) {
-        [self initSubjects];
-    } else {
-        Subject *uncategorized = [NSEntityDescription insertNewObjectForEntityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
-        [uncategorized setValue:@"Uncategorized" forKey:@"name"];
-        NSError *error;
-        if (![self.managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
-        [self initSubjects];
-    }
+   
     
     
     
     
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSLog(@"%lu",(unsigned long)self.subjects.count);
 }
 
 #pragma mark - Core Data method
@@ -88,22 +79,6 @@
         context = [delegate managedObjectContext];
     }
     return context;
-}
-
-- (void)initSubjects
-{
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Subject"];
-    NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
-    request.sortDescriptors = @[sortByName];
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    
-    for (int i=0; i<[results count]; i++) {
-        [self.subjects addObject:[results objectAtIndex:i]];
-    }
-
 }
 
 - (void)dismissKeyboard {
@@ -199,13 +174,21 @@
 
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
 {
-    if ([segue.identifier isEqualToString:@"subjectModal"]) {
-        SubjectModalVC *vc = segue.destinationViewController;
-        vc.selectedSubjects = self.subjects;
-        vc.addbookvc = self;
-        
-        
+    if ([segue.identifier isEqualToString:@"subjectModal2"]) {
+        NSLog(@"test");
+        SubjectModalVC *vc = (SubjectModalVC*)segue.destinationViewController;
+        vc.delegate = self;
+        if ([self.delegate respondsToSelector:@selector(sendObject:)]) {
+            for (Subject *subject in self.subjects) {
+                [self.delegate sendObject:subject];
+            }
+        }
     }
+}
+
+- (void)sendObject:(Subject *)subject {
+    
+    [self.subjects addObject:subject];
 }
 
 @end

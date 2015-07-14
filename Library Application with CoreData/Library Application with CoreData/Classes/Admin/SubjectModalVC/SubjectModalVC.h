@@ -9,10 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "AddBookVC.h"
-@interface SubjectModalVC : UITableViewController<UITableViewDelegate,NSFetchedResultsControllerDelegate>
+#import "Subject.h"
+
+@protocol SubjectModelDelegate <NSObject>
+- (void) sendObject:(Subject *)subject;
+@end
+
+@interface SubjectModalVC : UITableViewController<UITableViewDelegate,NSFetchedResultsControllerDelegate, AddBookModelDelegate>
+
+@property (nonatomic, strong) id <SubjectModelDelegate> delegate;
 
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @property (strong, nonatomic) NSMutableArray *selectedSubjects;
 
-@property (strong, nonatomic) AddBookVC *addbookvc;
 @end

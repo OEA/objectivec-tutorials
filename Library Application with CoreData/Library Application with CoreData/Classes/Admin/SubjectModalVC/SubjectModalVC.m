@@ -22,6 +22,28 @@
     [self initSubjects];
     [self.tableView reloadData];
     
+    if (!_subjects)
+        _subjects = [NSMutableArray new];
+    if (!_selectedSubjects)
+        _selectedSubjects = [NSMutableArray new];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Subject"];
+    
+    NSError *searchError;
+    
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    
+    if ([results count] > 0) {
+        
+    } else {
+        Subject *uncategorized = [NSEntityDescription insertNewObjectForEntityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
+        [uncategorized setValue:@"Uncategorized" forKey:@"name"];
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+    }
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -57,8 +79,22 @@
 }
 
 - (IBAction)doneButtonTapped:(id)sender {
-    self.addbookvc.subjects = self.subjects;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSMutableArray *controllers = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
+    
+    [controllers removeLastObject];
+    AddBookVC *vc = (AddBookVC *)[controllers lastObject];
+    
+    if ([self.delegate respondsToSelector:@selector(sendObject:)]) {
+        
+        for (Subject *subject in self.selectedSubjects) {
+            [self.delegate sendObject:subject];
+        }
+        
+        vc.delegate = self;
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -66,9 +102,10 @@
     Subject *subject = [self.subjects objectAtIndex:indexPath.row];
     cell.textLabel.text = subject.name;
     cell.accessoryType = UITableViewCellAccessoryNone;
+    
     // Configure the cell...
     for (Subject *subject in self.selectedSubjects) {
-        if ([subject.name isEqualToString:[self.subjects objectAtIndex:indexPath.row]])
+        if ([subject.name isEqualToString:[self.selectedSubjects objectAtIndex:indexPath.row]])
         {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
@@ -92,59 +129,26 @@
 
 - (void)tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    NSLog(@"%ld",(long)indexPath.row);
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        Subject *subject = [self.subjects objectAtIndex:indexPath.row];
+        [self.selectedSubjects removeObject:subject];
         cell.accessoryType = UITableViewCellAccessoryNone;
     } else {
+        Subject *subject = [self.subjects objectAtIndex:indexPath.row];
+        [self.selectedSubjects addObject:subject];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     [self.tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+    
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)sendObject:(NSMutableArray *)subject
+{
+    if (!_selectedSubjects)
+        _selectedSubjects = [NSMutableArray new];
+    [self.selectedSubjects addObject:subject];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
