@@ -280,7 +280,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9e4-I9-E3t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="382" y="-106"/>
+            <point key="canvasLocation" x="252" y="653"/>
         </scene>
         <!--Add Book-->
         <scene sceneID="fWm-lD-xYo">
@@ -983,7 +983,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z4Y-L4-tKU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6" y="-977"/>
+            <point key="canvasLocation" x="136" y="-903"/>
         </scene>
         <!--Home-->
         <scene sceneID="P6Z-w5-GOA">
@@ -1075,7 +1075,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Subjects" id="nah-4a-G9k">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="7r2-W9-6ZK"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="7r2-W9-6ZK">
+                            <connections>
+                                <action selector="addSubject:" destination="aYv-9e-lX0" id="CUZ-MB-282"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RqG-XG-6Qi" userLabel="First Responder" sceneMemberID="firstResponder"/>

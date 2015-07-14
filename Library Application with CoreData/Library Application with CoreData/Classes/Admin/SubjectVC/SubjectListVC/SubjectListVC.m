@@ -83,6 +83,38 @@
     self.tableView.backgroundColor = [[UIColor alloc]initWithRed:255 green:255 blue:255 alpha:0.90];
 }
 
+
+- (IBAction)addSubject:(id)sender {
+    UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:@"Subject" message:@"Enter subject what you want to add" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert addButtonWithTitle:@"Add"];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {  //Add
+        UITextField *subjectName = [alertView textFieldAtIndex:0];
+        NSString *name = subjectName.text;
+        
+        Subject *subject = [NSEntityDescription insertNewObjectForEntityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
+        
+        [subject setValue:name forKey:@"name"];
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfully created." message:[NSString stringWithFormat:@"You successfully created %@ subject !",name] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+        [alert show];
+        [self initSubjects];
+        [self.tableView reloadData];
+        
+    }
+}
+
+
+
+
 - (NSArray *)subjectFilterArray
 {
     if (!_subjectFilterArray) {
