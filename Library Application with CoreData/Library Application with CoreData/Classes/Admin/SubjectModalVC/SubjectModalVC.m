@@ -79,19 +79,8 @@
 }
 
 - (IBAction)doneButtonTapped:(id)sender {
-    
-    NSMutableArray *controllers = [NSMutableArray arrayWithArray:self.navigationController.viewControllers];
-    
-    [controllers removeLastObject];
-    AddBookVC *vc = (AddBookVC *)[controllers lastObject];
-    
     if ([self.delegate respondsToSelector:@selector(sendObject:)]) {
-        
-        for (Subject *subject in self.selectedSubjects) {
-            [self.delegate sendObject:subject];
-        }
-        
-        vc.delegate = self;
+        [self.delegate sendObject:self.selectedSubjects];
     }
     [self.navigationController popViewControllerAnimated:YES];
     
@@ -143,12 +132,6 @@
     
 }
 
-- (void)sendObject:(NSMutableArray *)subject
-{
-    if (!_selectedSubjects)
-        _selectedSubjects = [NSMutableArray new];
-    [self.selectedSubjects addObject:subject];
-}
 
 
 @end

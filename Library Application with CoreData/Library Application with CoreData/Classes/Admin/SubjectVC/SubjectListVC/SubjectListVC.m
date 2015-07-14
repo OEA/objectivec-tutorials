@@ -162,6 +162,42 @@
     }
 }
 
+- (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
+        Subject *subject = [self.subjectArray objectAtIndex:indexPath.row];
+        [self deleteSubject:subject.name];
+        
+        [tableView beginUpdates];
+        
+        [self initSubjects];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView endUpdates];
+    }];
+    deleteAction.backgroundColor = [UIColor redColor];
+    
+    return @[deleteAction];
+}
+
+- (void)deleteSubject:(NSString *)subjectName
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Subject"];
+    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", subjectName];
+    
+    NSError *searchError;
+    
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    Subject *subject = [results firstObject];
+    
+    [self.managedObjectContext deleteObject:subject];
+    NSError *error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
+        return;
+    }
+
+}
+
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     //self.filteredCountries.removeAll()

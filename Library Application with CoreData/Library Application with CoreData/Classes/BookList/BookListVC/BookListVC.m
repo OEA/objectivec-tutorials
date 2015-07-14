@@ -15,6 +15,7 @@
 @interface BookListVC()
 @property (strong, nonatomic) IBOutlet UIView *mainView;
 @property (strong, nonatomic) IBOutlet UITableView *mTableView;
+@property (strong, nonatomic) NSCache *imagesCache;
 @end
 
 @implementation BookListVC
@@ -26,6 +27,8 @@
     [super viewDidLoad];
     [self initBooks];
     [self.mTableView reloadData];
+    if (!_imagesCache)
+        _imagesCache = [NSCache new];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -83,7 +86,7 @@
 //    });
     
     Book *book = [_books objectAtIndex:indexPath.row];
-    cell.bookImage.image = [UIImage imageWithData:book.image];
+    cell.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:book.image]];
     cell.bookTitle.text = book.title;
     cell.bookAuthor.text = book.author.name;
     cell.bookPages.text = [NSString stringWithFormat:@"%@ pages", book.pages];
@@ -96,6 +99,20 @@
     NSLog(@"%lu", (unsigned long)books.count);
     
     return cell;
+}
+
+- (NSData *)getImageFromURLOrCache:(NSString *)url
+{
+    NSData *data = [self.imagesCache objectForKey:url];
+    if (!data) {
+        if (url) {
+            data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+            if (data)
+                [self.imagesCache setObject:data forKey:url];
+        }
+    }
+    
+    return data;
 }
 
 

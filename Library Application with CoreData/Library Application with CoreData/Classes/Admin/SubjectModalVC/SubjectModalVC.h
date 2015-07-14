@@ -12,10 +12,10 @@
 #import "Subject.h"
 
 @protocol SubjectModelDelegate <NSObject>
-- (void) sendObject:(Subject *)subject;
+- (void) sendObject:(NSMutableArray *)subjects;
 @end
 
-@interface SubjectModalVC : UITableViewController<UITableViewDelegate,NSFetchedResultsControllerDelegate, AddBookModelDelegate>
+@interface SubjectModalVC : UITableViewController<UITableViewDelegate,NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) id <SubjectModelDelegate> delegate;
 

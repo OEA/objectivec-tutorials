@@ -14,6 +14,7 @@
 @interface AddBookVC() <UIPickerViewDataSource, SubjectModelDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *bookTitle;
+@property (weak, nonatomic) IBOutlet UITextView *subjectList;
 
 @property (strong, nonatomic) IBOutlet UITextField *author;
 @property (strong, nonatomic) IBOutlet UITextField *pages;
@@ -55,18 +56,25 @@
     [self.dateView reloadAllComponents];
     [self.dateView selectRow:[self.years count]-1 inComponent:0 animated:YES];
     
+    self.subjectList.text = @"";
     
-   
-    
-    
-    
+    for (Subject *subject in self.subjects) {
+        [self.subjectList.text stringByAppendingString:subject.name];
+        [self.subjectList.text stringByAppendingString:@"\n"];
+    }
     
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSLog(@"%lu",(unsigned long)self.subjects.count);
+    self.subjectList.text = @"";
+    
+    for (Subject *subject in self.subjects) {
+        NSLog(@"%@",subject.name);
+        self.subjectList.text = [self.subjectList.text stringByAppendingString:subject.name];
+        self.subjectList.text = [self.subjectList.text stringByAppendingString:@"\n"];
+    }
 }
 
 #pragma mark - Core Data method
@@ -143,7 +151,7 @@
         [book setValue:self.bookTitle.text forKey:@"title"];
         [book setValue:[self numberFromString:self.pages.text] forKey:@"pages"];
         [book setValue:[self dateFromString:self.date] forKey:@"publishDate"];
-        [book setValue:[self imageFromUrl:self.imageUrl.text] forKey:@"image"];
+        [book setValue:self.imageUrl.text forKey:@"image"];
         [book setValue:author forKey:@"author"];
         [author addBooksObject:book];
         NSError *error;
@@ -162,9 +170,18 @@
 
 - (NSDate *)dateFromString:(NSString *)dateStr
 {
-    NSDateFormatter *dateFormat = [NSDateFormatter new];
-    [dateFormat setDateFormat:@"yyyy"];
-    return [dateFormat dateFromString:dateStr];  
+    if (!dateStr) {
+        
+        NSDate *currDate = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"yyyy"];
+        NSString *dateString = [dateFormatter stringFromDate:currDate];
+        return [dateFormatter dateFromString:dateString];
+    } else {
+        NSDateFormatter *dateFormat = [NSDateFormatter new];
+        [dateFormat setDateFormat:@"yyyy"];
+        return [dateFormat dateFromString:dateStr];
+    }
 }
 
 - (NSData *)imageFromUrl:(NSString *)url
@@ -178,17 +195,14 @@
         NSLog(@"test");
         SubjectModalVC *vc = (SubjectModalVC*)segue.destinationViewController;
         vc.delegate = self;
-        if ([self.delegate respondsToSelector:@selector(sendObject:)]) {
-            for (Subject *subject in self.subjects) {
-                [self.delegate sendObject:subject];
-            }
-        }
     }
 }
 
-- (void)sendObject:(Subject *)subject {
-    
-    [self.subjects addObject:subject];
+- (void)sendObject:(NSMutableArray *)subjects {
+    [self.subjects removeAllObjects];
+    for (Subject *subject in subjects) {
+        [self.subjects addObject:subject];
+    }
 }
 
 @end

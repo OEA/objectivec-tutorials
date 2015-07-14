@@ -73,6 +73,9 @@
     }
 
 }
+- (IBAction)loginButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 - (UserLog *)createLog:(User *)user
 {
     
