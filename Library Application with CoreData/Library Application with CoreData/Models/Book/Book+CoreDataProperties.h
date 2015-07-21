@@ -2,7 +2,7 @@
 //  Book+CoreDataProperties.h
 //  Library Application with CoreData
 //
-//  Created by Ömer Emre Aslan on 14/07/15.
+//  Created by Ömer Emre Aslan on 21/07/15.
 //  Copyright © 2015 omer. All rights reserved.
 //
 //  Delete this file and regenerate it using "Create NSManagedObject Subclass…"
@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *pages;
 @property (nullable, nonatomic, retain) NSDate *publishDate;
 @property (nullable, nonatomic, retain) NSString *title;
+@property (nullable, nonatomic, retain) NSString *summary;
 @property (nullable, nonatomic, retain) Author *author;
 @property (nullable, nonatomic, retain) NSSet<Subject *> *subjects;
 
