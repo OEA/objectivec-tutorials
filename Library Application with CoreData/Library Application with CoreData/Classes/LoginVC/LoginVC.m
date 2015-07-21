@@ -46,6 +46,9 @@
     
     if ([results count] > 0) {
         self.isLoggedIn = YES;
+        User *user = [results firstObject];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:user.username forKey:@"user"];
     } else {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Login Failed" message:@"you entered wrong username or password" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
         [alert show];

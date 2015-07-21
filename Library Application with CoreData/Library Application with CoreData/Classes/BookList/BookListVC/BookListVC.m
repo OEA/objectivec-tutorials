@@ -12,11 +12,13 @@
 #import "Author.h"
 #import "AddBookVC.h"
 #import "BookDetailVC.h"
+#import "User.h"
 
 @interface BookListVC()
 @property (strong, nonatomic) IBOutlet UIView *mainView;
 @property (strong, nonatomic) IBOutlet UITableView *mTableView;
 @property (strong, nonatomic) NSCache *imagesCache;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *adminPanelButton;
 @end
 
 @implementation BookListVC
@@ -30,8 +32,32 @@
     [self.mTableView reloadData];
     if (!_imagesCache)
         _imagesCache = [NSCache new];
+    
+    User *user = [self getUserFromSession];
+    
+    
+    if (user.isAdmin.intValue < 1) {
+        self.navigationItem.rightBarButtonItem = nil ;        
+    }
 }
 
+- (User *)getUserFromSession
+{
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *username = [defaults objectForKey:@"user"];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    request.predicate = [NSPredicate predicateWithFormat:@"(username = %@)", username];
+    
+    NSError *searchError;
+    
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    User *user = [results firstObject];
+    NSLog(@"%@", user.username);
+    return user;
+}
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -127,7 +153,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UITableViewCell *cell = sender;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if ([segue.identifier isEqualToString:@"addBook"]) {
         AddBookVC *vc = segue.destinationViewController;
         vc.books = self.books;

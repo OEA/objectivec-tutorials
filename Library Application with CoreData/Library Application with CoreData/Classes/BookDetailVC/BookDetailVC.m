@@ -8,6 +8,8 @@
 
 #import "BookDetailVC.h"
 #import "Subject.h"
+#import "Transaction.h"
+#import "User.h"
 
 @interface BookDetailVC ()
 @property (strong, nonatomic) NSCache *imagesCache;
@@ -35,16 +37,171 @@
     self.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:self.book.image]];
     
     if (![self isBookAvailable]){
-        [self.getButton setBackgroundColor:[UIColor orangeColor]];
-        [self.getButton setTitle:@"NOTIFY ME" forState:UIControlStateNormal];
-        [self.getButton setEnabled:NO];
+        [self changeUI];
     }
 }
 
+#pragma mark - Core Data method
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    NSManagedObjectContext *context = nil;
+    id delegate = [[UIApplication sharedApplication] delegate];
+    if ([delegate performSelector:@selector(managedObjectContext)]) {
+        context = [delegate managedObjectContext];
+    }
+    return context;
+}
+
+- (IBAction)getButtonTapped:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:[NSString stringWithFormat:@"Request %@",self.book.title]
+                          message:[NSString stringWithFormat:@"Are you sure to get %@ ?",self.book.title]
+                          delegate:self
+                          cancelButtonTitle:nil
+                          otherButtonTitles:@"YES",@"NO", nil];
+    
+    
+    [alert show];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self requestBook];
+    } else {
+        
+    }
+
+}
+
+- (void)requestBook
+{
+    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
+    NSDate *startDate = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:startDate];
+    
+    //adding 1 week
+    [components setDay:([components day] + 7)];
+    NSDate *finishDate = [cal dateFromComponents:components];
+
+    User *user = [self getUserFromSession];
+
+    [transaction setValue:startDate forKey:@"transactionStartDate"];
+    [transaction setValue:finishDate forKey:@"transactionFinishDate"];
+    [transaction setValue:self.book forKey:@"book"];
+    [transaction setValue:user forKey:@"user"];
+    
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    [self changeUI];
+    
+}
+
+- (void)changeUI
+{
+    
+    
+    if ([self isBookOnMe]) {
+        [self.cancelButton setHidden:NO];
+    } else {
+        [self.cancelButton setHidden:YES];
+    }
+    if ([self isBookAvailable]){
+        [self.getButton setBackgroundColor:[UIColor greenColor]];
+        [self.getButton setTitle:@"GET" forState:UIControlStateNormal];
+        [self.getButton setEnabled:YES];
+        self.availability.text = @"Available";
+    } else {
+        [self.getButton setBackgroundColor:[UIColor orangeColor]];
+        [self.getButton setTitle:@"NOTIFY ME" forState:UIControlStateNormal];
+        [self.getButton setEnabled:NO];
+        self.availability.text = @"Not available";
+    }
+
+}
+
+- (BOOL)isBookOnMe
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *username = [defaults objectForKey:@"user"];
+    
+    Transaction *lastTransaction = [self getLastTransaction];
+    if ([lastTransaction.user.username isEqualToString:username]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+- (IBAction)cancelButtonTapped:(id)sender {
+    Transaction *lastTransaction = [self getLastTransaction];
+    
+    [self.managedObjectContext deleteObject:lastTransaction];
+    NSError *error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
+    }
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfully canceled." message:@"You successfully canceled getting the book !" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//    [alert show];
+    [self changeUI];
+}
+
+- (Transaction *)getLastTransaction
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Transaction"];
+    
+    request.predicate = [NSPredicate predicateWithFormat:@"book.title = %@", self.book.title];
+    NSError *searchError;
+    
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    
+    Transaction *lastTransaction = results.lastObject;
+    NSLog(lastTransaction.book.title);
+    return lastTransaction;
+    
+}
+
+- (User *)getUserFromSession
+{
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *username = [defaults objectForKey:@"user"];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    request.predicate = [NSPredicate predicateWithFormat:@"(username = %@)", username];
+    
+    NSError *searchError;
+    
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    User *user = [results firstObject];
+    NSLog(@"%@", user.username);
+    return user;
+}
 
 - (BOOL)isBookAvailable
 {
-    return YES;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Transaction"];
+    NSDate *today = [NSDate date];
+    
+    request.predicate = [NSPredicate predicateWithFormat:@"book.title = %@ AND (transactionFinishDate > %@) ", self.book.title, today];
+    
+    NSError *searchError;
+    
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    
+    if ([results count] > 0) {
+        return NO;
+    } else {
+        return YES;
+    }
+
 }
 
 - (NSData *)getImageFromURLOrCache:(NSString *)url

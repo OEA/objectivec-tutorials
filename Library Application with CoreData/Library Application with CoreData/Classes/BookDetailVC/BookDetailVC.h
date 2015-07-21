@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Book.h"
-@interface BookDetailVC : UIViewController
+@interface BookDetailVC : UIViewController <NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) Book *book;
 
@@ -21,5 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *bookYear;
 @property (weak, nonatomic) IBOutlet UIButton *getButton;
 @property (weak, nonatomic) IBOutlet UIImageView *bookImage;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
+@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @end

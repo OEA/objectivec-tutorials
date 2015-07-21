@@ -31,6 +31,7 @@
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
+            <string>HelveticaNeue-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -284,6 +285,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="adminPanelButton" destination="gzR-Rg-t2T" id="VmW-6s-fzo"/>
                         <outlet property="mTableView" destination="bO6-hI-CxK" id="CCu-G4-pvu"/>
                     </connections>
                 </tableViewController>
@@ -1425,6 +1427,9 @@
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <state key="normal" title="GET"/>
+                                                <connections>
+                                                    <action selector="getButtonTapped:" destination="OWR-PD-iYN" eventType="touchUpInside" id="2LR-H3-toi"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subjects" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tg2-pr-CXv">
                                                 <rect key="frame" x="155" y="82" width="437" height="20.5"/>
@@ -1448,6 +1453,16 @@
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bPM-ed-x29">
+                                                <rect key="frame" x="8" y="296" width="139" height="30"/>
+                                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" title="Cancel"/>
+                                                <connections>
+                                                    <action selector="cancelButtonTapped:" destination="OWR-PD-iYN" eventType="touchUpInside" id="0mt-pI-DdH"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -1505,6 +1520,7 @@
                         <outlet property="bookSubjects" destination="tg2-pr-CXv" id="nLV-eT-whL"/>
                         <outlet property="bookSummary" destination="llr-aT-bot" id="0Ws-Bo-AJU"/>
                         <outlet property="bookYear" destination="XGm-J3-qDa" id="mrQ-7r-WRQ"/>
+                        <outlet property="cancelButton" destination="bPM-ed-x29" id="efG-NJ-wG8"/>
                         <outlet property="getButton" destination="OHd-LJ-akg" id="6Vz-Kf-Aut"/>
                     </connections>
                 </viewController>
