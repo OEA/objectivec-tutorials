@@ -11,6 +11,7 @@
 #import "Author.h"
 #import "BookEditVC.h"
 #import "BookListCell.h"
+#import "BookDetailVC.h"
 @interface AdminBookListVC ()
 @property (strong, nonatomic)NSMutableArray *books;
 @property (strong, nonatomic) NSCache *imagesCache;
@@ -58,6 +59,10 @@
 
 - (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    BookListCell *cell = [BookListCell new];
+    cell = [tableView dequeueReusableCellWithIdentifier:@"Book Cell" forIndexPath:indexPath];
+    
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
         Book *book = [self.books objectAtIndex:indexPath.row];
         [self deleteBook:book.title];
@@ -69,8 +74,11 @@
         [tableView endUpdates];
     }];
     deleteAction.backgroundColor = [UIColor redColor];
-    
-    return @[deleteAction];
+    UITableViewRowAction *editAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Edit" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
+        [self performSegueWithIdentifier:@"bookEdit" sender:cell];
+    }];
+    editAction.backgroundColor = [UIColor orangeColor];
+    return @[deleteAction, editAction];
 }
 
 - (void)deleteBook:(NSString *)title
@@ -150,9 +158,16 @@
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
 {
     UITableViewCell *cell = sender;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if ([segue.identifier isEqualToString:@"bookEdit"]) {
         BookEditVC *vc = segue.destinationViewController;
-        vc.bookTitle = cell.textLabel.text;
+        Book *book = [self.books objectAtIndex:indexPath.row];
+        vc.bookTitle = book.title;
+    } else if ([segue.identifier isEqualToString:@"bookDetail"]) {
+        BookDetailVC *vc = segue.destinationViewController;
+       
+        Book *book = [_books objectAtIndex:indexPath.row];
+        vc.book = book;
     }
 }
 

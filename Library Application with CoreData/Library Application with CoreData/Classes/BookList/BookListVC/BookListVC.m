@@ -11,6 +11,7 @@
 #import "Book.h"
 #import "Author.h"
 #import "AddBookVC.h"
+#import "BookDetailVC.h"
 
 @interface BookListVC()
 @property (strong, nonatomic) IBOutlet UIView *mainView;
@@ -125,10 +126,17 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    UITableViewCell *cell = sender;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];    
     if ([segue.identifier isEqualToString:@"addBook"]) {
         AddBookVC *vc = segue.destinationViewController;
         vc.books = self.books;
         vc.managedObjectContext = self.managedObjectContext;
+    } else if ([segue.identifier isEqualToString:@"bookDetail"]) {
+        BookDetailVC *vc = segue.destinationViewController;
+        
+        Book *book = [_books objectAtIndex:indexPath.row];
+        vc.book = book;
     }
 }
 

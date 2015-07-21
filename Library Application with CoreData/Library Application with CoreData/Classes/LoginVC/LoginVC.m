@@ -57,15 +57,18 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"test"]) {
+    if ([segue.identifier isEqualToString:@"login"]) {
         
     }
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-//    return self.isLoggedIn;
-    return YES;
+    if ([identifier isEqualToString:@"login"]){
+        return self.isLoggedIn;
+    } else {
+        return YES;
+    }
 }
 
 @end

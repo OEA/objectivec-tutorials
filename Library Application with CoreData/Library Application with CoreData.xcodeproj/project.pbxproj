@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		17741D881B54F029006849C2 /* SubjectListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17741D871B54F029006849C2 /* SubjectListVC.m */; };
+		1787D0691B5E26CD0031B95E /* BookDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0681B5E26CD0031B95E /* BookDetailVC.m */; };
+		1787D0721B5E500E0031B95E /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0711B5E500E0031B95E /* Transaction.m */; };
 		17ABD62E1B53808700AE5B11 /* AdminHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD62D1B53808700AE5B11 /* AdminHomeVC.m */; };
 		17ABD6321B539CCF00AE5B11 /* UserAddVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6311B539CCF00AE5B11 /* UserAddVC.m */; };
 		17ABD6361B53B02500AE5B11 /* UserDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6351B53B02500AE5B11 /* UserDetailVC.m */; };
@@ -48,6 +50,11 @@
 /* Begin PBXFileReference section */
 		17741D861B54F029006849C2 /* SubjectListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectListVC.h; sourceTree = "<group>"; };
 		17741D871B54F029006849C2 /* SubjectListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectListVC.m; sourceTree = "<group>"; };
+		1787D0671B5E26CD0031B95E /* BookDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailVC.h; sourceTree = "<group>"; };
+		1787D0681B5E26CD0031B95E /* BookDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetailVC.m; sourceTree = "<group>"; };
+		1787D06F1B5E500E0031B95E /* Transaction+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Transaction+CoreDataProperties.h"; sourceTree = "<group>"; };
+		1787D0701B5E500E0031B95E /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
+		1787D0711B5E500E0031B95E /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		17ABD62C1B53808700AE5B11 /* AdminHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdminHomeVC.h; sourceTree = "<group>"; };
 		17ABD62D1B53808700AE5B11 /* AdminHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminHomeVC.m; sourceTree = "<group>"; };
 		17ABD6301B539CCF00AE5B11 /* UserAddVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAddVC.h; sourceTree = "<group>"; };
@@ -136,6 +143,25 @@
 				17741D871B54F029006849C2 /* SubjectListVC.m */,
 			);
 			path = SubjectListVC;
+			sourceTree = "<group>";
+		};
+		1787D0661B5E269C0031B95E /* BookDetailVC */ = {
+			isa = PBXGroup;
+			children = (
+				1787D0671B5E26CD0031B95E /* BookDetailVC.h */,
+				1787D0681B5E26CD0031B95E /* BookDetailVC.m */,
+			);
+			path = BookDetailVC;
+			sourceTree = "<group>";
+		};
+		1787D06E1B5E4FD70031B95E /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				1787D06F1B5E500E0031B95E /* Transaction+CoreDataProperties.h */,
+				1787D0701B5E500E0031B95E /* Transaction.h */,
+				1787D0711B5E500E0031B95E /* Transaction.m */,
+			);
+			path = Transaction;
 			sourceTree = "<group>";
 		};
 		17ABD62A1B537FF500AE5B11 /* Admin */ = {
@@ -311,6 +337,7 @@
 		95DA18111B4CFCF0008B5517 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1787D0661B5E269C0031B95E /* BookDetailVC */,
 				17ABD62A1B537FF500AE5B11 /* Admin */,
 				95DA18121B4CFCF0008B5517 /* BookList */,
 				95DA181C1B4CFCF0008B5517 /* HomeVC */,
@@ -385,6 +412,7 @@
 		95DA18281B4CFE20008B5517 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1787D06E1B5E4FD70031B95E /* Transaction */,
 				17ABD6371B53B48D00AE5B11 /* UserLog */,
 				954036DD1B4F9D96004D2794 /* Subject */,
 				95DA182D1B4CFE5B008B5517 /* Author */,
@@ -530,6 +558,7 @@
 				17ABD64D1B53CBA900AE5B11 /* Author.m in Sources */,
 				17741D881B54F029006849C2 /* SubjectListVC.m in Sources */,
 				17BC12FB1B55271800EFB951 /* BookEditVC.m in Sources */,
+				1787D0721B5E500E0031B95E /* Transaction.m in Sources */,
 				95DA18251B4CFCF0008B5517 /* BookListVC.m in Sources */,
 				17ABD62E1B53808700AE5B11 /* AdminHomeVC.m in Sources */,
 				17ABD6451B53CB7100AE5B11 /* Subject.m in Sources */,
@@ -544,6 +573,7 @@
 				95DA18261B4CFCF0008B5517 /* LoginVC.m in Sources */,
 				17ABD6511B53DA8200AE5B11 /* SubjectModalVC.m in Sources */,
 				17ABD6361B53B02500AE5B11 /* UserDetailVC.m in Sources */,
+				1787D0691B5E26CD0031B95E /* BookDetailVC.m in Sources */,
 				954037021B513E2E004D2794 /* UserListVCViewController.m in Sources */,
 				95DA17F11B4CFC6A008B5517 /* Library_Application_with_CoreData.xcdatamodeld in Sources */,
 			);
