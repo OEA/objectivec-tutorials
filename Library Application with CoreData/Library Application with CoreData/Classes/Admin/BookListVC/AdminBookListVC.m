@@ -8,9 +8,13 @@
 
 #import "AdminBookListVC.h"
 #import "Book.h"
+#import "Author.h"
 #import "BookEditVC.h"
+#import "BookListCell.h"
 @interface AdminBookListVC ()
 @property (strong, nonatomic)NSMutableArray *books;
+@property (strong, nonatomic) NSCache *imagesCache;
+
 @end
 
 @implementation AdminBookListVC
@@ -20,6 +24,8 @@
     [self initBooks];
     [self.tableView reloadData];
 
+    if (!_imagesCache)
+        _imagesCache = [NSCache new];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -109,13 +115,36 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"adminBookListCell" forIndexPath:indexPath];
+    BookListCell *cell = [BookListCell new];
+    cell = [tableView dequeueReusableCellWithIdentifier:@"Book Cell" forIndexPath:indexPath];
     
     // Configure the cell...
     Book *book = [_books objectAtIndex:indexPath.row];
-    cell.textLabel.text = book.title;
+    cell.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:book.image]];
+    cell.bookTitle.text = book.title;
+    cell.bookAuthor.text = book.author.name;
+    cell.bookPages.text = [NSString stringWithFormat:@"%@ pages", book.pages];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:book.publishDate];
+    
+    cell.bookPublished.text = [NSString stringWithFormat:@"%ld", (long)[components year]];
+
+    
 
     return cell;
+}
+
+- (NSData *)getImageFromURLOrCache:(NSString *)url
+{
+    NSData *data = [self.imagesCache objectForKey:url];
+    if (!data) {
+        if (url) {
+            data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+            if (data)
+                [self.imagesCache setObject:data forKey:url];
+        }
+    }
+    
+    return data;
 }
 
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender

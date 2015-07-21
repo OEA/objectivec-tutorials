@@ -198,6 +198,9 @@
         NSLog(@"test");
         SubjectModalVC *vc = (SubjectModalVC*)segue.destinationViewController;
         vc.delegate = self;
+//        for (Subject *subject in self.subjects) {
+//            [vc.selectedSubjects addObject:subject];
+//        }
     }
 }
 
