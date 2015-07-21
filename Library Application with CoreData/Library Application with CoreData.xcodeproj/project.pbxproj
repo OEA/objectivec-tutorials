@@ -141,6 +141,7 @@
 		17ABD62A1B537FF500AE5B11 /* Admin */ = {
 			isa = PBXGroup;
 			children = (
+				95DA18131B4CFCF0008B5517 /* AddBookVC */,
 				17BC12F81B5526F200EFB951 /* BookEditVC */,
 				17BC12F01B551A7D00EFB951 /* BookListVC */,
 				17741D841B54EFE1006849C2 /* SubjectVC */,
@@ -322,7 +323,6 @@
 		95DA18121B4CFCF0008B5517 /* BookList */ = {
 			isa = PBXGroup;
 			children = (
-				95DA18131B4CFCF0008B5517 /* AddBookVC */,
 				95DA18161B4CFCF0008B5517 /* BookListCell */,
 				95DA18191B4CFCF0008B5517 /* BookListVC */,
 			);
@@ -335,7 +335,8 @@
 				95DA18141B4CFCF0008B5517 /* AddBookVC.h */,
 				95DA18151B4CFCF0008B5517 /* AddBookVC.m */,
 			);
-			path = AddBookVC;
+			name = AddBookVC;
+			path = ../BookList/AddBookVC;
 			sourceTree = "<group>";
 		};
 		95DA18161B4CFCF0008B5517 /* BookListCell */ = {
