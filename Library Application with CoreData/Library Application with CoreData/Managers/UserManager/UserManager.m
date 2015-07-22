@@ -78,7 +78,7 @@
     }
     //Create insertable User model
     User *creationUser = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:self.managedObjectContext];
-    //Setting all necessarry fields
+    //Setting all necessary fields
     [creationUser setName:user.name];
     [creationUser setUsername:user.username];
     [creationUser setPassword:user.password];
@@ -176,7 +176,18 @@
 }
 - (User *)getCurrentUser
 {
-    return nil;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *username = [defaults objectForKey:@"user"];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    request.predicate = [NSPredicate predicateWithFormat:@"(username = %@)", username];
+    
+    NSError *searchError;
+    
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    User *user = [results firstObject];
+    return user;
 }
 
 - (NSArray *)getAllUser
