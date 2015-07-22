@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		171BFA391B5E822200CE4DE4 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA381B5E822200CE4DE4 /* UserManager.m */; };
+		171BFA3C1B5E822E00CE4DE4 /* BookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA3B1B5E822E00CE4DE4 /* BookManager.m */; };
+		171BFA431B5F693500CE4DE4 /* UserLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA421B5F693500CE4DE4 /* UserLogManager.m */; };
 		17741D881B54F029006849C2 /* SubjectListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17741D871B54F029006849C2 /* SubjectListVC.m */; };
 		1787D0691B5E26CD0031B95E /* BookDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0681B5E26CD0031B95E /* BookDetailVC.m */; };
 		1787D0721B5E500E0031B95E /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0711B5E500E0031B95E /* Transaction.m */; };
@@ -48,6 +51,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		171BFA371B5E822200CE4DE4 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
+		171BFA381B5E822200CE4DE4 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
+		171BFA3A1B5E822E00CE4DE4 /* BookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookManager.h; sourceTree = "<group>"; };
+		171BFA3B1B5E822E00CE4DE4 /* BookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookManager.m; sourceTree = "<group>"; };
+		171BFA411B5F693500CE4DE4 /* UserLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLogManager.h; sourceTree = "<group>"; };
+		171BFA421B5F693500CE4DE4 /* UserLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLogManager.m; sourceTree = "<group>"; };
 		17741D861B54F029006849C2 /* SubjectListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectListVC.h; sourceTree = "<group>"; };
 		17741D871B54F029006849C2 /* SubjectListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectListVC.m; sourceTree = "<group>"; };
 		1787D0671B5E26CD0031B95E /* BookDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailVC.h; sourceTree = "<group>"; };
@@ -128,6 +137,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		171BFA341B5E81C200CE4DE4 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				171BFA401B5E849400CE4DE4 /* UserLogManager */,
+				171BFA3F1B5E847B00CE4DE4 /* AuthorManager */,
+				171BFA3E1B5E847400CE4DE4 /* SubjectManager */,
+				171BFA3D1B5E846D00CE4DE4 /* TransactionManager */,
+				171BFA361B5E81D100CE4DE4 /* UserManager */,
+				171BFA351B5E81CA00CE4DE4 /* BookManager */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		171BFA351B5E81CA00CE4DE4 /* BookManager */ = {
+			isa = PBXGroup;
+			children = (
+				171BFA3A1B5E822E00CE4DE4 /* BookManager.h */,
+				171BFA3B1B5E822E00CE4DE4 /* BookManager.m */,
+			);
+			path = BookManager;
+			sourceTree = "<group>";
+		};
+		171BFA361B5E81D100CE4DE4 /* UserManager */ = {
+			isa = PBXGroup;
+			children = (
+				171BFA371B5E822200CE4DE4 /* UserManager.h */,
+				171BFA381B5E822200CE4DE4 /* UserManager.m */,
+			);
+			path = UserManager;
+			sourceTree = "<group>";
+		};
+		171BFA3D1B5E846D00CE4DE4 /* TransactionManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TransactionManager;
+			sourceTree = "<group>";
+		};
+		171BFA3E1B5E847400CE4DE4 /* SubjectManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SubjectManager;
+			sourceTree = "<group>";
+		};
+		171BFA3F1B5E847B00CE4DE4 /* AuthorManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AuthorManager;
+			sourceTree = "<group>";
+		};
+		171BFA401B5E849400CE4DE4 /* UserLogManager */ = {
+			isa = PBXGroup;
+			children = (
+				171BFA411B5F693500CE4DE4 /* UserLogManager.h */,
+				171BFA421B5F693500CE4DE4 /* UserLogManager.m */,
+			);
+			path = UserLogManager;
+			sourceTree = "<group>";
+		};
 		17741D841B54EFE1006849C2 /* SubjectVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +363,7 @@
 		95DA17E71B4CFC6A008B5517 /* Library Application with CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				171BFA341B5E81C200CE4DE4 /* Managers */,
 				95DA18281B4CFE20008B5517 /* Models */,
 				95DA18111B4CFCF0008B5517 /* Classes */,
 				95DA17EC1B4CFC6A008B5517 /* AppDelegate.h */,
@@ -558,12 +629,14 @@
 				17ABD64D1B53CBA900AE5B11 /* Author.m in Sources */,
 				17741D881B54F029006849C2 /* SubjectListVC.m in Sources */,
 				17BC12FB1B55271800EFB951 /* BookEditVC.m in Sources */,
+				171BFA3C1B5E822E00CE4DE4 /* BookManager.m in Sources */,
 				1787D0721B5E500E0031B95E /* Transaction.m in Sources */,
 				95DA18251B4CFCF0008B5517 /* BookListVC.m in Sources */,
 				17ABD62E1B53808700AE5B11 /* AdminHomeVC.m in Sources */,
 				17ABD6451B53CB7100AE5B11 /* Subject.m in Sources */,
 				17ABD6321B539CCF00AE5B11 /* UserAddVC.m in Sources */,
 				95DA17EB1B4CFC6A008B5517 /* main.m in Sources */,
+				171BFA391B5E822200CE4DE4 /* UserManager.m in Sources */,
 				95DA18241B4CFCF0008B5517 /* BookListCell.m in Sources */,
 				95DA18231B4CFCF0008B5517 /* AddBookVC.m in Sources */,
 				95DA17F41B4CFC6A008B5517 /* ViewController.m in Sources */,
@@ -572,6 +645,7 @@
 				17ABD63C1B53B55E00AE5B11 /* UserLog.m in Sources */,
 				95DA18261B4CFCF0008B5517 /* LoginVC.m in Sources */,
 				17ABD6511B53DA8200AE5B11 /* SubjectModalVC.m in Sources */,
+				171BFA431B5F693500CE4DE4 /* UserLogManager.m in Sources */,
 				17ABD6361B53B02500AE5B11 /* UserDetailVC.m in Sources */,
 				1787D0691B5E26CD0031B95E /* BookDetailVC.m in Sources */,
 				954037021B513E2E004D2794 /* UserListVCViewController.m in Sources */,

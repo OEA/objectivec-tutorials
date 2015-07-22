@@ -37,7 +37,7 @@
     
     
     if (user.isAdmin.intValue < 1) {
-        self.navigationItem.rightBarButtonItem = nil ;        
+        self.navigationItem.rightBarButtonItem = nil ;
     }
 }
 

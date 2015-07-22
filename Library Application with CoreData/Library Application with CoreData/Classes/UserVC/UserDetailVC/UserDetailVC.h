@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface UserDetailVC : UITableViewController<UISearchResultsUpdating, UISearchControllerDelegate, NSFetchedResultsControllerDelegate>
+@interface UserDetailVC : UITableViewController<NSFetchedResultsControllerDelegate>
 
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @property (strong, nonatomic) NSString *username;

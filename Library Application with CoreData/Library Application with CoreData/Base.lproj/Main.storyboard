@@ -944,7 +944,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Q2a-nc-YlC" kind="show" id="qFk-as-mF5"/>
+                                    <segue destination="Q2a-nc-YlC" kind="show" identifier="userDetail" id="qFk-as-mF5"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

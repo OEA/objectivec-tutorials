@@ -19,12 +19,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = false;
-    self.searchController.delegate = self;
-    [self.searchController.searchBar sizeToFit];
-    self.tableView.tableHeaderView = self.searchController.searchBar;
     [self initLogs];
     [self.tableView reloadData];
 }
@@ -59,10 +53,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
-{
-    
-}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
