@@ -179,6 +179,14 @@
     return nil;
 }
 
+- (NSArray *)getAllUser
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSError *searchError;
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    return results;
+}
+
 #pragma mark - Logical Methods
 - (BOOL)isAdmin
 

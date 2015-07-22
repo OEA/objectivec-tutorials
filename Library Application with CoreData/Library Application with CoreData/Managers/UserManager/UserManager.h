@@ -23,6 +23,7 @@
 - (User *)getLastUser;
 - (User *)getFirstUser;
 - (User *)getCurrentUser; //Last logged in user
+- (NSArray *)getAllUser;
 
 //Logical methods
 - (BOOL)isAdmin;
