@@ -8,11 +8,13 @@
 
 #import "SubjectListVC.h"
 #import "Subject.h"
+#import "SubjectManager.h"
 @interface SubjectListVC ()
 
 @property (strong, nonatomic) NSMutableArray *subjectArray;
 @property (strong, nonatomic) NSMutableArray *subjectFilterArray;
 @property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) SubjectManager *subjectManager;
 //Core Data context variable
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 
@@ -37,6 +39,13 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (SubjectManager *)subjectManager
+{
+    if(!_subjectManager)
+        _subjectManager = [SubjectManager sharedInstance];
+    return _subjectManager;
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -58,12 +67,7 @@
 
 - (void)initSubjects
 {
-    NSFetchRequest *fetchRequest = [NSFetchRequest new];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSError *error;
-    self.subjectArray = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    self.subjectArray = [self.subjectManager getAllSubjects];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,18 +101,26 @@
         UITextField *subjectName = [alertView textFieldAtIndex:0];
         NSString *name = subjectName.text;
         
-        Subject *subject = [NSEntityDescription insertNewObjectForEntityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
-        
-        [subject setValue:name forKey:@"name"];
-        NSError *error;
-        if (![self.managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        @try {
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
+            Subject *subject = [[Subject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+            [subject setName:name];
+            [self.subjectManager createSubject:subject];
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfully created." message:[NSString stringWithFormat:@"You successfully created %@ subject !",name] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+            [alert show];
+
         }
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfully created." message:[NSString stringWithFormat:@"You successfully created %@ subject !",name] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
-        [alert show];
+        @catch (NSException *exception) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Subject creation failed." message:[NSString stringWithFormat:@"You failed to create %@ subject !",name] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        @finally {
+            
+        }
+        
         [self initSubjects];
         [self.tableView reloadData];
-        
     }
 }
 
@@ -181,21 +193,7 @@
 
 - (void)deleteSubject:(NSString *)subjectName
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Subject"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", subjectName];
-    
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    Subject *subject = [results firstObject];
-    
-    [self.managedObjectContext deleteObject:subject];
-    NSError *error = nil;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
-        return;
-    }
-
+    [self.subjectManager deleteSubject:[self.subjectManager getSubjectFromName:subjectName]];
 }
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController

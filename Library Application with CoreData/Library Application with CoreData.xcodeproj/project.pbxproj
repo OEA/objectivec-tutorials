@@ -10,6 +10,7 @@
 		171BFA391B5E822200CE4DE4 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA381B5E822200CE4DE4 /* UserManager.m */; };
 		171BFA3C1B5E822E00CE4DE4 /* BookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA3B1B5E822E00CE4DE4 /* BookManager.m */; };
 		171BFA431B5F693500CE4DE4 /* UserLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA421B5F693500CE4DE4 /* UserLogManager.m */; };
+		171BFA461B5FA81300CE4DE4 /* SubjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA451B5FA81300CE4DE4 /* SubjectManager.m */; };
 		17741D881B54F029006849C2 /* SubjectListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17741D871B54F029006849C2 /* SubjectListVC.m */; };
 		1787D0691B5E26CD0031B95E /* BookDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0681B5E26CD0031B95E /* BookDetailVC.m */; };
 		1787D0721B5E500E0031B95E /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0711B5E500E0031B95E /* Transaction.m */; };
@@ -57,6 +58,8 @@
 		171BFA3B1B5E822E00CE4DE4 /* BookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookManager.m; sourceTree = "<group>"; };
 		171BFA411B5F693500CE4DE4 /* UserLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLogManager.h; sourceTree = "<group>"; };
 		171BFA421B5F693500CE4DE4 /* UserLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLogManager.m; sourceTree = "<group>"; };
+		171BFA441B5FA81300CE4DE4 /* SubjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectManager.h; sourceTree = "<group>"; };
+		171BFA451B5FA81300CE4DE4 /* SubjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectManager.m; sourceTree = "<group>"; };
 		17741D861B54F029006849C2 /* SubjectListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectListVC.h; sourceTree = "<group>"; };
 		17741D871B54F029006849C2 /* SubjectListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectListVC.m; sourceTree = "<group>"; };
 		1787D0671B5E26CD0031B95E /* BookDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailVC.h; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 		171BFA3E1B5E847400CE4DE4 /* SubjectManager */ = {
 			isa = PBXGroup;
 			children = (
+				171BFA441B5FA81300CE4DE4 /* SubjectManager.h */,
+				171BFA451B5FA81300CE4DE4 /* SubjectManager.m */,
 			);
 			path = SubjectManager;
 			sourceTree = "<group>";
@@ -633,6 +638,7 @@
 				1787D0721B5E500E0031B95E /* Transaction.m in Sources */,
 				95DA18251B4CFCF0008B5517 /* BookListVC.m in Sources */,
 				17ABD62E1B53808700AE5B11 /* AdminHomeVC.m in Sources */,
+				171BFA461B5FA81300CE4DE4 /* SubjectManager.m in Sources */,
 				17ABD6451B53CB7100AE5B11 /* Subject.m in Sources */,
 				17ABD6321B539CCF00AE5B11 /* UserAddVC.m in Sources */,
 				95DA17EB1B4CFC6A008B5517 /* main.m in Sources */,
