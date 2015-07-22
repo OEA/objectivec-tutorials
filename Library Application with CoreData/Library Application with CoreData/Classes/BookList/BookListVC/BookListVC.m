@@ -13,16 +13,19 @@
 #import "AddBookVC.h"
 #import "BookDetailVC.h"
 #import "User.h"
+#import "BookManager.h"
+#import "UserManager.h"
 
 @interface BookListVC()
 @property (strong, nonatomic) IBOutlet UIView *mainView;
 @property (strong, nonatomic) IBOutlet UITableView *mTableView;
 @property (strong, nonatomic) NSCache *imagesCache;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *adminPanelButton;
+@property (strong, nonatomic) BookManager *bookManager;
+@property (strong, nonatomic) UserManager *userManager;
 @end
 
 @implementation BookListVC
-@synthesize managedObjectContext;
 
 #pragma mark - View Controller default methods
 - (void)viewDidLoad
@@ -33,31 +36,30 @@
     if (!_imagesCache)
         _imagesCache = [NSCache new];
     
-    User *user = [self getUserFromSession];
-    
+    User *user = [self.userManager getCurrentUser];
     
     if (user.isAdmin.intValue < 1) {
         self.navigationItem.rightBarButtonItem = nil ;
     }
 }
 
-- (User *)getUserFromSession
+- (BookManager *)bookManager
 {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSString *username = [defaults objectForKey:@"user"];
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"(username = %@)", username];
-    
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    User *user = [results firstObject];
-    NSLog(@"%@", user.username);
-    return user;
+    if (!_bookManager) {
+        _bookManager = [BookManager sharedInstance];
+    }
+    return _bookManager;
 }
+
+- (UserManager *)userManager
+{
+    if (!_userManager) {
+        _userManager = [UserManager sharedInstance];
+    }
+    return _userManager;
+}
+
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -81,12 +83,7 @@
 - (void)initBooks
 {
     
-    NSFetchRequest *fetchRequest = [NSFetchRequest new];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSError *error;
-    self.books = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    self.books = [self.bookManager getAllBooks];
     
 }
 
@@ -97,20 +94,6 @@
     BookListCell *cell = [BookListCell new];
     
     cell = [tableView dequeueReusableCellWithIdentifier:@"Book Cell" forIndexPath:indexPath];
-//    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-//        
-//        Book *book = [_books objectAtIndex:indexPath.row];
-//        
-//    cell.bookTitle.text = book.title;
-//    cell.bookAuthor.text = book.author;
-//    cell.bookPages.text =[NSString stringWithFormat:@"%li pages",book.pages];
-//    cell.bookPublished.text = book.publishdate;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        
-//        cell.bookImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:book.imageUrl]]];
-//    });
-//        
-//    });
     
     Book *book = [_books objectAtIndex:indexPath.row];
     cell.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:book.image]];
@@ -118,13 +101,7 @@
     cell.bookAuthor.text = book.author.name;
     cell.bookPages.text = [NSString stringWithFormat:@"%@ pages", book.pages];
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:book.publishDate];
-
     cell.bookPublished.text = [NSString stringWithFormat:@"%ld", (long)[components year]];
-    
-    Author *author = book.author;
-    NSSet *books = author.books;
-    NSLog(@"%lu", (unsigned long)books.count);
-    
     return cell;
 }
 
@@ -160,7 +137,6 @@
         vc.managedObjectContext = self.managedObjectContext;
     } else if ([segue.identifier isEqualToString:@"bookDetail"]) {
         BookDetailVC *vc = segue.destinationViewController;
-        
         Book *book = [_books objectAtIndex:indexPath.row];
         vc.book = book;
     }
