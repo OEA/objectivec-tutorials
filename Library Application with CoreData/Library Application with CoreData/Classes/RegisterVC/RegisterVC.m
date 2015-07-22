@@ -7,25 +7,21 @@
 //
 
 #import "RegisterVC.h"
-#import "BookListVC.h"
 #import "User.h"
-#import "UserLog.h"
+#import "UserManager.h"
 
 @interface RegisterVC()
 @property (strong, nonatomic) IBOutlet UITextField *nameText;
 @property (strong, nonatomic) IBOutlet UITextField *usernameText;
 @property (strong, nonatomic) IBOutlet UITextField *passwordText;
-
-
+@property (strong, nonatomic) UserManager *userManager;
 @end
 @implementation RegisterVC
 
-
-- (NSMutableArray *)books
+- (void)viewDidLoad
 {
-    if (!_books)
-        _books = [NSMutableArray new];
-    return _books;
+    if (!_userManager)
+        _userManager = [UserManager sharedInstance];
 }
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -43,74 +39,32 @@
     NSString *username = self.usernameText.text;
     NSString *password = self.passwordText.text;
     NSString *name = self.nameText.text;
-    NSNumber *isAdmin = [self isAdmin];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
     
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    
-    if ([results count] > 0) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Register Failed" message:@"you entered a picked username, please change it." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+    @try {
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
+        User *user = [[User alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+        [user setName:name];
+        [user setUsername:username];
+        [user setPassword:password];
+        [self.userManager createUser:user];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Register Successful" message:@"Please log into the system." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-    } else {
-        User *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:self.managedObjectContext];
-        
-        [user setValue:name forKey:@"name"];
-        [user setValue:username forKey:@"username"];
-        [user setValue:password forKey:@"password"];
-        [user setValue:[NSDate date] forKey:@"creationDate"];
-        [user setValue:isAdmin forKey:@"isAdmin"];
-        
-        NSError *error;
-        if (![self.managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    @catch (NSException *exception) {
+        if ([exception.reason isEqualToString:@"pickedUsername"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Register Failed" message:@"you entered a picked username, please change it." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+            [alert show];
+        } else {
+            
         }
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfully registered." message:@"You successfully registered !" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
-        [alert show];
-
+    }
+    @finally {
+        
     }
 
 }
 - (IBAction)loginButtonTapped:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-- (UserLog *)createLog:(User *)user
-{
-    
-    UserLog *userLog = [NSEntityDescription insertNewObjectForEntityForName:@"UserLog" inManagedObjectContext:self.managedObjectContext];
-    [userLog setValue:user forKey:@"user"];
-    [userLog setValue:@"User created by himself/herself" forKey:@"transaction"];
-    [userLog setValue:[NSDate date] forKey:@"transactionDate"];
-    
-    NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-    }
-    
-    return userLog;
-    
-}
-
-- (NSNumber *)isAdmin
-{
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSError *searchError;
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    
-    if ([results count] == 0)
-        return [NSNumber numberWithInt:1];
-    else 
-        return [NSNumber numberWithInt:0];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"listBooks"]) {
-        BookListVC *vc = segue.destinationViewController;
-        vc.books = self.books;
-    }
 }
 
 @end

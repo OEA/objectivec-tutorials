@@ -10,10 +10,12 @@
 #import "LoginVC.h"
 #import "User.h"
 #import "BookListVC.h"
+#import "UserManager.h"
 
 @interface LoginVC()
 @property (strong, nonatomic) IBOutlet UITextField *usernameText;
 @property (strong, nonatomic) IBOutlet UITextField *passwordText;
+@property (strong, nonatomic) UserManager *userManager;
 
 @property (nonatomic)BOOL isLoggedIn;
 @end
@@ -23,7 +25,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 }
+
+- (UserManager *)userManager
+{
+    if (!_userManager) {
+        _userManager = [UserManager sharedInstance];
+    }
+    return _userManager;
+}
+
 - (NSManagedObjectContext *)managedObjectContext
 {
     NSManagedObjectContext *context = nil;
@@ -37,25 +49,18 @@
     NSString *username = self.usernameText.text;
     NSString *password = self.passwordText.text;
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"(username = %@) AND (password = %@)", username, password];
-    
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    
-    if ([results count] > 0) {
+    @try {
+        [self.userManager loginUser:username :password];
         self.isLoggedIn = YES;
-        User *user = [results firstObject];
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setObject:user.username forKey:@"user"];
-    } else {
+    }
+    @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Login Failed" message:@"you entered wrong username or password" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
         [alert show];
         self.isLoggedIn = NO;
     }
-
-    
+    @finally {
+        
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

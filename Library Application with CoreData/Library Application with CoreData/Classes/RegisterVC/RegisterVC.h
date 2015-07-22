@@ -9,9 +9,5 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 @interface RegisterVC : UIViewController <NSFetchedResultsControllerDelegate>
-
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
-
-@property (strong, nonatomic) NSMutableArray *books;
-
 @end
