@@ -47,12 +47,12 @@
         [user setUsername:username];
         [user setPassword:password];
         [self.userManager createUser:user];
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Register Successful" message:@"Please log into the system." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Register successful" message:@"Please log into the system." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
     @catch (NSException *exception) {
         if ([exception.reason isEqualToString:@"pickedUsername"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Register Failed" message:@"you entered a picked username, please change it." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Register failed" message:@"you entered a picked username, please change it." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
             [alert show];
         } else {
             
