@@ -12,5 +12,5 @@
 @interface UserDetailVC : UITableViewController<UISearchResultsUpdating, UISearchControllerDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
-
+@property (strong, nonatomic) NSString *username;
 @end

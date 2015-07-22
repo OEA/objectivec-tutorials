@@ -18,6 +18,9 @@
 //Create Log
 - (void)createLog:(NSString *)transaction :(User *)user;
 
+//Get All Log for specific username
+- (NSArray *)getLogsFromUserName:(NSString *)username;
+
 //Shared Instance
 +(instancetype)sharedInstance;
 @end

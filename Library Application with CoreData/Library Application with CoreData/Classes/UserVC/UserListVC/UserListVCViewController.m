@@ -9,6 +9,7 @@
 #import "UserListVCViewController.h"
 #import "User.h"
 #import "UserManager.h"
+#import "UserDetailVC.h"
 
 @interface UserListVCViewController ()
 @property (strong, nonatomic) NSMutableArray *userArray;
@@ -90,16 +91,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -217,6 +208,26 @@
         self.tableView.backgroundColor = [[UIColor alloc]initWithRed:255 green:255 blue:255 alpha:0.90];
     }
     [self.tableView reloadData];
+}
+
+-(void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
+{
+    
+    UITableViewCell *cell = sender;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    if ([segue.identifier isEqualToString:@"userDetail"]) {
+        UserDetailVC *vc = segue.destinationViewController;
+        User *user;
+        if (self.searchController.active) {
+            user = [self.userFilterArray objectAtIndex:indexPath.row];
+        } else {
+            user = [self.userArray objectAtIndex:indexPath.row];
+        }
+        vc.username = user.username;
+        vc.title = vc.username;
+        
+    }
 }
 
 @end

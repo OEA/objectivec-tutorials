@@ -70,4 +70,17 @@
     
 }
 
+
+- (NSArray *)getLogsFromUserName:(NSString *)username
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"UserLog"];
+    request.predicate = [NSPredicate predicateWithFormat:@"user.username = %@", username];
+    
+    NSError *searchError;
+    
+    NSArray *logs;
+    logs = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    return logs;
+}
+
 @end
