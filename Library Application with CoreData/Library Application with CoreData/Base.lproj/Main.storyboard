@@ -278,7 +278,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Books" id="VaL-kq-0tz">
-                        <barButtonItem key="rightBarButtonItem" title="Admin Panel" id="gzR-Rg-t2T">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="A9V-u3-xr6">
+                            <connections>
+                                <action selector="logoutButtonTapped:" destination="y2I-MG-niX" id="JJM-Po-D3i"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Admin" id="gzR-Rg-t2T">
                             <connections>
                                 <segue destination="k9O-Be-UCY" kind="presentation" id="4iO-LA-bTB"/>
                             </connections>

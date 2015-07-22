@@ -141,5 +141,8 @@
         vc.book = book;
     }
 }
+- (IBAction)logoutButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

@@ -11,6 +11,8 @@
 #import "Book.h"
 #import "Author.h"
 #import "SubjectModalVC.h"
+#import "BookManager.h"
+#import "AuthorManager.h"
 
 @interface BookEditVC ()<SubjectModelDelegate>
 
@@ -23,6 +25,8 @@
 @property (strong, nonatomic) NSMutableArray *years;
 @property (strong, nonatomic) Book* book;
 @property (strong, nonatomic) NSString *date;
+@property (strong, nonatomic) BookManager *bookManager;
+@property (strong, nonatomic) AuthorManager *authorManager;
 @end
 
 #define MIN_YEAR 1800
@@ -49,17 +53,25 @@
         [_years addObject:[[NSNumber alloc] initWithInt:i]];
     }
     
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    request.predicate = [NSPredicate predicateWithFormat:@"title = %@", self.bookTitle];
-    
-    NSError *searchError;
-    NSArray *list = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    
-    self.book = [list firstObject];
-    
+    //Getting book from book title
+    self.book = [self.bookManager getBookFromName:self.book.title];
+    //clear UI
     [self initUI];
     
+}
+
+- (BookManager *)bookManager
+{
+    if (!_bookManager)
+        _bookManager = [BookManager sharedInstance];
+    return _bookManager;
+}
+
+- (AuthorManager *)authorManager
+{
+    if (!_authorManager)
+        _authorManager = [AuthorManager sharedInstance];
+    return _authorManager;
 }
 
 - (void)initUI
@@ -86,51 +98,33 @@
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:currentDate];
     return [components year];
 }
+
 - (IBAction)editButtonTapped:(id)sender {
+    Author *author = [self.authorManager getAuthor:self.authorText.text];
+    Book *book = [self.bookManager getBookFromName:self.book.title];
     
-    Author *author;
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Author"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name = %@", self.authorText.text];
-    
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    
-    if ([results count] > 0) {
-        author = [results objectAtIndex:0];
-    } else {
-        author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
-        [author setValue:self.authorText.text forKey:@"name"];
-    }
-    
-    Book *book;
-    NSFetchRequest *bookReq = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    bookReq.predicate = [NSPredicate predicateWithFormat:@"title = %@", self.book.title];
-    
-    NSArray *bookResults = [self.managedObjectContext executeFetchRequest:bookReq error:&searchError];
-    
-    book = [bookResults objectAtIndex:0];
-    [book setValue:self.titleText.text forKey:@"title"];
-    [book setValue:[self numberFromString:self.pagesText.text] forKey:@"pages"];
-    [book setValue:[self dateFromString:self.date] forKey:@"publishDate"];
-    [book setValue:self.imageText.text forKey:@"image"];
-    [book setValue:author forKey:@"author"];
-    [book setValue:nil forKey:@"subjects"];
-    
-    for (Subject *subject in self.book.subjects) {
-        [book removeSubjects:subject];
-    }
-    for (Subject *subject in self.subjects) {
+    @try {
+        [book setTitle:self.titleText.text];
+        [book setPages:[self numberFromString:self.pagesText.text]];
+        [book setPublishDate:[NSDate dateFromString:self.date]];
+        [book setImage:self.imageText.text];
+        for (Subject *subject in self.subjects) {
+            [book addSubjectsObject:subject];
+        }
+        [self.bookManager updateBook:book];
         
-        [book addSubjectsObject:subject];
+        Book *editedBook = [self.bookManager getBookFromName:book.title];
+        [editedBook setAuthor:author];
+        [self.bookManager updateBook:editedBook];
+        [author addBooksObject:[self.bookManager getBookFromName:book.title]];
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    if (![book.author.name isEqualToString:self.authorText.text]) {
-        [author addBooksObject:book];
+    @catch (NSException *exception) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Adding Book Failed" message:@"you entered book which is already added." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+        [alert show];
     }
-    
-    NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    @finally {
+        
     }
     
     
@@ -141,21 +135,6 @@
     return [NSNumber numberWithInteger:[numberStr integerValue]];
 }
 
-- (NSDate *)dateFromString:(NSString *)dateStr
-{
-    if (!dateStr) {
-        
-        NSDate *currDate = [NSDate date];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        [dateFormatter setDateFormat:@"yyyy"];
-        NSString *dateString = [dateFormatter stringFromDate:currDate];
-        return [dateFormatter dateFromString:dateString];
-    } else {
-        NSDateFormatter *dateFormat = [NSDateFormatter new];
-        [dateFormat setDateFormat:@"yyyy"];
-        return [dateFormat dateFromString:dateStr];
-    }
-}
 #pragma mark - Core Data method
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -168,6 +147,7 @@
     return context;
 }
 
+#pragma mark - UI elements
 - (void)dismissKeyboard {
     [self.view endEditing:YES];
 }
@@ -187,13 +167,6 @@
     
 }
 
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)changeTitle:(NSString *)title
 {
     self.bookTitle = title;
@@ -203,6 +176,16 @@
 {
     return [_years count];
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+
+#pragma mark - Table View
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -221,16 +204,8 @@
     id title = [_years objectAtIndex:row];
     self.date = [NSString stringWithFormat:@"%@", title];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
+#pragma mark - segue
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
 {
     if ([segue.identifier isEqualToString:@"subjectModal"]) {

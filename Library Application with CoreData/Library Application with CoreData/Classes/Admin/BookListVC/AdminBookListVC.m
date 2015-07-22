@@ -12,14 +12,18 @@
 #import "BookEditVC.h"
 #import "BookListCell.h"
 #import "BookDetailVC.h"
+#import "BookManager.h"
+
 @interface AdminBookListVC ()
 @property (strong, nonatomic)NSMutableArray *books;
 @property (strong, nonatomic) NSCache *imagesCache;
-
+@property (strong, nonatomic) BookManager *bookManager;
 @end
 
 @implementation AdminBookListVC
 
+
+#pragma mark - viewDid methods
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initBooks];
@@ -45,14 +49,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Book Manager
+
+-(BookManager *)bookManager
+{
+    if (!_bookManager)
+        _bookManager = [BookManager sharedInstance];
+    return _bookManager;
+}
+
+
+#pragma mark - Book Initializer
 - (void)initBooks
 {
-    NSFetchRequest *fetchRequest = [NSFetchRequest new];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSError *error;
-    self.books = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    self.books = [self.bookManager getAllBooks];
     
 
 }
@@ -83,20 +93,7 @@
 
 - (void)deleteBook:(NSString *)title
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    request.predicate = [NSPredicate predicateWithFormat:@"title = %@", title];
-    
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    Book *book = [results firstObject];
-    
-    [self.managedObjectContext deleteObject:book];
-    NSError *error = nil;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
-        return;
-    }
+    [self.bookManager deleteBook:[self.bookManager getBookFromName:title]];
 }
 
 #pragma mark - Core Data method

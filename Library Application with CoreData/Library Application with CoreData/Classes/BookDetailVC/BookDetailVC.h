@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) Book *book;
 
+//Book Detail's UI elements
 @property (weak, nonatomic) IBOutlet UILabel *bookName;
 @property (weak, nonatomic) IBOutlet UILabel *bookAuthor;
 @property (weak, nonatomic) IBOutlet UILabel *bookPages;
@@ -23,5 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *bookImage;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
+//Coredata context
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @end

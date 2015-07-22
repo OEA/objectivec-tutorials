@@ -108,6 +108,8 @@
     return context;
 }
 
+#pragma mark - UI functionality
+
 - (void)dismissKeyboard {
     [self.view endEditing:YES];
 }
@@ -154,14 +156,11 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
         Book *book = [[Book alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
     
-    
     @try {
         [book setTitle:self.bookTitle.text];
         [book setPages:[self numberFromString:self.pages.text]];
         [book setPublishDate:[NSDate dateFromString:self.date]];
         [book setImage:self.imageUrl.text];
-        
-       
         for (Subject *subject in self.subjects) {
             [book addSubjectsObject:subject];
         }
@@ -180,10 +179,9 @@
     @finally {
         
     }
-    
-    
-    
 }
+
+#pragma mark - necessary extensions
 
 - (NSNumber *)numberFromString:(NSString *)numberStr
 {
@@ -194,6 +192,8 @@
 {
     return [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
 }
+
+#pragma mark - segue
 
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
 {

@@ -45,7 +45,7 @@
         [self changeUI];
     }
 }
-
+#pragma mark - Book and User Managers
 - (BookManager *)bookManager
 {
     if (!_bookManager)
@@ -72,6 +72,7 @@
     return context;
 }
 
+#pragma mark - UI functionalities
 - (IBAction)getButtonTapped:(id)sender {
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:[NSString stringWithFormat:@"Request %@",self.book.title]
@@ -95,33 +96,6 @@
 
 }
 
-- (void)requestBook
-{
-    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
-    NSDate *startDate = [NSDate date];
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *components = [cal components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:startDate];
-    
-    //adding 1 week
-    [components setDay:([components day] + 7)];
-    NSDate *finishDate = [cal dateFromComponents:components];
-
-    User *user = [self getUserFromSession];
-
-    [transaction setValue:startDate forKey:@"transactionStartDate"];
-    [transaction setValue:finishDate forKey:@"transactionFinishDate"];
-    [transaction setValue:self.book forKey:@"book"];
-    [transaction setValue:user forKey:@"user"];
-    
-    NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-    }
-    
-    [self changeUI];
-    
-}
-
 - (void)changeUI
 {
     
@@ -142,9 +116,52 @@
         [self.getButton setEnabled:NO];
         self.availability.text = @"Not available";
     }
-
+    
 }
 
+- (IBAction)cancelButtonTapped:(id)sender {
+    Transaction *lastTransaction = [self getLastTransaction];
+    
+    [self.managedObjectContext deleteObject:lastTransaction];
+    NSError *error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
+    }
+    //    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfully canceled." message:@"You successfully canceled getting the book !" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    //    [alert show];
+    [self changeUI];
+}
+
+
+#pragma mark - transaction process
+- (void)requestBook
+{
+    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
+    NSDate *startDate = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:startDate];
+    
+    //adding 1 week
+    [components setDay:([components day] + 7)];
+    NSDate *finishDate = [cal dateFromComponents:components];
+
+    User *user = [self.userManager getCurrentUser];
+
+    [transaction setValue:startDate forKey:@"transactionStartDate"];
+    [transaction setValue:finishDate forKey:@"transactionFinishDate"];
+    [transaction setValue:self.book forKey:@"book"];
+    [transaction setValue:user forKey:@"user"];
+    
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    [self changeUI];
+    
+}
+
+#pragma mark - logical methods
 - (BOOL)isBookOnMe
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -158,18 +175,7 @@
         return NO;
     }
 }
-- (IBAction)cancelButtonTapped:(id)sender {
-    Transaction *lastTransaction = [self getLastTransaction];
-    
-    [self.managedObjectContext deleteObject:lastTransaction];
-    NSError *error = nil;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
-    }
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfully canceled." message:@"You successfully canceled getting the book !" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//    [alert show];
-    [self changeUI];
-}
+
 
 - (Transaction *)getLastTransaction
 {
@@ -184,24 +190,6 @@
     NSLog(lastTransaction.book.title);
     return lastTransaction;
     
-}
-
-- (User *)getUserFromSession
-{
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSString *username = [defaults objectForKey:@"user"];
-    
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"(username = %@)", username];
-    
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    User *user = [results firstObject];
-    NSLog(@"%@", user.username);
-    return user;
 }
 
 - (BOOL)isBookAvailable
@@ -242,14 +230,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
