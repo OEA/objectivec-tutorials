@@ -14,6 +14,7 @@
 
 @implementation UserLogManager
 
+#pragma mark - Shared Instance methods
 + (instancetype)sharedInstance
 {
     static UserLogManager *instance = nil;
@@ -47,6 +48,8 @@
     
 }
 
+#pragma mark - Necessary Methods
+
 - (void)createLog:(NSString *)transaction :(User *)user
 {
     UserLog *userLog = [NSEntityDescription insertNewObjectForEntityForName:@"UserLog" inManagedObjectContext:self.managedObjectContext];
@@ -59,15 +62,6 @@
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
     }
-    
-//    } else if ([transaction isEqualToString:@"add"]) {
-//        
-//    } else if () {
-//        
-//    } else if () {
-//        
-//    }
-    
 }
 
 
@@ -75,9 +69,7 @@
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"UserLog"];
     request.predicate = [NSPredicate predicateWithFormat:@"user.username = %@", username];
-    
     NSError *searchError;
-    
     NSArray *logs;
     logs = [self.managedObjectContext executeFetchRequest:request error:&searchError];
     return logs;

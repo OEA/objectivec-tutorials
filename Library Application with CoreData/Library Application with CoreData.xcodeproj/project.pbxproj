@@ -11,6 +11,8 @@
 		171BFA3C1B5E822E00CE4DE4 /* BookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA3B1B5E822E00CE4DE4 /* BookManager.m */; };
 		171BFA431B5F693500CE4DE4 /* UserLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA421B5F693500CE4DE4 /* UserLogManager.m */; };
 		171BFA461B5FA81300CE4DE4 /* SubjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA451B5FA81300CE4DE4 /* SubjectManager.m */; };
+		171BFA491B5FB32E00CE4DE4 /* AuthorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA481B5FB32E00CE4DE4 /* AuthorManager.m */; };
+		171BFA4D1B5FCD3100CE4DE4 /* NSDate+DateFromString.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA4C1B5FCD3100CE4DE4 /* NSDate+DateFromString.m */; };
 		17741D881B54F029006849C2 /* SubjectListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17741D871B54F029006849C2 /* SubjectListVC.m */; };
 		1787D0691B5E26CD0031B95E /* BookDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0681B5E26CD0031B95E /* BookDetailVC.m */; };
 		1787D0721B5E500E0031B95E /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0711B5E500E0031B95E /* Transaction.m */; };
@@ -60,6 +62,10 @@
 		171BFA421B5F693500CE4DE4 /* UserLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLogManager.m; sourceTree = "<group>"; };
 		171BFA441B5FA81300CE4DE4 /* SubjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectManager.h; sourceTree = "<group>"; };
 		171BFA451B5FA81300CE4DE4 /* SubjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectManager.m; sourceTree = "<group>"; };
+		171BFA471B5FB32E00CE4DE4 /* AuthorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorManager.h; sourceTree = "<group>"; };
+		171BFA481B5FB32E00CE4DE4 /* AuthorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorManager.m; sourceTree = "<group>"; };
+		171BFA4B1B5FCD3100CE4DE4 /* NSDate+DateFromString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromString.h"; sourceTree = "<group>"; };
+		171BFA4C1B5FCD3100CE4DE4 /* NSDate+DateFromString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromString.m"; sourceTree = "<group>"; };
 		17741D861B54F029006849C2 /* SubjectListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectListVC.h; sourceTree = "<group>"; };
 		17741D871B54F029006849C2 /* SubjectListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectListVC.m; sourceTree = "<group>"; };
 		1787D0671B5E26CD0031B95E /* BookDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailVC.h; sourceTree = "<group>"; };
@@ -190,6 +196,8 @@
 		171BFA3F1B5E847B00CE4DE4 /* AuthorManager */ = {
 			isa = PBXGroup;
 			children = (
+				171BFA471B5FB32E00CE4DE4 /* AuthorManager.h */,
+				171BFA481B5FB32E00CE4DE4 /* AuthorManager.m */,
 			);
 			path = AuthorManager;
 			sourceTree = "<group>";
@@ -201,6 +209,15 @@
 				171BFA421B5F693500CE4DE4 /* UserLogManager.m */,
 			);
 			path = UserLogManager;
+			sourceTree = "<group>";
+		};
+		171BFA4A1B5FCCC700CE4DE4 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				171BFA4B1B5FCD3100CE4DE4 /* NSDate+DateFromString.h */,
+				171BFA4C1B5FCD3100CE4DE4 /* NSDate+DateFromString.m */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		17741D841B54EFE1006849C2 /* SubjectVC */ = {
@@ -368,6 +385,7 @@
 		95DA17E71B4CFC6A008B5517 /* Library Application with CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				171BFA4A1B5FCCC700CE4DE4 /* Utilities */,
 				171BFA341B5E81C200CE4DE4 /* Managers */,
 				95DA18281B4CFE20008B5517 /* Models */,
 				95DA18111B4CFCF0008B5517 /* Classes */,
@@ -633,6 +651,7 @@
 				17ABD6401B53B5AA00AE5B11 /* User.m in Sources */,
 				17ABD64D1B53CBA900AE5B11 /* Author.m in Sources */,
 				17741D881B54F029006849C2 /* SubjectListVC.m in Sources */,
+				171BFA491B5FB32E00CE4DE4 /* AuthorManager.m in Sources */,
 				17BC12FB1B55271800EFB951 /* BookEditVC.m in Sources */,
 				171BFA3C1B5E822E00CE4DE4 /* BookManager.m in Sources */,
 				1787D0721B5E500E0031B95E /* Transaction.m in Sources */,
@@ -650,6 +669,7 @@
 				17ABD6491B53CB9800AE5B11 /* Book.m in Sources */,
 				17ABD63C1B53B55E00AE5B11 /* UserLog.m in Sources */,
 				95DA18261B4CFCF0008B5517 /* LoginVC.m in Sources */,
+				171BFA4D1B5FCD3100CE4DE4 /* NSDate+DateFromString.m in Sources */,
 				17ABD6511B53DA8200AE5B11 /* SubjectModalVC.m in Sources */,
 				171BFA431B5F693500CE4DE4 /* UserLogManager.m in Sources */,
 				17ABD6361B53B02500AE5B11 /* UserDetailVC.m in Sources */,

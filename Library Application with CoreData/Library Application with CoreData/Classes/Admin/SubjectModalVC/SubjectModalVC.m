@@ -8,58 +8,51 @@
 
 #import "SubjectModalVC.h"
 #import "Subject.h"
+#import "SubjectManager.h"
 
 @interface SubjectModalVC ()
 
 @property (strong, nonatomic) NSMutableArray *subjects;
+@property (strong, nonatomic) SubjectManager *subjectManager;
 @end
 
 @implementation SubjectModalVC
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self initSubjects];
-    [self.tableView reloadData];
-    
     if (!_subjects)
         _subjects = [NSMutableArray new];
     if (!_selectedSubjects)
         _selectedSubjects = [NSMutableArray new];
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Subject"];
     
-    NSError *searchError;
+    [self initSubjects];
     
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    NSArray *results = [self.subjectManager getAllSubjects];
     
     if ([results count] > 0) {
         
     } else {
-        Subject *uncategorized = [NSEntityDescription insertNewObjectForEntityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
-        [uncategorized setValue:@"Uncategorized" forKey:@"name"];
-        NSError *error;
-        if (![self.managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
+        Subject *uncategorized = [[Subject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+        [uncategorized setName:@"Uncategorized"];
+        [self.subjectManager createSubject:uncategorized];
+        
     }
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView reloadData];
+}
+
+- (SubjectManager *)subjectManager
+{
+    if (!_subjectManager)
+        _subjectManager = [SubjectManager sharedInstance];
+    return _subjectManager;
 }
 
 - (void)initSubjects
 {
-    
-    NSFetchRequest *fetchRequest = [NSFetchRequest new];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSError *error;
-    self.subjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    self.subjects = [self.subjectManager getAllSubjects];
     
 }
 

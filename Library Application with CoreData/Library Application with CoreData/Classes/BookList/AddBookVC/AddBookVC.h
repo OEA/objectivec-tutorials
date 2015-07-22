@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "Subject.h"
+#import "NSDate+DateFromString.h"
 
 @interface AddBookVC : UIViewController <UIPickerViewDelegate, NSFetchedResultsControllerDelegate>
 

@@ -10,9 +10,14 @@
 #import "Subject.h"
 #import "Transaction.h"
 #import "User.h"
+#import "Author.h"
+#import "BookManager.h"
+#import "UserManager.h"
 
 @interface BookDetailVC ()
 @property (strong, nonatomic) NSCache *imagesCache;
+@property (strong, nonatomic) BookManager *bookManager;
+@property (strong, nonatomic) UserManager *userManager;
 @end
 
 @implementation BookDetailVC
@@ -35,10 +40,24 @@
     self.bookYear.text = [NSString stringWithFormat:@"%ld", (long)[components year]];
     
     self.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:self.book.image]];
-    
+    self.bookAuthor.text = self.book.author.name;
     if (![self isBookAvailable]){
         [self changeUI];
     }
+}
+
+- (BookManager *)bookManager
+{
+    if (!_bookManager)
+        _bookManager = [BookManager sharedInstance];
+    return _bookManager;
+}
+
+- (UserManager *)userManager
+{
+    if (!_userManager)
+        _userManager = [UserManager sharedInstance];
+    return _userManager;
 }
 
 #pragma mark - Core Data method

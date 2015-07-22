@@ -102,7 +102,7 @@
         NSString *name = subjectName.text;
         
         @try {
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
             Subject *subject = [[Subject alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
             [subject setName:name];
             [self.subjectManager createSubject:subject];
@@ -135,16 +135,6 @@
     return _subjectFilterArray;
 }
 
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

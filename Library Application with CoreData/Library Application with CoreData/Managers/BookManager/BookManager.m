@@ -53,20 +53,26 @@
 - (void)createBook:(Book *)book
 {
     
-    //Create insertable Book model
-    Book *creationBook = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
-    //Setting all necessary fields
-    [creationBook setTitle:book.title];
-    [creationBook setPublishDate:book.publishDate];
-    [creationBook setAuthor:book.author];
-    [creationBook setSubjects:book.subjects];
-    [creationBook setImage:book.image];
+    if (![self getBookFromName:book.title]) {
     
-    NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        //Create insertable Book model
+        Book *creationBook = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+        //Setting all necessary fields
+        [creationBook setTitle:book.title];
+        [creationBook setPublishDate:book.publishDate];
+        [creationBook setAuthor:book.author];
+        [creationBook setSubjects:book.subjects];
+        [creationBook setImage:book.image];
+        [creationBook setPages:book.pages];
+    
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+    
+    } else {
+        @throw [[NSException alloc] initWithName:@"Custom" reason:@"pickedBook" userInfo:nil];
     }
-    
     //Creation Log
     //[self.userLogManager createLog:@"createUser" :creationUser];
 }
@@ -81,6 +87,7 @@
     [editingBook setAuthor:book.author];
     [editingBook setSubjects:book.subjects];
     [editingBook setImage:book.image];
+    [editingBook setPages:book.pages];
     
     NSError *error;
     if (![self.managedObjectContext save:&error]) {

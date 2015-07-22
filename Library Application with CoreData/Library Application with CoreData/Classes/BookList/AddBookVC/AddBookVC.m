@@ -11,6 +11,8 @@
 #import "Subject.h"
 #import "Author.h"
 #import "SubjectModalVC.h"
+#import "BookManager.h"
+#import "AuthorManager.h"
 @interface AddBookVC() <UIPickerViewDataSource, SubjectModelDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *bookTitle;
@@ -23,6 +25,9 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *dateView;
 @property (strong, nonatomic) NSString *date;
 @property (strong, nonatomic) NSString *subject;
+@property (strong, nonatomic) BookManager *bookManager;
+@property (strong, nonatomic) AuthorManager *authorManager;
+
 
 
 
@@ -63,6 +68,20 @@
         [self.subjectList.text stringByAppendingString:@"\n"];
     }
     
+}
+
+- (BookManager *)bookManager
+{
+    if (!_bookManager)
+        _bookManager = [BookManager sharedInstance];
+    return _bookManager;
+}
+
+- (AuthorManager *)authorManager
+{
+    if (!_authorManager)
+        _authorManager = [AuthorManager sharedInstance];
+    return _authorManager;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -130,61 +149,45 @@
 }
 
 - (IBAction)addButtonTapped:(id)sender {
+    Author *author = [self.authorManager getAuthor:self.author.text];
     
-        Author *author;
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Author"];
-        request.predicate = [NSPredicate predicateWithFormat:@"name = %@", self.author.text];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+        Book *book = [[Book alloc] initWithEntity:entity insertIntoManagedObjectContext:nil];
+    
+    
+    @try {
+        [book setTitle:self.bookTitle.text];
+        [book setPages:[self numberFromString:self.pages.text]];
+        [book setPublishDate:[NSDate dateFromString:self.date]];
+        [book setImage:self.imageUrl.text];
         
-        NSError *searchError;
-        
-        NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-        
-        if ([results count] > 0) {
-            author = [results objectAtIndex:0];
-        } else {
-            author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
-            [author setValue:self.author.text forKey:@"name"];
-        }
-        
-        Book *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
-        
-        [book setValue:self.bookTitle.text forKey:@"title"];
-        [book setValue:[self numberFromString:self.pages.text] forKey:@"pages"];
-        [book setValue:[self dateFromString:self.date] forKey:@"publishDate"];
-        [book setValue:self.imageUrl.text forKey:@"image"];
-        [book setValue:author forKey:@"author"];
+       
         for (Subject *subject in self.subjects) {
             [book addSubjectsObject:subject];
         }
-        [author addBooksObject:book];
-        NSError *error;
-        if (![self.managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
+        [self.bookManager createBook:book];
         
+        Book *createdBook = [self.bookManager getBookFromName:book.title];
+        [createdBook setAuthor:author];
+        [self.bookManager updateBook:createdBook];
+        [author addBooksObject:[self.bookManager getBookFromName:book.title]];
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    @catch (NSException *exception) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Adding Book Failed" message:@"you entered book which is already added." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    @finally {
+        
+    }
+    
+    
     
 }
 
 - (NSNumber *)numberFromString:(NSString *)numberStr
 {
     return [NSNumber numberWithInteger:[numberStr integerValue]];
-}
-
-- (NSDate *)dateFromString:(NSString *)dateStr
-{
-    if (!dateStr) {
-        
-        NSDate *currDate = [NSDate date];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        [dateFormatter setDateFormat:@"yyyy"];
-        NSString *dateString = [dateFormatter stringFromDate:currDate];
-        return [dateFormatter dateFromString:dateString];
-    } else {
-        NSDateFormatter *dateFormat = [NSDateFormatter new];
-        [dateFormat setDateFormat:@"yyyy"];
-        return [dateFormat dateFromString:dateStr];
-    }
 }
 
 - (NSData *)imageFromUrl:(NSString *)url

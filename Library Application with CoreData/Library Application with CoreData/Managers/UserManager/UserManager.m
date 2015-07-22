@@ -70,6 +70,7 @@
 
 - (void)createUser:(User *)user
 {
+    BOOL userIsAdmin = [self isAdmin];
     NSArray *results;
     results = [self getUserArrayWithUserName:user];
     //If username is already taken, it throws exception to handle username conflicts.
@@ -84,7 +85,7 @@
     [creationUser setPassword:user.password];
     [creationUser setName:user.name];
     
-    NSNumber *isAdmin = ([self isAdmin]) ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0];
+    NSNumber *isAdmin = (userIsAdmin) ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0];
     
     [creationUser setCreationDate:[NSDate date]];
     [creationUser setIsAdmin:isAdmin];
