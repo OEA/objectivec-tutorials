@@ -8,11 +8,13 @@
 
 #import "UserListVCViewController.h"
 #import "User.h"
+#import "UserManager.h"
 
 @interface UserListVCViewController ()
 @property (strong, nonatomic) NSMutableArray *userArray;
 @property (strong, nonatomic) NSMutableArray *userFilterArray;
 @property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) UserManager *userManager;
 //Core Data context variable
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @end
@@ -31,6 +33,17 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.tableView reloadData];
 }
+
+
+
+- (UserManager *)userManager
+{
+    if (!_userManager) {
+        _userManager = [UserManager sharedInstance];
+    }
+    return _userManager;
+}
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -54,14 +67,7 @@
 #pragma mark - User Init
 - (void)initUsers
 {
-    
-    NSFetchRequest *fetchRequest = [NSFetchRequest new];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSError *error;
-    self.userArray = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
+    self.userArray = [self.userManager getAllUser];
 }
 
 
@@ -170,7 +176,7 @@
     }];
     deleteAction.backgroundColor = [UIColor redColor];
     UITableViewRowAction *editAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Edit" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
-        NSLog(@"test");
+        //User edit may be added later
     }];
     editAction.backgroundColor = [UIColor orangeColor];
     return @[deleteAction, editAction];
@@ -178,19 +184,16 @@
 
 - (void)deleteUser:(NSString *)username
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"username = %@", username];
-    
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    User *user = [results firstObject];
-    
-    [self.managedObjectContext deleteObject:user];
-    NSError *error = nil;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Can't Delete! %@ %@", error, [error localizedDescription]);
-        return;
+    User *user = [self.userManager getUserFromUserName:username];
+    @try {
+        [self.userManager deleteUser:user];
+    }
+    @catch (NSException *exception) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"Please try again." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    @finally {
+        
     }
 }
 

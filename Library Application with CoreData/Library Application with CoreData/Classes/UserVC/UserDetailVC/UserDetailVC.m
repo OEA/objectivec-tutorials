@@ -7,6 +7,7 @@
 //
 
 #import "UserDetailVC.h"
+#import "UserManager.h"
 
 @interface UserDetailVC ()
 @property (strong, nonatomic) UISearchController *searchController;
@@ -27,7 +28,6 @@
     [self initLogs];
     [self.tableView reloadData];
 }
-
 
 #pragma mark - Core Data method
 
