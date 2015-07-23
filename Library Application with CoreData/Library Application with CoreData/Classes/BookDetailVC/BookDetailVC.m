@@ -74,15 +74,24 @@
 
 #pragma mark - UI functionalities
 - (IBAction)getButtonTapped:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc]
+    
+    if ([self.getButton.titleLabel.text isEqualToString:@"GET"]) {
+        UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:[NSString stringWithFormat:@"Request %@",self.book.title]
                           message:[NSString stringWithFormat:@"Are you sure to get %@ ?",self.book.title]
                           delegate:self
                           cancelButtonTitle:nil
                           otherButtonTitles:@"YES",@"NO", nil];
-    
-    
-    [alert show];
+        [alert show];
+    } else {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow: 15];
+        localNotification.alertBody = [NSString stringWithFormat:@"%@ now avaible",self.book.title];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+
+    }
 }
 
 
@@ -113,7 +122,6 @@
     } else {
         [self.getButton setBackgroundColor:[UIColor orangeColor]];
         [self.getButton setTitle:@"NOTIFY ME" forState:UIControlStateNormal];
-        [self.getButton setEnabled:NO];
         self.availability.text = @"Not available";
     }
     

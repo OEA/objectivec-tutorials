@@ -10,13 +10,14 @@
 
 @interface AppDelegate ()
 
+@property (strong, nonatomic) UIAlertView *notificationAlert;
 @end
 
 @implementation AppDelegate
-
+@synthesize notificationAlert = _notificationAlert;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     return YES;
 }
 
@@ -35,7 +36,12 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [self clearNotifications];
+}
+
+- (void) clearNotifications {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -124,4 +130,34 @@
     }
 }
 
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    // Play a sound and show an alert only if the application is active, to avoid doubly notifiying the user.
+    if ([application applicationState] == UIApplicationStateActive) {
+        // Initialize the alert view.
+        if (!_notificationAlert) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:nil
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+           
+        
+            [self setNotificationAlert:alert];
+            [self clearNotifications];
+        }
+        
+        // Load the notification sound.
+        
+        // Set the title of the alert with the notification's body.
+        [_notificationAlert setTitle:[notification alertBody]];
+        [_notificationAlert show];
+    } else {
+        
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+}
 @end
