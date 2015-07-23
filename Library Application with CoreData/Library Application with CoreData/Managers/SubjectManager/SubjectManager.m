@@ -7,6 +7,7 @@
 //
 
 #import "SubjectManager.h"
+#import "NSString+CheckingEmpty.h"
 
 @interface SubjectManager()
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
@@ -24,18 +25,22 @@
         @throw [[NSException alloc] initWithName:@"Custom" reason:@"pickedSubject" userInfo:nil];
     }
     
-    //Create insertable Book model
-    Subject *creationSubject = [NSEntityDescription insertNewObjectForEntityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
-    //Setting all necessary fields
-    [creationSubject setName:subject.name];
-    
-    NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    if ([subject.name isCompleteEmpty]) {
+        @throw [[NSException alloc] initWithName:@"Custom" reason:@"emptySubject" userInfo:nil];
+    } else {
+        //Create insertable Book model
+        Subject *creationSubject = [NSEntityDescription insertNewObjectForEntityForName:@"Subject" inManagedObjectContext:self.managedObjectContext];
+        //Setting all necessary fields
+        [creationSubject setName:subject.name];
+        
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+        
+        //Creation Log
+        //[self.userLogManager createLog:@"createUser" :creationUser];
     }
-    
-    //Creation Log
-    //[self.userLogManager createLog:@"createUser" :creationUser];
 }
 - (void)updateSubject:(Subject *)subject
 {

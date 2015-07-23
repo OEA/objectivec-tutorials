@@ -140,28 +140,37 @@
                               message:[NSString stringWithFormat:@"%@",user.name]
                               delegate:self
                               cancelButtonTitle:@"OK"
-                              otherButtonTitles:@"Edit", @"Delete",@"Detail", nil];
+                              otherButtonTitles:@"Delete",@"Detail", nil];
         [alert show];
     }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 2) {
+    if (buttonIndex == 1) {
         [self deleteUser:[alertView.title substringFromIndex:1]];
         [self initUsers];
         [self.tableView reloadData];
+    } else if (buttonIndex == 2) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[self.tableView indexPathForSelectedRow]];
+        [self.searchController setActive:NO];
+        [self performSegueWithIdentifier:@"userDetail" sender:cell];
+        
     }
 }
 
 - (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
+        
         User *user = [self.userArray objectAtIndex:indexPath.row];
         
         NSManagedObjectID *objectId = [user objectID];
         int adminPK = [[[[[objectId URIRepresentation] absoluteString] lastPathComponent] substringFromIndex:1] intValue];
         if (adminPK == 1) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"You cannot delete super admin." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+            [alert show];
+        } else if ([user.username isEqualToString:[self.userManager getCurrentUser].username]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"You cannot delete yourself. Calm Down." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
             [alert show];
         } else {
             [self deleteUser:user.username];
@@ -181,6 +190,13 @@
     return @[deleteAction, editAction];
 }
 
+- (void)tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    if (self.searchController.active) {
+        [self.searchController setActive:NO];
+    }
+    [self performSegueWithIdentifier:@"userDetail" sender:[tableView cellForRowAtIndexPath:indexPath]];
+}
 - (void)deleteUser:(NSString *)username
 {
     User *user = [self.userManager getUserFromUserName:username];
@@ -191,6 +207,9 @@
         
         if ([exception.reason isEqualToString:@"superAdmin"]) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"You cannot delete super admin." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+            [alert show];
+        } else if ([exception.reason isEqualToString:@"kamikaze"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"You cannot delete yourself. Calm Down." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
             [alert show];
         } else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"Please try again." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];

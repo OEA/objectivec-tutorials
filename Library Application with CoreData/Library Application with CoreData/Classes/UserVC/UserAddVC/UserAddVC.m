@@ -66,6 +66,7 @@
         [self.userManager createUser:user];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"User creation successful" message:@"You added the user to system." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
+        [self.navigationController popViewControllerAnimated:YES];
     }
     @catch (NSException *exception) {
         if ([exception.reason isEqualToString:@"pickedUsername"]) {

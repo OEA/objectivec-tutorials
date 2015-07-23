@@ -112,8 +112,13 @@
 
         }
         @catch (NSException *exception) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Subject creation failed." message:[NSString stringWithFormat:@"You failed to create %@ subject !",name] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
-            [alert show];
+            if ([exception.reason isEqualToString:@"emptySubject"]) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Subject creation failed." message:[NSString stringWithFormat:@"You failed to create %@ subject ! Please fill the name field.",name] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+                [alert show];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Subject creation failed." message:[NSString stringWithFormat:@"You failed to create %@ subject !",name] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+                [alert show];
+            }
         }
         @finally {
             

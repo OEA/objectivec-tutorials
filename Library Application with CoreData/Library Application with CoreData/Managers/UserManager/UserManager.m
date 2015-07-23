@@ -70,7 +70,12 @@
 
 - (void)createUser:(User *)user
 {
-    BOOL userIsAdmin = [self isAdmin];
+    BOOL userIsAdmin;
+    if ([user.isAdmin intValue] == 1)
+        userIsAdmin = YES;
+    else
+        userIsAdmin = [self isAdmin];
+
     NSArray *results;
     results = [self getUserArrayWithUserName:user];
     //If username is already taken, it throws exception to handle username conflicts.
@@ -140,6 +145,10 @@
     int adminPK = [[[[[objectId URIRepresentation] absoluteString] lastPathComponent] substringFromIndex:1] intValue];
     if (adminPK == 1) {
         @throw [[NSException alloc] initWithName:@"Custom" reason:@"superAdmin" userInfo:nil];
+    }
+    
+    if ([deletingUser.username isEqualToString:[self getCurrentUser].username]) {
+        @throw [[NSException alloc] initWithName:@"Custom" reason:@"kamikaze" userInfo:nil];
     }
     
     [self.userLogManager createLog:@"removeUser" :deletingUser];

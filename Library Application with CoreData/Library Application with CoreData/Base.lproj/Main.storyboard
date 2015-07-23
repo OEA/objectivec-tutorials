@@ -931,9 +931,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="Q2a-nc-YlC" kind="show" identifier="userDetail" id="qFk-as-mF5"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -948,6 +945,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Q2a-nc-YlC" kind="show" identifier="userDetail" id="N4Z-HA-Ovz"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ciy-DH-3I6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
