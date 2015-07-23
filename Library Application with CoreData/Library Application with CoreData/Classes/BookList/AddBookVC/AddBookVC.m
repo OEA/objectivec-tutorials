@@ -176,6 +176,9 @@
         if ([exception.reason isEqualToString:@"emptyFields"]) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Adding Book Failed" message:@"Please fill the all necessary fields." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
             [alert show];
+        } else if ([exception.reason isEqualToString:@"pageNotNumber"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Adding Book Failed" message:@"you entered book page which is not positive number." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+            [alert show];
         } else {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Adding Book Failed" message:@"you entered book which is already added." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
             [alert show];

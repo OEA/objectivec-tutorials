@@ -13,11 +13,13 @@
 #import "Author.h"
 #import "BookManager.h"
 #import "UserManager.h"
+#import "TransactionManager.h"
 
 @interface BookDetailVC ()
 @property (strong, nonatomic) NSCache *imagesCache;
 @property (strong, nonatomic) BookManager *bookManager;
 @property (strong, nonatomic) UserManager *userManager;
+@property (strong, nonatomic) TransactionManager *transactionManager;
 @end
 
 @implementation BookDetailVC
@@ -60,6 +62,13 @@
     return _userManager;
 }
 
+- (TransactionManager *)transactionManager
+{
+    if (!_transactionManager)
+        _transactionManager = [TransactionManager sharedInstance];
+    return _transactionManager;
+}
+
 #pragma mark - Core Data method
 
 - (NSManagedObjectContext *)managedObjectContext
@@ -84,8 +93,9 @@
                           otherButtonTitles:@"YES",@"NO", nil];
         [alert show];
     } else {
+        NSDate *fireDate = [self.transactionManager getTransaction:self.book].transactionFinishDate;
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow: 15];
+        localNotification.fireDate = fireDate;
         localNotification.alertBody = [NSString stringWithFormat:@"%@ now avaible",self.book.title];
         localNotification.soundName = UILocalNotificationDefaultSoundName;
         localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
@@ -128,7 +138,7 @@
 }
 
 - (IBAction)cancelButtonTapped:(id)sender {
-    Transaction *lastTransaction = [self getLastTransaction];
+    Transaction *lastTransaction = [self.transactionManager getTransaction:self.book];
     
     [self.managedObjectContext deleteObject:lastTransaction];
     NSError *error = nil;
@@ -144,27 +154,7 @@
 #pragma mark - transaction process
 - (void)requestBook
 {
-    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
-    NSDate *startDate = [NSDate date];
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *components = [cal components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:startDate];
-    
-    //adding 1 week
-    [components setDay:([components day] + 7)];
-    NSDate *finishDate = [cal dateFromComponents:components];
-
-    User *user = [self.userManager getCurrentUser];
-
-    [transaction setValue:startDate forKey:@"transactionStartDate"];
-    [transaction setValue:finishDate forKey:@"transactionFinishDate"];
-    [transaction setValue:self.book forKey:@"book"];
-    [transaction setValue:user forKey:@"user"];
-    
-    NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-    }
-    
+    [self.transactionManager createTransaction:self.book];
     [self changeUI];
     
 }
@@ -176,7 +166,7 @@
     
     NSString *username = [defaults objectForKey:@"user"];
     
-    Transaction *lastTransaction = [self getLastTransaction];
+    Transaction *lastTransaction = [self.transactionManager getTransaction:self.book];
     if ([lastTransaction.user.username isEqualToString:username]) {
         return YES;
     } else {
@@ -184,21 +174,6 @@
     }
 }
 
-
-- (Transaction *)getLastTransaction
-{
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Transaction"];
-    
-    request.predicate = [NSPredicate predicateWithFormat:@"book.title = %@", self.book.title];
-    NSError *searchError;
-    
-    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    
-    Transaction *lastTransaction = results.lastObject;
-    NSLog(lastTransaction.book.title);
-    return lastTransaction;
-    
-}
 
 - (BOOL)isBookAvailable
 {

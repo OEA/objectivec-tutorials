@@ -57,7 +57,7 @@
     if (![self getBookFromName:book.title]) {
         
         if (![book.title isCompleteEmpty] && ![book.author.name isCompleteEmpty]
-            && ![[NSString stringWithFormat:@"%@",book.pages] isCompleteEmpty]) {
+            && ![[NSString stringWithFormat:@"%@",book.pages] isCompleteEmpty] && !([book.pages intValue] <= 0)) {
             //Create insertable Book model
             Book *creationBook = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
             //Setting all necessary fields
@@ -73,6 +73,9 @@
                 NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
             }
 
+        } else if ([book.pages intValue] <= 0 &&
+                   ![[NSString stringWithFormat:@"%@",book.pages] isCompleteEmpty]) {
+            @throw [[NSException alloc] initWithName:@"Custom" reason:@"pageNotNumber" userInfo:nil];
         } else {
             @throw [[NSException alloc] initWithName:@"Custom" reason:@"emptyFields" userInfo:nil];
         }
@@ -89,6 +92,11 @@
     Book *editingBook = [self getBookFromName:book.title];
     //Setting all necessarry fields
     
+    if ([book.pages intValue] <= 0 &&
+        ![[NSString stringWithFormat:@"%@",book.pages] isCompleteEmpty]) {
+        @throw [[NSException alloc] initWithName:@"Custom" reason:@"pageNotNumber" userInfo:nil];
+    }
+    
     if (![book.title isCompleteEmpty]) {
         [editingBook setTitle:book.title];
     }
@@ -101,6 +109,9 @@
     if (![[NSString stringWithFormat:@"%@",book.pages] isCompleteEmpty]) {
         [editingBook setPages:book.pages];
     }
+    
+    
+    
     [editingBook setPublishDate:book.publishDate];
     [editingBook setSubjects:book.subjects];
     

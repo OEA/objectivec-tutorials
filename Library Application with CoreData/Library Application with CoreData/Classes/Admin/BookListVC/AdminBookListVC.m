@@ -93,12 +93,14 @@
 
 - (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    BookListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Book Cell" forIndexPath:indexPath];
-    
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
+        
+        
         Book *book = [self.books objectAtIndex:indexPath.row];
         [self deleteBook:book.title];
+        
+        if ([self.filteredBooks containsObject:book])
+            [self.filteredBooks removeObject:book];
         
         [tableView beginUpdates];
         
