@@ -136,6 +136,11 @@
 - (void)deleteUser:(User *)user
 {
     User *deletingUser = [self getUserFromUserName:user.username];
+    NSManagedObjectID *objectId = [deletingUser objectID];
+    int adminPK = [[[[[objectId URIRepresentation] absoluteString] lastPathComponent] substringFromIndex:1] intValue];
+    if (adminPK == 1) {
+        @throw [[NSException alloc] initWithName:@"Custom" reason:@"superAdmin" userInfo:nil];
+    }
     
     [self.userLogManager createLog:@"removeUser" :deletingUser];
     

@@ -157,13 +157,21 @@
 {
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
         User *user = [self.userArray objectAtIndex:indexPath.row];
-        [self deleteUser:user.username];
         
-        [tableView beginUpdates];
-        
-        [self initUsers];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [tableView endUpdates];
+        NSManagedObjectID *objectId = [user objectID];
+        int adminPK = [[[[[objectId URIRepresentation] absoluteString] lastPathComponent] substringFromIndex:1] intValue];
+        if (adminPK == 1) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"You cannot delete super admin." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+            [alert show];
+        } else {
+            [self deleteUser:user.username];
+            
+            [tableView beginUpdates];
+            
+            [self initUsers];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView endUpdates];
+        }
     }];
     deleteAction.backgroundColor = [UIColor redColor];
     UITableViewRowAction *editAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Edit" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
@@ -180,8 +188,14 @@
         [self.userManager deleteUser:user];
     }
     @catch (NSException *exception) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"Please try again." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
-        [alert show];
+        
+        if ([exception.reason isEqualToString:@"superAdmin"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"You cannot delete super admin." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+            [alert show];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Delete process failed" message:@"Please try again." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
+            [alert show];
+        }
     }
     @finally {
         

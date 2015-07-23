@@ -25,7 +25,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
 }
 
 - (UserManager *)userManager
@@ -52,6 +52,7 @@
     @try {
         [self.userManager loginUser:username :password];
         self.isLoggedIn = YES;
+        [self clearAllUIElements];
     }
     @catch (NSException *exception) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Login Failed" message:@"you entered wrong username or password" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil, nil];
@@ -68,6 +69,12 @@
     if ([segue.identifier isEqualToString:@"login"]) {
         
     }
+}
+
+- (void)clearAllUIElements
+{
+    self.usernameText.text = @"";
+    self.passwordText.text = @"";
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
