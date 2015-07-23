@@ -17,12 +17,13 @@
 #import "UserManager.h"
 
 @interface BookListVC()
-@property (strong, nonatomic) IBOutlet UIView *mainView;
 @property (strong, nonatomic) IBOutlet UITableView *mTableView;
 @property (strong, nonatomic) NSCache *imagesCache;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *adminPanelButton;
 @property (strong, nonatomic) BookManager *bookManager;
 @property (strong, nonatomic) UserManager *userManager;
+@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) NSMutableArray *filteredBooks;
 @end
 
 @implementation BookListVC
@@ -32,6 +33,12 @@
 {
     [super viewDidLoad];
     [self initBooks];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = false;
+    self.searchController.delegate = self;
+    [self.searchController.searchBar sizeToFit];
+    self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.mTableView reloadData];
     if (!_imagesCache)
         _imagesCache = [NSCache new];
@@ -42,6 +49,13 @@
         self.navigationItem.rightBarButtonItem = nil ;
     }
     
+}
+
+- (NSMutableArray *)filteredBooks
+{
+    if (!_filteredBooks)
+        _filteredBooks = [NSMutableArray new];
+    return _filteredBooks;
 }
 
 - (BookManager *)bookManager
@@ -90,20 +104,48 @@
 
 #pragma mark - Table View
 
+
+- (void)tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"bookDetail" sender:[tableView cellForRowAtIndexPath:indexPath]];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BookListCell *cell = [BookListCell new];
-    
     cell = [tableView dequeueReusableCellWithIdentifier:@"Book Cell" forIndexPath:indexPath];
     
-    Book *book = [_books objectAtIndex:indexPath.row];
-    cell.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:book.image]];
-    cell.bookTitle.text = book.title;
-    cell.bookAuthor.text = book.author.name;
-    cell.bookPages.text = [NSString stringWithFormat:@"%@ pages", book.pages];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:book.publishDate];
-    cell.bookPublished.text = [NSString stringWithFormat:@"%ld", (long)[components year]];
+    if (self.searchController.active) {
+       
+        Book *book = [self.filteredBooks objectAtIndex:indexPath.row];
+        cell.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:book.image]];
+        cell.bookTitle.text = book.title;
+        cell.bookAuthor.text = book.author.name;
+        cell.bookPages.text = [NSString stringWithFormat:@"%@ pages", book.pages];
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:book.publishDate];
+        cell.bookPublished.text = [NSString stringWithFormat:@"%ld", (long)[components year]];
+
+    } else {
+        
+        Book *book = [_books objectAtIndex:indexPath.row];
+        cell.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:book.image]];
+        cell.bookTitle.text = book.title;
+        cell.bookAuthor.text = book.author.name;
+        cell.bookPages.text = [NSString stringWithFormat:@"%@ pages", book.pages];
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:book.publishDate];
+        cell.bookPublished.text = [NSString stringWithFormat:@"%ld", (long)[components year]];
+    }
+    
     return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.searchController.active) {
+        return self.filteredBooks.count;
+    } else {
+        return self.books.count;
+    }
 }
 
 - (NSData *)getImageFromURLOrCache:(NSString *)url
@@ -120,10 +162,27 @@
     return data;
 }
 
-
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)willPresentSearchController:(UISearchController *)searchController
 {
-    return [_books count];
+    
+    self.tableView.backgroundColor = [[UIColor alloc]initWithRed:255 green:255 blue:255 alpha:0.90];
+}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    //self.filteredCountries.removeAll()
+    [self.filteredBooks removeAllObjects];
+    NSString *searching = searchController.searchBar.text;
+    if (![searching isEqualToString:@""]) {
+        for (Book *book in self.books) {
+            if ([book.title.lowercaseString containsString:searching.lowercaseString] || [book.author.name.lowercaseString containsString:searching.lowercaseString]) {
+                [self.filteredBooks addObject:book];
+            }
+        }
+    } else {
+        self.tableView.backgroundColor = [[UIColor alloc]initWithRed:255 green:255 blue:255 alpha:0.90];
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - segue
@@ -138,9 +197,16 @@
         vc.managedObjectContext = self.managedObjectContext;
     } else if ([segue.identifier isEqualToString:@"bookDetail"]) {
         BookDetailVC *vc = segue.destinationViewController;
-        Book *book = [_books objectAtIndex:indexPath.row];
+        Book *book;
+        if (self.searchController.active) {
+            book = [_filteredBooks objectAtIndex:indexPath.row];
+        } else {
+            book = [_books objectAtIndex:indexPath.row];
+        }
         vc.book = book;
     }
+    
+    [self.searchController setActive:NO];
 }
 - (IBAction)logoutButtonTapped:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

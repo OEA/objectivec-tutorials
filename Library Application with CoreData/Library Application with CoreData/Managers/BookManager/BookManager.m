@@ -144,4 +144,12 @@
     return results;
 }
 
+- (void)clearBooksFromSubject:(Subject *)deletingSubject
+{
+    NSMutableArray *books = [self getAllBooks];
+    for (Book *book in books) {
+        [book removeSubjectsObject:deletingSubject];
+    }
+}
+
 @end

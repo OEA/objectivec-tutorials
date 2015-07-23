@@ -150,12 +150,17 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
     [self initUI];
     if ([self.subjects count]) {
         self.subjectList.text = @"";
         for (Subject *subject in self.subjects) {
-            self.subjectList.text = [self.subjectList.text stringByAppendingString:subject.name];
-            self.subjectList.text = [self.subjectList.text stringByAppendingString:@"\n"];
+            if (subject.name != nil) {
+                self.subjectList.text = [self.subjectList.text stringByAppendingString:subject.name];
+                self.subjectList.text = [self.subjectList.text stringByAppendingString:@"\n"];
+            } else {
+                [self.book removeSubjectsObject:subject];
+            }
         }
     }
     

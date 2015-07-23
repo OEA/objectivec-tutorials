@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface BookListVC : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface BookListVC : UITableViewController <UISearchResultsUpdating,
+NSFetchedResultsControllerDelegate,
+UISearchControllerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *books; //of library
 

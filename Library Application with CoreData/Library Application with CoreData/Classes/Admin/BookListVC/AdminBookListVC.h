@@ -11,7 +11,9 @@
 
 
 
-@interface AdminBookListVC : UITableViewController<NSFetchedResultsControllerDelegate>
+@interface AdminBookListVC : UITableViewController<UISearchResultsUpdating,
+NSFetchedResultsControllerDelegate,
+UISearchControllerDelegate>
 //Core Data context variable
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 

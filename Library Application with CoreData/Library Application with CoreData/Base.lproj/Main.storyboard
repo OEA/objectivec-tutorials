@@ -268,7 +268,6 @@
                                     <outlet property="bookPages" destination="ydG-jB-hP9" id="4Xw-Bf-G09"/>
                                     <outlet property="bookPublished" destination="Qhm-oG-wwe" id="FgU-y1-n8T"/>
                                     <outlet property="bookTitle" destination="WD2-o9-T1l" id="rX5-8z-X77"/>
-                                    <segue destination="OWR-PD-iYN" kind="show" identifier="bookDetail" id="9Uk-Y4-OU6"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -292,6 +291,7 @@
                     <connections>
                         <outlet property="adminPanelButton" destination="gzR-Rg-t2T" id="VmW-6s-fzo"/>
                         <outlet property="mTableView" destination="bO6-hI-CxK" id="CCu-G4-pvu"/>
+                        <segue destination="OWR-PD-iYN" kind="show" identifier="bookDetail" id="Mxw-Vb-G0a"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9e4-I9-E3t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -655,7 +655,6 @@
                                     <outlet property="bookPages" destination="Kj0-o3-EGh" id="zoA-CH-w9i"/>
                                     <outlet property="bookPublished" destination="e7F-bA-zoy" id="c2X-gE-mod"/>
                                     <outlet property="bookTitle" destination="3oa-bU-q78" id="289-g1-gzs"/>
-                                    <segue destination="OWR-PD-iYN" kind="show" identifier="bookDetail2" id="mIu-qf-NtH"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -673,6 +672,7 @@
                     </navigationItem>
                     <connections>
                         <segue destination="29q-pl-UDo" kind="show" identifier="editBook" id="3Jc-hf-JSi"/>
+                        <segue destination="OWR-PD-iYN" kind="show" identifier="bookDetail2" id="jjE-ZA-swY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s0Y-xZ-E4a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1527,7 +1527,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fpM-qw-2u7"/>
-        <segue reference="mIu-qf-NtH"/>
+        <segue reference="jjE-ZA-swY"/>
         <segue reference="yPn-Da-erJ"/>
     </inferredMetricsTieBreakers>
 </document>

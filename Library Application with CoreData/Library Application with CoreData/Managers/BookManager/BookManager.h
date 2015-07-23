@@ -26,4 +26,6 @@
 
 //Shared Instance
 + (instancetype)sharedInstance;
+
+- (void)clearBooksFromSubject:(Subject *)deletingSubject;
 @end

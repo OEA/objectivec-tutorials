@@ -18,6 +18,8 @@
 @property (strong, nonatomic)NSMutableArray *books;
 @property (strong, nonatomic) NSCache *imagesCache;
 @property (strong, nonatomic) BookManager *bookManager;
+@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) NSMutableArray *filteredBooks;
 @end
 
 @implementation AdminBookListVC
@@ -27,6 +29,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initBooks];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = false;
+    self.searchController.delegate = self;
+    [self.searchController.searchBar sizeToFit];
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+
     [self.tableView reloadData];
 
     if (!_imagesCache)
@@ -36,6 +45,15 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+
+
+- (NSMutableArray *)filteredBooks
+{
+    if (!_filteredBooks)
+        _filteredBooks = [NSMutableArray new];
+    return _filteredBooks;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -65,6 +83,12 @@
     self.books = [self.bookManager getAllBooks];
     
 
+}
+
+- (void)tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    
+    [self performSegueWithIdentifier:@"bookDetail2" sender:[tableView cellForRowAtIndexPath:indexPath]];
 }
 
 - (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,28 +137,42 @@
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_books count];
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     BookListCell *cell = [BookListCell new];
     cell = [tableView dequeueReusableCellWithIdentifier:@"Book Cell" forIndexPath:indexPath];
     
-    // Configure the cell...
-    Book *book = [_books objectAtIndex:indexPath.row];
-    cell.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:book.image]];
-    cell.bookTitle.text = book.title;
-    cell.bookAuthor.text = book.author.name;
-    cell.bookPages.text = [NSString stringWithFormat:@"%@ pages", book.pages];
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:book.publishDate];
+    if (self.searchController.active) {
+        
+        Book *book = [self.filteredBooks objectAtIndex:indexPath.row];
+        cell.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:book.image]];
+        cell.bookTitle.text = book.title;
+        cell.bookAuthor.text = book.author.name;
+        cell.bookPages.text = [NSString stringWithFormat:@"%@ pages", book.pages];
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:book.publishDate];
+        cell.bookPublished.text = [NSString stringWithFormat:@"%ld", (long)[components year]];
+        
+    } else {
+        
+        Book *book = [_books objectAtIndex:indexPath.row];
+        cell.bookImage.image = [UIImage imageWithData:[self getImageFromURLOrCache:book.image]];
+        cell.bookTitle.text = book.title;
+        cell.bookAuthor.text = book.author.name;
+        cell.bookPages.text = [NSString stringWithFormat:@"%@ pages", book.pages];
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:book.publishDate];
+        cell.bookPublished.text = [NSString stringWithFormat:@"%ld", (long)[components year]];
+    }
     
-    cell.bookPublished.text = [NSString stringWithFormat:@"%ld", (long)[components year]];
-
-    
-
     return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.searchController.active) {
+        return self.filteredBooks.count;
+    } else {
+        return self.books.count;
+    }
 }
 
 - (NSData *)getImageFromURLOrCache:(NSString *)url
@@ -149,6 +187,30 @@
     }
     
     return data;
+}
+
+
+- (void)willPresentSearchController:(UISearchController *)searchController
+{
+    
+    self.tableView.backgroundColor = [[UIColor alloc]initWithRed:255 green:255 blue:255 alpha:0.90];
+}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    //self.filteredCountries.removeAll()
+    [self.filteredBooks removeAllObjects];
+    NSString *searching = searchController.searchBar.text;
+    if (![searching isEqualToString:@""]) {
+        for (Book *book in self.books) {
+            if ([book.title.lowercaseString containsString:searching.lowercaseString] || [book.author.name.lowercaseString containsString:searching.lowercaseString]) {
+                [self.filteredBooks addObject:book];
+            }
+        }
+    } else {
+        self.tableView.backgroundColor = [[UIColor alloc]initWithRed:255 green:255 blue:255 alpha:0.90];
+    }
+    [self.tableView reloadData];
 }
 
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
@@ -166,14 +228,25 @@
     
     if ([segue.identifier isEqualToString:@"editBook"]) {
         BookEditVC *vc = segue.destinationViewController;
-        Book *book = [_books objectAtIndex:indexPath.row];
+        Book *book;
+        if (self.searchController.active) {
+            book = [_filteredBooks objectAtIndex:indexPath.row];
+        } else {
+            book = [_books objectAtIndex:indexPath.row];
+        }
         vc.book = book;
     } else if ([segue.identifier isEqualToString:@"bookDetail2"]) {
         BookDetailVC *vc = segue.destinationViewController;
-       
-        Book *book = [_books objectAtIndex:indexPath.row];
+        Book *book;
+        if (self.searchController.active) {
+            book = [_filteredBooks objectAtIndex:indexPath.row];
+        } else {
+            book = [_books objectAtIndex:indexPath.row];
+        }
         vc.book = book;
     }
+    
+    [self.searchController setActive:NO];
 }
 
 

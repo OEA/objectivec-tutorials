@@ -158,6 +158,11 @@
     }
 }
 
+- (void)tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"userDetail" sender:[tableView cellForRowAtIndexPath:indexPath]];
+}
+
 - (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
@@ -190,13 +195,6 @@
     return @[deleteAction, editAction];
 }
 
-- (void)tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-{
-    if (self.searchController.active) {
-        [self.searchController setActive:NO];
-    }
-    [self performSegueWithIdentifier:@"userDetail" sender:[tableView cellForRowAtIndexPath:indexPath]];
-}
 - (void)deleteUser:(NSString *)username
 {
     User *user = [self.userManager getUserFromUserName:username];
@@ -254,6 +252,7 @@
         User *user;
         if (self.searchController.active) {
             user = [self.userFilterArray objectAtIndex:indexPath.row];
+            
         } else {
             user = [self.userArray objectAtIndex:indexPath.row];
         }
@@ -261,6 +260,7 @@
         vc.title = vc.username;
         
     }
+    self.searchController.active = NO;
 }
 
 @end

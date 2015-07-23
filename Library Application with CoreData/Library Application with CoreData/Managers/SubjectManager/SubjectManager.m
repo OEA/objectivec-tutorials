@@ -7,13 +7,23 @@
 //
 
 #import "SubjectManager.h"
+#import "BookManager.h"
 #import "NSString+CheckingEmpty.h"
 
 @interface SubjectManager()
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+@property (nonatomic,strong) BookManager *bookManager;
+
 @end
 
 @implementation SubjectManager
+
+- (BookManager *)bookManager
+{
+    if (!_bookManager)
+        _bookManager = [BookManager sharedInstance];
+    return _bookManager;
+}
 
 //Book CRUD methods
 - (void)createSubject:(Subject *)subject
@@ -59,7 +69,7 @@
 - (void)deleteSubject:(Subject *)subject
 {
     Subject *deletingSubject = [self getSubjectFromName:subject.name];
-    
+    [self.bookManager clearBooksFromSubject:deletingSubject];
     [self.managedObjectContext deleteObject:deletingSubject];
     NSError *error = nil;
     if (![self.managedObjectContext save:&error]) {
