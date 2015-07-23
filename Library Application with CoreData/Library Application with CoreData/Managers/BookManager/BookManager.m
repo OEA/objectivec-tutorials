@@ -8,6 +8,7 @@
 
 #import "BookManager.h"
 #import "UserLogManager.h"
+#import "NSString+CheckingEmpty.h"
 
 @interface BookManager()
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
@@ -54,22 +55,28 @@
 {
     
     if (![self getBookFromName:book.title]) {
-    
-        //Create insertable Book model
-        Book *creationBook = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
-        //Setting all necessary fields
-        [creationBook setTitle:book.title];
-        [creationBook setPublishDate:book.publishDate];
-        [creationBook setAuthor:book.author];
-        [creationBook setSubjects:book.subjects];
-        [creationBook setImage:book.image];
-        [creationBook setPages:book.pages];
-    
-        NSError *error;
-        if (![self.managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        
+        if (![book.title isCompleteEmpty] && ![book.author.name isCompleteEmpty]
+            && ![[NSString stringWithFormat:@"%@",book.pages] isCompleteEmpty]) {
+            //Create insertable Book model
+            Book *creationBook = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+            //Setting all necessary fields
+            [creationBook setTitle:book.title];
+            [creationBook setPublishDate:book.publishDate];
+            [creationBook setAuthor:book.author];
+            [creationBook setSubjects:book.subjects];
+            [creationBook setImage:book.image];
+            [creationBook setPages:book.pages];
+            
+            NSError *error;
+            if (![self.managedObjectContext save:&error]) {
+                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+            }
+
+        } else {
+            @throw [[NSException alloc] initWithName:@"Custom" reason:@"emptyFields" userInfo:nil];
         }
-    
+
     } else {
         @throw [[NSException alloc] initWithName:@"Custom" reason:@"pickedBook" userInfo:nil];
     }
@@ -82,12 +89,21 @@
     Book *editingBook = [self getBookFromName:book.title];
     //Setting all necessarry fields
     
-    [editingBook setTitle:book.title];
+    if (![book.title isCompleteEmpty]) {
+        [editingBook setTitle:book.title];
+    }
+    if (![book.author.name isCompleteEmpty]) {
+        [editingBook setAuthor:book.author];
+    }
+    if (![book.image isCompleteEmpty]) {
+        [editingBook setImage:book.image];
+    }
+    if (![[NSString stringWithFormat:@"%@",book.pages] isCompleteEmpty]) {
+        [editingBook setPages:book.pages];
+    }
     [editingBook setPublishDate:book.publishDate];
-    [editingBook setAuthor:book.author];
     [editingBook setSubjects:book.subjects];
-    [editingBook setImage:book.image];
-    [editingBook setPages:book.pages];
+    
     
     NSError *error;
     if (![self.managedObjectContext save:&error]) {

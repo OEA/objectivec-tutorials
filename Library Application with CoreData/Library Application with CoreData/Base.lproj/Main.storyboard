@@ -110,7 +110,7 @@
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="eLR-Cn-BZc" kind="show" id="99G-G1-93r"/>
+                                                    <segue destination="iNS-33-9Wn" kind="show" id="rti-5t-d4Q"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjx-uu-mX1">
@@ -296,7 +296,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9e4-I9-E3t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-782" y="2217"/>
+            <point key="canvasLocation" x="-638" y="2083"/>
         </scene>
         <!--Add Book-->
         <scene sceneID="fWm-lD-xYo">
@@ -655,7 +655,7 @@
                                     <outlet property="bookPages" destination="Kj0-o3-EGh" id="zoA-CH-w9i"/>
                                     <outlet property="bookPublished" destination="e7F-bA-zoy" id="c2X-gE-mod"/>
                                     <outlet property="bookTitle" destination="3oa-bU-q78" id="289-g1-gzs"/>
-                                    <segue destination="OWR-PD-iYN" kind="show" identifier="bookDetail" id="mIu-qf-NtH"/>
+                                    <segue destination="OWR-PD-iYN" kind="show" identifier="bookDetail2" id="mIu-qf-NtH"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -672,7 +672,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="29q-pl-UDo" kind="show" identifier="bookEdit" id="hOR-56-uS9"/>
+                        <segue destination="29q-pl-UDo" kind="show" identifier="editBook" id="3Jc-hf-JSi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s0Y-xZ-E4a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -798,6 +798,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="registerButtonTapped:" destination="iNS-33-9Wn" eventType="touchUpInside" id="fua-OC-nvI"/>
+                                                    <segue destination="kpe-1c-SLo" kind="presentation" identifier="registerSuccessful" id="fpM-qw-2u7"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgl-s2-ttF">
@@ -859,25 +860,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="REc-vG-3nU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="258" y="1353"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ZFV-mP-l32">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eLR-Cn-BZc" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mVI-w6-krw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="iNS-33-9Wn" kind="relationship" relationship="rootViewController" id="SuN-gM-cMA"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8kQ-s6-kgB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-498" y="1353"/>
+            <point key="canvasLocation" x="-430" y="1371"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ojL-FE-WNe">
@@ -1379,7 +1362,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZCt-hT-yDS">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCt-hT-yDS">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRy-Xn-RQc">
@@ -1543,7 +1526,8 @@
         <image name="users" width="29" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9Uk-Y4-OU6"/>
-        <segue reference="FWe-wF-6Zs"/>
+        <segue reference="fpM-qw-2u7"/>
+        <segue reference="mIu-qf-NtH"/>
+        <segue reference="yPn-Da-erJ"/>
     </inferredMetricsTieBreakers>
 </document>

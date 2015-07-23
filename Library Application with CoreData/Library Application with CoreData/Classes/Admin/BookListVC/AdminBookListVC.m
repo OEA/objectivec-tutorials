@@ -70,8 +70,7 @@
 - (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    BookListCell *cell = [BookListCell new];
-    cell = [tableView dequeueReusableCellWithIdentifier:@"Book Cell" forIndexPath:indexPath];
+    BookListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Book Cell" forIndexPath:indexPath];
     
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
         Book *book = [self.books objectAtIndex:indexPath.row];
@@ -85,7 +84,7 @@
     }];
     deleteAction.backgroundColor = [UIColor redColor];
     UITableViewRowAction *editAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Edit" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
-        [self performSegueWithIdentifier:@"bookEdit" sender:cell];
+        [self performSegueWithIdentifier:@"editBook" sender:indexPath];
     }];
     editAction.backgroundColor = [UIColor orangeColor];
     return @[deleteAction, editAction];
@@ -154,18 +153,29 @@
 
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
 {
-    UITableViewCell *cell = sender;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    if ([segue.identifier isEqualToString:@"bookEdit"]) {
+
+    BookListCell *cell;
+    NSIndexPath *indexPath;
+    
+    if ([sender isKindOfClass:[BookListCell class]]) {
+        cell = sender;
+       indexPath = [self.tableView indexPathForCell:cell];
+    } else {
+        indexPath = sender;
+    }
+    
+    if ([segue.identifier isEqualToString:@"editBook"]) {
         BookEditVC *vc = segue.destinationViewController;
-        Book *book = [self.books objectAtIndex:indexPath.row];
-        vc.bookTitle = book.title;
-    } else if ([segue.identifier isEqualToString:@"bookDetail"]) {
+        Book *book = [_books objectAtIndex:indexPath.row];
+        vc.book = book;
+    } else if ([segue.identifier isEqualToString:@"bookDetail2"]) {
         BookDetailVC *vc = segue.destinationViewController;
        
         Book *book = [_books objectAtIndex:indexPath.row];
         vc.book = book;
     }
 }
+
+
 
 @end

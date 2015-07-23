@@ -14,8 +14,9 @@
 
 @interface AuthorManager : NSObject <NSFetchedResultsControllerDelegate>
 
-//Create Log
+//Create Author
 - (void)createAuthor:(Author *)author;
+//Get Author from name
 - (Author *)getAuthor:(NSString *)name;
 
 //Shared Instance

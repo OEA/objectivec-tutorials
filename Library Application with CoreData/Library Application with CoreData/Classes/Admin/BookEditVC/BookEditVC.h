@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "Book.h"
 @interface BookEditVC : UIViewController<UIPickerViewDataSource,UIPickerViewDelegate, NSFetchedResultsControllerDelegate>
 @property (strong,nonatomic)NSString *bookTitle;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @property (strong, nonatomic) NSMutableArray *subjects;
+@property (strong, nonatomic) Book* book;
+
 @end

@@ -41,6 +41,7 @@
     if (user.isAdmin.intValue < 1) {
         self.navigationItem.rightBarButtonItem = nil ;
     }
+    
 }
 
 - (BookManager *)bookManager

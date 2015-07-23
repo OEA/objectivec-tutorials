@@ -8,7 +8,6 @@
 
 #import "BookEditVC.h"
 #import "Subject.h"
-#import "Book.h"
 #import "Author.h"
 #import "SubjectModalVC.h"
 #import "BookManager.h"
@@ -23,7 +22,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *subjectList;
 @property (weak, nonatomic) IBOutlet UIPickerView *dateView;
 @property (strong, nonatomic) NSMutableArray *years;
-@property (strong, nonatomic) Book* book;
 @property (strong, nonatomic) NSString *date;
 @property (strong, nonatomic) BookManager *bookManager;
 @property (strong, nonatomic) AuthorManager *authorManager;
@@ -52,9 +50,6 @@
     for (int i = MIN_YEAR; i<=maxYear; i++) {
         [_years addObject:[[NSNumber alloc] initWithInt:i]];
     }
-    
-    //Getting book from book title
-    self.book = [self.bookManager getBookFromName:self.book.title];
     //clear UI
     [self initUI];
     
