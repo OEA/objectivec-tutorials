@@ -10,6 +10,7 @@
 #import "LoginVC.h"
 #import "User.h"
 #import "BookListVC.h"
+#import "BookDetailVC.h"
 #import "UserManager.h"
 
 @interface LoginVC()
@@ -25,7 +26,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
 }
 
 - (UserManager *)userManager
@@ -45,9 +52,14 @@
     }
     return context;
 }
+
+
+
 - (IBAction)loginTapped:(id)sender {
     NSString *username = self.usernameText.text;
     NSString *password = self.passwordText.text;
+    
+    
     
     @try {
         [self.userManager loginUser:username :password];
@@ -80,6 +92,7 @@
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
     if ([identifier isEqualToString:@"login"]){
+        
         return self.isLoggedIn;
     } else {
         return YES;

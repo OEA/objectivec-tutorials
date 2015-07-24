@@ -10,12 +10,15 @@
 #import "User.h"
 #import "UserManager.h"
 #import "NSString+CheckingEmpty.h"
+#import <Photos/Photos.h>
 
-@interface RegisterVC()
+@interface RegisterVC() <UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (strong, nonatomic) IBOutlet UITextField *nameText;
 @property (strong, nonatomic) IBOutlet UITextField *usernameText;
 @property (strong, nonatomic) IBOutlet UITextField *passwordText;
+@property (weak, nonatomic) IBOutlet UIImageView *thumbView;
 @property (strong, nonatomic) UserManager *userManager;
+@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (nonatomic) BOOL isRegistered;
 @property (nonatomic) int seen;
 @end
@@ -28,6 +31,15 @@
     
     self.seen = 0;
 }
+- (IBAction)browseButtonTapped:(id)sender {
+    UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+    
+    // Don't forget to add UIImagePickerControllerDelegate in your .h
+    picker.delegate = self;
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    
+    [self.navigationController presentViewController:picker animated:YES completion:nil];
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -36,6 +48,7 @@
     
     if (self.seen > 1) {
         [self.navigationController popViewControllerAnimated:YES];
+        
     }
 }
 - (NSManagedObjectContext *)managedObjectContext

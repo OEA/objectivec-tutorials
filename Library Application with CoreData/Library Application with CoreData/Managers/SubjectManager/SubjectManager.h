@@ -21,7 +21,7 @@
 - (Subject *)getSubjectFromName:(NSString *)name; //of subject
 
 //Necessary Methods
-- (NSArray *)getAllSubjects;
+- (NSMutableArray *)getAllSubjects;
 
 //Shared Instance
 + (instancetype)sharedInstance;

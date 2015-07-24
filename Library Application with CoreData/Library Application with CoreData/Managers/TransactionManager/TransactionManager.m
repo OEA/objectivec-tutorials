@@ -60,7 +60,7 @@
 {
     Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     NSDate *startDate = [NSDate date];
-    NSDate *finishDate = [startDate dateByAddingTimeInterval:5];
+    NSDate *finishDate = [startDate dateByAddingTimeInterval:15];
     
     User *user = [self.userManager getCurrentUser];
     

@@ -127,6 +127,8 @@
     return YES;
 }
 
+
+#pragma mark - picker view
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     return [_years count];

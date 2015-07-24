@@ -96,15 +96,16 @@
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete" handler:^(UITableViewRowAction * __nonnull action, NSIndexPath * __nonnull indexPath) {
         
         
-        Book *book = [self.books objectAtIndex:indexPath.row];
+        Book *book = [self.filteredBooks objectAtIndex:indexPath.row];
+        
         [self deleteBook:book.title];
         
-        if ([self.filteredBooks containsObject:book])
-            [self.filteredBooks removeObject:book];
+        
+        [self.filteredBooks removeObject:book];
+        [self.books removeObject:book];
+        
         
         [tableView beginUpdates];
-        
-        [self initBooks];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [tableView endUpdates];
     }];
@@ -121,6 +122,14 @@
     [self.bookManager deleteBook:[self.bookManager getBookFromName:title]];
 }
 
+- (void)checkBooks
+{
+    for (Book *book in self.books) {
+        if (!book || book.title == nil) {
+            [self.books removeObject:book];
+        }
+    }
+}
 #pragma mark - Core Data method
 
 - (NSManagedObjectContext *)managedObjectContext

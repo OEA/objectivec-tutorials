@@ -22,7 +22,7 @@
 - (Book *)getBookFromName:(NSString *)name; //of book
 
 //Necessary Methods
-- (NSArray *)getAllBooks;
+- (NSMutableArray *)getAllBooks;
 
 //Shared Instance
 + (instancetype)sharedInstance;

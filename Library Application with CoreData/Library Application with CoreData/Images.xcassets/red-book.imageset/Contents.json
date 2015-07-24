@@ -2,18 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "red-book.png"
+      "filename" : "red-book.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "red-book-1.png"
+      "filename" : "red-book-1.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "red-book-2.png"
+      "filename" : "red-book-2.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

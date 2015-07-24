@@ -147,12 +147,12 @@
     return book;
 }
 
-- (NSArray *)getAllBooks
+- (NSMutableArray *)getAllBooks
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSError *searchError;
     NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    return results;
+    return [results mutableCopy];
 }
 
 - (void)clearBooksFromSubject:(Subject *)deletingSubject

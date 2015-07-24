@@ -33,6 +33,7 @@
 {
     [super viewDidLoad];
     [self initBooks];
+    [self checkNotification];
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
     self.searchController.dimsBackgroundDuringPresentation = false;
@@ -48,6 +49,8 @@
     if (user.isAdmin.intValue < 1) {
         self.navigationItem.rightBarButtonItem = nil ;
     }
+    
+    
     
 }
 
@@ -80,6 +83,7 @@
     [super viewDidAppear:animated];
     [self initBooks];
     [self.mTableView reloadData];
+    
 }
 
 #pragma mark - Core Data method
@@ -92,6 +96,22 @@
         context = [delegate managedObjectContext];
     }
     return context;
+}
+
+- (void)checkNotification
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *test = [defaults objectForKey:@"notify"];
+    NSLog(@"%@",test);
+    if ([test isEqualToString:@"book"]) {
+        NSString *bookTitle = [defaults objectForKey:@"bookTitle"];
+        Book *book = [self.bookManager getBookFromName:bookTitle];
+        NSInteger index = [self.books indexOfObject:book];
+        UITableViewCell *cell = [self.mTableView cellForRowAtIndexPath:[NSIndexPath indexPathWithIndex:index]];
+        [self performSegueWithIdentifier:@"bookDetail2" sender:cell];
+    }
+    [defaults removeObjectForKey:@"notify"];
+    
 }
 
 #pragma mark - Book Init
@@ -196,6 +216,15 @@
         vc.books = self.books;
         vc.managedObjectContext = self.managedObjectContext;
     } else if ([segue.identifier isEqualToString:@"bookDetail"]) {
+        BookDetailVC *vc = segue.destinationViewController;
+        Book *book;
+        if (self.searchController.active) {
+            book = [_filteredBooks objectAtIndex:indexPath.row];
+        } else {
+            book = [_books objectAtIndex:indexPath.row];
+        }
+        vc.book = book;
+    } else if ([segue.identifier isEqualToString:@"bookDetail2"]) {
         BookDetailVC *vc = segue.destinationViewController;
         Book *book;
         if (self.searchController.active) {

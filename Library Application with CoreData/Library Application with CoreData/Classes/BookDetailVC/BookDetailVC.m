@@ -93,12 +93,16 @@
                           otherButtonTitles:@"YES",@"NO", nil];
         [alert show];
     } else {
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
         NSDate *fireDate = [self.transactionManager getTransaction:self.book].transactionFinishDate;
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         localNotification.fireDate = fireDate;
         localNotification.alertBody = [NSString stringWithFormat:@"%@ now avaible",self.book.title];
         localNotification.soundName = UILocalNotificationDefaultSoundName;
         localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+        [defaults setObject:self.book.title forKey:@"bookTitle"];
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 
     }

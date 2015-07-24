@@ -205,12 +205,12 @@
     return user;
 }
 
-- (NSArray *)getAllUser
+- (NSMutableArray *)getAllUser
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     NSError *searchError;
     NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    return results;
+    return [results mutableCopy];
 }
 
 #pragma mark - Logical Methods

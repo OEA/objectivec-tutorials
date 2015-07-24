@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "UserAddVC.h"
 @interface AppDelegate ()
 
 @property (strong, nonatomic) UIAlertView *notificationAlert;
@@ -18,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+    
     return YES;
 }
 
@@ -147,17 +148,19 @@
             [self clearNotifications];
         }
         
-        // Load the notification sound.
         
-        // Set the title of the alert with the notification's body.
         [_notificationAlert setTitle:[notification alertBody]];
         [_notificationAlert show];
-    } else {
-        
+    }
+    if([application applicationState] == UIApplicationStateInactive)
+    {
+        NSUserDefaults *defualts = [NSUserDefaults standardUserDefaults];
+        [defualts setObject:@"book" forKey:@"notify"];
     }
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 }
+
 @end

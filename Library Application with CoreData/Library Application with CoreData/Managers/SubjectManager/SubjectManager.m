@@ -89,12 +89,12 @@
 }
 
 //Necessary Methods
-- (NSArray *)getAllSubjects
+- (NSMutableArray *)getAllSubjects
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Subject"];
     NSError *searchError;
     NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
-    return results;
+    return [results mutableCopy];
 }
 
 - (NSArray *)getSubjectArrayFromName:(Subject *)subject
