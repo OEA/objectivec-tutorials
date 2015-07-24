@@ -293,7 +293,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9e4-I9-E3t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-638" y="2083"/>
+            <point key="canvasLocation" x="-372" y="2017"/>
         </scene>
         <!--Add Book-->
         <scene sceneID="fWm-lD-xYo">
@@ -795,6 +795,7 @@
                                 <state key="normal" title="Register"/>
                                 <connections>
                                     <action selector="registerButtonTapped:" destination="iNS-33-9Wn" eventType="touchUpInside" id="NW7-qH-iAW"/>
+                                    <segue destination="rtI-g5-Gft" kind="presentation" identifier="registerSuccessful" id="xyL-dD-Ct6"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMa-OL-lQc">
@@ -828,7 +829,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="REc-vG-3nU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-430" y="1371"/>
+            <point key="canvasLocation" x="382" y="1371"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ojL-FE-WNe">
@@ -841,7 +842,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="y2I-MG-niX" kind="relationship" relationship="rootViewController" id="P0n-CB-dmF"/>
+                        <segue destination="rtI-g5-Gft" kind="relationship" relationship="rootViewController" id="P0n-CB-dmF"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2cF-jT-ggH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1484,6 +1485,25 @@
             </objects>
             <point key="canvasLocation" x="-1986" y="1476"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gJh-OI-z7q">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rtI-g5-Gft" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="K7V-W3-HRs"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4LG-Jm-1f8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="y2I-MG-niX" kind="relationship" relationship="rootViewController" id="BDv-KO-Rqp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t8G-vm-30t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1184" y="2017"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bg" width="100" height="56"/>
@@ -1494,7 +1514,8 @@
         <image name="users" width="29" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GmB-Y8-pZM"/>
+        <segue reference="xyL-dD-Ct6"/>
+        <segue reference="Mxw-Vb-G0a"/>
         <segue reference="yPn-Da-erJ"/>
     </inferredMetricsTieBreakers>
 </document>

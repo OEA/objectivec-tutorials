@@ -89,6 +89,8 @@
     [creationUser setUsername:user.username];
     [creationUser setPassword:user.password];
     [creationUser setName:user.name];
+    [creationUser setPhoto:user.photo];
+    [creationUser setCity:user.city];
     
     NSNumber *isAdmin = (userIsAdmin) ? [NSNumber numberWithInt:1] : [NSNumber numberWithInt:0];
     
@@ -123,6 +125,12 @@
     if (user.isAdmin != editingUser.isAdmin) {
         [editingUser setIsAdmin:user.isAdmin];
     }
+    if ([user.city isEqualToString:editingUser.city]) {
+        [editingUser setCity:user.city];
+    }
+//    if (user.photo != editingUser.photo) {
+//        [editingUser setPhoto:user.photo];
+//    }
     NSArray *results;
     results = [self getUserArrayWithUserName:user];
     //If username is already taken, it throws exception to handle username conflicts.

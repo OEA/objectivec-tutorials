@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.h
 //  Library Application with CoreData
 //
-//  Created by Ömer Emre Aslan on 13/07/15.
+//  Created by Ömer Emre Aslan on 24/07/15.
 //  Copyright © 2015 omer. All rights reserved.
 //
 //  Delete this file and regenerate it using "Create NSManagedObject Subclass…"
@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *name;
 @property (nullable, nonatomic, retain) NSString *password;
 @property (nullable, nonatomic, retain) NSString *username;
+@property (nullable, nonatomic, retain) NSString *city;
+@property (nullable, nonatomic, retain) NSData *photo;
 @property (nullable, nonatomic, retain) NSSet<UserLog *> *logs;
 
 @end
