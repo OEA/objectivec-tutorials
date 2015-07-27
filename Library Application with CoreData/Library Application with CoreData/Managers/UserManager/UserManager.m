@@ -7,6 +7,7 @@
 //
 
 #import "UserManager.h"
+#import "City.h"
 #import "UserLogManager.h"
 
 @interface UserManager()
@@ -219,6 +220,28 @@
     NSError *searchError;
     NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
     return [results mutableCopy];
+}
+
+- (NSMutableArray *)getCitiesArray
+{
+    NSMutableArray *citiesArray = [NSMutableArray new];
+    
+    for (User *user in [self getAllUser]) {
+        BOOL cityIsAdded = NO;
+        for (City *city in citiesArray) {
+            if ([city.name isEqualToString:user.city]) {
+                cityIsAdded = YES;
+                city.count++;
+            }
+        }
+        if (!cityIsAdded) {
+            City *city = [City new];
+            city.name = user.city;
+            city.count = 1;
+            [citiesArray addObject:city];
+        }
+    }
+    return citiesArray;
 }
 
 #pragma mark - Logical Methods

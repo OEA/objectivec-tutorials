@@ -24,6 +24,7 @@
 - (User *)getFirstUser;
 - (User *)getCurrentUser; //Last logged in user
 - (NSMutableArray *)getAllUser;
+- (NSMutableArray *)getCitiesArray;
 
 //Logical methods
 - (BOOL)isAdmin;
