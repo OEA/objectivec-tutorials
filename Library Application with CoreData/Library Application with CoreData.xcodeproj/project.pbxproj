@@ -15,6 +15,7 @@
 		171BFA461B5FA81300CE4DE4 /* SubjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA451B5FA81300CE4DE4 /* SubjectManager.m */; };
 		171BFA491B5FB32E00CE4DE4 /* AuthorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA481B5FB32E00CE4DE4 /* AuthorManager.m */; };
 		171BFA4D1B5FCD3100CE4DE4 /* NSDate+DateFromString.m in Sources */ = {isa = PBXBuildFile; fileRef = 171BFA4C1B5FCD3100CE4DE4 /* NSDate+DateFromString.m */; };
+		17293A871B65FE3300031EEC /* UserListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17293A861B65FE3300031EEC /* UserListCell.m */; };
 		17741D881B54F029006849C2 /* SubjectListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17741D871B54F029006849C2 /* SubjectListVC.m */; };
 		1787D0691B5E26CD0031B95E /* BookDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0681B5E26CD0031B95E /* BookDetailVC.m */; };
 		1787D0721B5E500E0031B95E /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0711B5E500E0031B95E /* Transaction.m */; };
@@ -27,6 +28,7 @@
 		17ABD6491B53CB9800AE5B11 /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6481B53CB9800AE5B11 /* Book.m */; };
 		17ABD64D1B53CBA900AE5B11 /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD64C1B53CBA900AE5B11 /* Author.m */; };
 		17ABD6511B53DA8200AE5B11 /* SubjectModalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ABD6501B53DA8200AE5B11 /* SubjectModalVC.m */; };
+		17AC40FE1B65FB4E000BE6F8 /* UserListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17AC40FD1B65FB4E000BE6F8 /* UserListVC.m */; };
 		17BC12F31B551AA400EFB951 /* AdminBookListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17BC12F21B551AA400EFB951 /* AdminBookListVC.m */; };
 		17BC12FB1B55271800EFB951 /* BookEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17BC12FA1B55271800EFB951 /* BookEditVC.m */; };
 		954036F11B4FB4F4004D2794 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 954036F01B4FB4F4004D2794 /* Images.xcassets */; };
@@ -72,6 +74,8 @@
 		171BFA481B5FB32E00CE4DE4 /* AuthorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorManager.m; sourceTree = "<group>"; };
 		171BFA4B1B5FCD3100CE4DE4 /* NSDate+DateFromString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateFromString.h"; sourceTree = "<group>"; };
 		171BFA4C1B5FCD3100CE4DE4 /* NSDate+DateFromString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateFromString.m"; sourceTree = "<group>"; };
+		17293A851B65FE3300031EEC /* UserListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListCell.h; sourceTree = "<group>"; };
+		17293A861B65FE3300031EEC /* UserListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListCell.m; sourceTree = "<group>"; };
 		17741D861B54F029006849C2 /* SubjectListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectListVC.h; sourceTree = "<group>"; };
 		17741D871B54F029006849C2 /* SubjectListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectListVC.m; sourceTree = "<group>"; };
 		1787D0671B5E26CD0031B95E /* BookDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailVC.h; sourceTree = "<group>"; };
@@ -102,6 +106,8 @@
 		17ABD64C1B53CBA900AE5B11 /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
 		17ABD64F1B53DA8200AE5B11 /* SubjectModalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectModalVC.h; sourceTree = "<group>"; };
 		17ABD6501B53DA8200AE5B11 /* SubjectModalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectModalVC.m; sourceTree = "<group>"; };
+		17AC40FC1B65FB4E000BE6F8 /* UserListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListVC.h; sourceTree = "<group>"; };
+		17AC40FD1B65FB4E000BE6F8 /* UserListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListVC.m; sourceTree = "<group>"; };
 		17BC12F11B551AA400EFB951 /* AdminBookListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdminBookListVC.h; sourceTree = "<group>"; };
 		17BC12F21B551AA400EFB951 /* AdminBookListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdminBookListVC.m; sourceTree = "<group>"; };
 		17BC12F91B55271800EFB951 /* BookEditVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookEditVC.h; sourceTree = "<group>"; };
@@ -230,6 +236,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		17293A841B65FBA900031EEC /* UserListCell */ = {
+			isa = PBXGroup;
+			children = (
+				17293A851B65FE3300031EEC /* UserListCell.h */,
+				17293A861B65FE3300031EEC /* UserListCell.m */,
+			);
+			path = UserListCell;
+			sourceTree = "<group>";
+		};
 		17741D841B54EFE1006849C2 /* SubjectVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,6 +339,16 @@
 				17ABD6501B53DA8200AE5B11 /* SubjectModalVC.m */,
 			);
 			path = SubjectModalVC;
+			sourceTree = "<group>";
+		};
+		17AC40FB1B65FB09000BE6F8 /* UserListVC */ = {
+			isa = PBXGroup;
+			children = (
+				17293A841B65FBA900031EEC /* UserListCell */,
+				17AC40FC1B65FB4E000BE6F8 /* UserListVC.h */,
+				17AC40FD1B65FB4E000BE6F8 /* UserListVC.m */,
+			);
+			path = UserListVC;
 			sourceTree = "<group>";
 		};
 		17BC12F01B551A7D00EFB951 /* BookListVC */ = {
@@ -441,6 +466,7 @@
 		95DA18111B4CFCF0008B5517 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				17AC40FB1B65FB09000BE6F8 /* UserListVC */,
 				1787D0661B5E269C0031B95E /* BookDetailVC */,
 				17ABD62A1B537FF500AE5B11 /* Admin */,
 				95DA18121B4CFCF0008B5517 /* BookList */,
@@ -676,9 +702,11 @@
 				171BFA391B5E822200CE4DE4 /* UserManager.m in Sources */,
 				95DA18241B4CFCF0008B5517 /* BookListCell.m in Sources */,
 				95DA18231B4CFCF0008B5517 /* AddBookVC.m in Sources */,
+				17AC40FE1B65FB4E000BE6F8 /* UserListVC.m in Sources */,
 				95DA17F41B4CFC6A008B5517 /* ViewController.m in Sources */,
 				95DA18271B4CFCF0008B5517 /* RegisterVC.m in Sources */,
 				17ABD6491B53CB9800AE5B11 /* Book.m in Sources */,
+				17293A871B65FE3300031EEC /* UserListCell.m in Sources */,
 				17ABD63C1B53B55E00AE5B11 /* UserLog.m in Sources */,
 				95DA18261B4CFCF0008B5517 /* LoginVC.m in Sources */,
 				171BFA4D1B5FCD3100CE4DE4 /* NSDate+DateFromString.m in Sources */,
