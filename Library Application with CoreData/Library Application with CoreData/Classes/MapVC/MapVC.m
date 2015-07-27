@@ -52,7 +52,7 @@
         MKPointAnnotation *istanbulPoint = [[MKPointAnnotation alloc] init];
         istanbulPoint.coordinate = istanbul;
         istanbulPoint.title = city.name;
-        istanbulPoint.subtitle = @"4 books";
+        istanbulPoint.subtitle = [NSString stringWithFormat:@"%ld books", (long)city.count];
         
         
         [self.mapView addAnnotation:istanbulPoint];

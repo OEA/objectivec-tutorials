@@ -99,4 +99,15 @@
 }
 
 
+- (NSUInteger)getTransactionCountFromCity:(NSString *)name
+{
+    //Create query SELECT * FROM User where username = 'user.username' to get user
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Transaction"];
+    request.predicate = [NSPredicate predicateWithFormat:@"user.city = %@", name];
+    NSError *searchError;
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&searchError];
+    return [results count];
+}
+
+
 @end

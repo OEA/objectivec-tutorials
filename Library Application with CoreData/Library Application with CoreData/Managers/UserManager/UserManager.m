@@ -9,10 +9,12 @@
 #import "UserManager.h"
 #import "City.h"
 #import "UserLogManager.h"
+#import "TransactionManager.h"
 
 @interface UserManager()
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @property (nonatomic,strong) UserLogManager *userLogManager;
+@property (nonatomic,strong) TransactionManager *transactionManager;
 @end
 
 @implementation UserManager
@@ -44,6 +46,14 @@
         _userLogManager = [UserLogManager sharedInstance];
     }
     return _userLogManager;
+}
+
+- (TransactionManager *)transactionManager
+{
+    if (!_transactionManager) {
+        _transactionManager = [TransactionManager sharedInstance];
+    }
+    return _transactionManager;
 }
 
 #pragma mark - Core Data method
@@ -231,13 +241,13 @@
         for (City *city in citiesArray) {
             if ([city.name isEqualToString:user.city]) {
                 cityIsAdded = YES;
-                city.count++;
+                city.count = [self.transactionManager getTransactionCountFromCity:city.name];
             }
         }
         if (!cityIsAdded) {
             City *city = [City new];
             city.name = user.city;
-            city.count = 1;
+            city.count = [self.transactionManager getTransactionCountFromCity:user.city];
             [citiesArray addObject:city];
         }
     }

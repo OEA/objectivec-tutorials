@@ -18,7 +18,7 @@
 - (void)createTransaction:(Book *)book;
 - (void)deleteTransaction:(Book *)book;
 - (Transaction *)getTransaction:(Book *)book;
-
+- (NSUInteger)getTransactionCountFromCity:(NSString *)name;
 
 //Shared Instance
 + (instancetype)sharedInstance;
