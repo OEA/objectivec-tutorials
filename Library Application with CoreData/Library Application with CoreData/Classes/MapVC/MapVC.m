@@ -8,6 +8,7 @@
 
 #import "MapVC.h"
 #import "UserManager.h"
+#import "City.h"
 
 @interface MapVC() <MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -41,39 +42,47 @@
     
 }
 - (void)viewWillAppear:(BOOL)animated {
-    // 1
-    CLLocationCoordinate2D istanbul;
-    istanbul.latitude = 41.0082376;
-    istanbul.longitude= 28.9783589;
     
-    CLLocationCoordinate2D konya;
-    konya.latitude = 37.8746429;
-    konya.longitude= 32.4931554;
     
-    CLLocationCoordinate2D sivas;
-    sivas.latitude = 39.750545;
-    sivas.longitude= 37.0150217;
+    NSMutableArray *cities = [self.userManager getCitiesArray];
+    
+    for (City *city in cities) {
+       
+        CLLocationCoordinate2D istanbul = [self getCoordinateFromCityName:city.name];
+        MKPointAnnotation *istanbulPoint = [[MKPointAnnotation alloc] init];
+        istanbulPoint.coordinate = istanbul;
+        istanbulPoint.title = city.name;
+        istanbulPoint.subtitle = @"4 books";
+        
+        
+        [self.mapView addAnnotation:istanbulPoint];
+        
+    }
+    
+}
 
+- (CLLocationCoordinate2D)getCoordinateFromCityName:(NSString *)cityName
+{
     
-    MKPointAnnotation *istanbulPoint = [[MKPointAnnotation alloc] init];
-    istanbulPoint.coordinate = istanbul;
-    istanbulPoint.title = @"İstanbul";
-    istanbulPoint.subtitle = @"4 books";
+    NSLog(@"city = %@", cityName);
+    NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?address=%@", cityName];
+    
+    NSURL *excUrl = [NSURL URLWithString:url];
+    NSData *data = [NSData dataWithContentsOfURL:excUrl];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    NSDictionary *cityGeneral = dict[@"results"][0];
+    NSDictionary *cityDetail = [cityGeneral objectForKey:@"geometry"];
+    NSDictionary *bounds = [cityDetail objectForKey:@"location"];
+    
+    NSString *lat = [bounds objectForKey:@"lat"];
+    NSString *lng = [bounds objectForKey:@"lng"];
+    CLLocationCoordinate2D istanbul;
+    istanbul.latitude = [lat doubleValue];
+    istanbul.longitude= [lng doubleValue];
+    
+    return istanbul;
     
     
-    MKPointAnnotation *konyaPoint = [[MKPointAnnotation alloc] init];
-    konyaPoint.coordinate = konya;
-    konyaPoint.title = @"Konya";
-    konyaPoint.subtitle = @"0 book";
     
-    
-    MKPointAnnotation *sivasPoint = [[MKPointAnnotation alloc] init];
-    sivasPoint.coordinate = sivas;
-    sivasPoint.title = @"Sivas";
-    sivasPoint.subtitle = @"14 books";
-    
-    [self.mapView addAnnotation:istanbulPoint];
-    [self.mapView addAnnotation:konyaPoint];
-    [self.mapView addAnnotation:sivasPoint];
 }
 @end

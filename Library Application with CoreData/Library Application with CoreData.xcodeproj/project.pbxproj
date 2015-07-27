@@ -18,6 +18,7 @@
 		17293A871B65FE3300031EEC /* UserListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17293A861B65FE3300031EEC /* UserListCell.m */; };
 		17293A8B1B660C6700031EEC /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17293A8A1B660C6700031EEC /* MapVC.m */; };
 		17293A8D1B660F6900031EEC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17293A8C1B660F6900031EEC /* MapKit.framework */; };
+		17293A941B663DEA00031EEC /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 17293A931B663DEA00031EEC /* City.m */; };
 		17741D881B54F029006849C2 /* SubjectListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 17741D871B54F029006849C2 /* SubjectListVC.m */; };
 		1787D0691B5E26CD0031B95E /* BookDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0681B5E26CD0031B95E /* BookDetailVC.m */; };
 		1787D0721B5E500E0031B95E /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1787D0711B5E500E0031B95E /* Transaction.m */; };
@@ -81,6 +82,8 @@
 		17293A891B660C6700031EEC /* MapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapVC.h; sourceTree = "<group>"; };
 		17293A8A1B660C6700031EEC /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
 		17293A8C1B660F6900031EEC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		17293A921B663DEA00031EEC /* City.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		17293A931B663DEA00031EEC /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
 		17741D861B54F029006849C2 /* SubjectListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectListVC.h; sourceTree = "<group>"; };
 		17741D871B54F029006849C2 /* SubjectListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectListVC.m; sourceTree = "<group>"; };
 		1787D0671B5E26CD0031B95E /* BookDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailVC.h; sourceTree = "<group>"; };
@@ -258,6 +261,15 @@
 				17293A8A1B660C6700031EEC /* MapVC.m */,
 			);
 			path = MapVC;
+			sourceTree = "<group>";
+		};
+		17293A8E1B663D0B00031EEC /* City */ = {
+			isa = PBXGroup;
+			children = (
+				17293A921B663DEA00031EEC /* City.h */,
+				17293A931B663DEA00031EEC /* City.m */,
+			);
+			path = City;
 			sourceTree = "<group>";
 		};
 		17741D841B54EFE1006849C2 /* SubjectVC */ = {
@@ -559,6 +571,7 @@
 		95DA18281B4CFE20008B5517 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				17293A8E1B663D0B00031EEC /* City */,
 				1787D06E1B5E4FD70031B95E /* Transaction */,
 				17ABD6371B53B48D00AE5B11 /* UserLog */,
 				954036DD1B4F9D96004D2794 /* Subject */,
@@ -725,6 +738,7 @@
 				95DA18271B4CFCF0008B5517 /* RegisterVC.m in Sources */,
 				17ABD6491B53CB9800AE5B11 /* Book.m in Sources */,
 				17293A871B65FE3300031EEC /* UserListCell.m in Sources */,
+				17293A941B663DEA00031EEC /* City.m in Sources */,
 				17ABD63C1B53B55E00AE5B11 /* UserLog.m in Sources */,
 				95DA18261B4CFCF0008B5517 /* LoginVC.m in Sources */,
 				171BFA4D1B5FCD3100CE4DE4 /* NSDate+DateFromString.m in Sources */,
