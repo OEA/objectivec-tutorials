@@ -138,7 +138,7 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(nonnull NSString *)identifier sender:(nullable id)sender
 {
-    return NO;
+    return self.isRegistered;
 }
 
 #pragma mark - picker view
