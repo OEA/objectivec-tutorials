@@ -48,7 +48,7 @@
     
 }
 
-- (void)application:(nonnull UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forLocalNotification:(nonnull UILocalNotification *)notification completionHandler:(nonnull void (^)())completionHandler
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void(^)())completionHandler
 {
     if ([identifier isEqualToString:@"Action1"]) {
         
@@ -56,7 +56,9 @@
     }
     else if ([identifier isEqualToString:@"Action2"]) {
         
+        NSString *text = [responseInfo objectForKey:UIUserNotificationActionResponseTypedTextKey];
         NSLog(@"You chose action 2.");
+        NSLog(@"Entered text: %@",text);
     }
     if (completionHandler) {
         

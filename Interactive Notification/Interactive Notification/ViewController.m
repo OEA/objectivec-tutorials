@@ -32,6 +32,7 @@
     [action2 setIdentifier:@"Action2"];
     [action2 setDestructive:NO];
     [action2 setAuthenticationRequired:NO];
+    [action2 setBehavior:UIUserNotificationActionBehaviorTextInput];
     
     
     UIMutableUserNotificationCategory *actionCategory;
