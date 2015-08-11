@@ -40,6 +40,11 @@
     [actionCategory setActions:@[action1, action2]
                     forContext:UIUserNotificationActionContextDefault];
     
+    
+    /*
+        If we select the context as UIUserNotificationActionContextMinimal, actions will be shown on lockscreen and banner. Otherwise(UIUserNotificationActionContextDefault), more than 2 actions will be shown on modal notification.
+     */
+    
     NSSet *categories = [NSSet setWithObject:actionCategory];
     UIUserNotificationType types = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:categories];
