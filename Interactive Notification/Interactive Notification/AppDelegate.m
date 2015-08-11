@@ -42,4 +42,33 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+ - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    NSLog(@"test");
+    
+}
+
+- (void)application:(nonnull UIApplication *)application handleActionWithIdentifier:(nullable NSString *)identifier forLocalNotification:(nonnull UILocalNotification *)notification completionHandler:(nonnull void (^)())completionHandler
+{
+    if ([identifier isEqualToString:@"Action1"]) {
+        
+        NSLog(@"You chose action 1.");
+    }
+    else if ([identifier isEqualToString:@"Action2"]) {
+        
+        NSLog(@"You chose action 2.");
+    }
+    if (completionHandler) {
+        
+        completionHandler();
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    // Play a sound and show an alert only if the application is active, to avoid doubly notifiying the user.
+    if ([application applicationState] == UIApplicationStateActive) {
+        
+    }
+}
+
 @end
