@@ -48,14 +48,14 @@
     
     for (City *city in cities) {
        
-        CLLocationCoordinate2D istanbul = [self getCoordinateFromCityName:city.name];
-        MKPointAnnotation *istanbulPoint = [[MKPointAnnotation alloc] init];
-        istanbulPoint.coordinate = istanbul;
-        istanbulPoint.title = city.name;
-        istanbulPoint.subtitle = [NSString stringWithFormat:@"%ld books", (long)city.count];
+        CLLocationCoordinate2D cityLocation = [self getCoordinateFromCityName:city.name];
+        MKPointAnnotation *cityPoint = [[MKPointAnnotation alloc] init];
+        cityPoint.coordinate = cityLocation;
+        cityPoint.title = city.name;
+        cityPoint.subtitle = [NSString stringWithFormat:@"%ld books", (long)city.count];
         
         
-        [self.mapView addAnnotation:istanbulPoint];
+        [self.mapView addAnnotation:cityPoint];
         
     }
     

@@ -27,6 +27,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initUI];
+}
+
+- (void)initUI
+{
     self.bookName.text = self.book.title;
     self.bookPages.text = [NSString stringWithFormat:@"%@",self.book.pages];
     self.availability.text = @"Available";
@@ -34,7 +39,7 @@
     for (Subject *subject in self.book.subjects) {
         self.bookSubjects.text = [self.bookSubjects.text stringByAppendingString:[NSString stringWithFormat:@"%@ ",subject.name]];
     }
-   
+    
     self.bookSummary.text = @"test";
     self.bookYear.text = [NSString stringWithFormat:@"%@ ",self.book.publishDate];
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:self.book.publishDate];
